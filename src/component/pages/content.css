@@ -1,0 +1,152 @@
+.main-content {
+  /* margin-top: 160px; */
+  padding: 12px 24px;
+  background: #f0f2f5;
+  width: 100%;
+}
+
+.banner {
+  background-image: url('https://c1nguyendu.pgdcujut.edu.vn/wp-content/uploads/2022/07/background-nhe-nhang-tuyet-dep-68919.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 550px;
+  padding: 12px;
+  border-radius: 12px;
+  text-align: center;
+  margin-bottom: 24px;
+  color: white; /* nếu ảnh tối */
+}
+
+.search-input {
+  max-width: 50% !important;
+  margin: 16px auto;
+  border-radius: 20px !important;
+}
+.search-input .ant-input {
+  height: 56px !important;
+  font-size: 18px !important;
+  padding: 8px 16px !important;
+}
+
+.search-input .ant-btn {
+  height: 56px !important;
+  font-size: 18px !important;
+  padding: 0 20px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.advantages {
+  list-style: none; /* Loại bỏ bullet mặc định */
+  padding-left: 0; /* Loại bỏ padding mặc định */
+  margin-left: 30%;
+  color: #52c41a; /* Màu xanh lá như icon */
+  font-weight: 500;
+}
+
+.advantages li {
+  display: flex;
+  align-items: center; /* Căn dọc giữa icon và text */
+  gap: 8px; /* Khoảng cách giữa icon và text */
+  margin-bottom: 8px;
+}
+
+.services {
+  text-align: center;
+}
+
+.service-carousel-wrapper {
+  position: relative;
+  width: 100%;
+  padding: 0 32px;
+  margin-top: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  box-sizing: border-box;
+}
+.service-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* canh giữa ngang */
+  justify-content: center; /* canh giữa dọc nếu cần */
+  text-align: center;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.card-image {
+  width: 100px; /* hoặc kích thước tùy chỉnh */
+  height: 100px;
+  object-fit: cover;
+  margin-bottom: 8px;
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.service-cards-container {
+  width: 80%;
+  overflow-x: hidden;
+  display: flex;
+  gap: 32px;
+  scroll-behavior: smooth;
+  padding: 16px 0;
+}
+
+.service-card {
+  width: 18.5%;
+  height: 200px;
+  flex: 0 0 auto;
+  background: #fff;
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s;
+  text-align: left;
+}
+
+.service-card:hover {
+  transform: translateY(-4px);
+}
+
+.service-card h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #065c8c;
+  margin-bottom: 8px;
+}
+
+.service-card p {
+  font-size: 14px;
+  color: #555;
+  margin: 0;
+}
+
+.scroll-btn {
+  background-color: #fff;
+  border: none;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  /* position: absolute; */
+  top: 50%;
+  /* transform: translateY(-50%); */
+  /* z-index: 1; */
+}
+
+.scroll-btn.left {
+  left: 0;
+}
+
+.scroll-btn.right {
+  right: 0;
+}

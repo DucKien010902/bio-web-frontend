@@ -1,0 +1,49 @@
+.contact-icon {
+  cursor: pointer;
+  color: #555;
+  cursor: pointer;
+}
+.contact-icon:hover {
+  color: #00b5f1;
+}
+.button-name:hover {
+  color: aliceblue !important;
+  background-color: #00b5f1 !important;
+}
+.button-dowload:hover {
+  background-color: #f16400 !important;
+}
+@keyframes rgbBlink {
+  0% {
+    color: red;
+  }
+  33% {
+    color: lime;
+  }
+  66% {
+    color: blue;
+  }
+  100% {
+    color: red;
+  }
+}
+
+.popup-rgb-reminder {
+  /* width: 40px; */
+  /* position: absolute; */
+  /* top: 50%; */
+  /* right: 0px; Điều chỉnh nếu cần */
+
+  /* transform: translateY(-50%); */
+  margin-left: 0px;
+  /* background: #fff; */
+  background: none;
+  padding: 0px 12px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 12px;
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); */
+  animation: rgbBlink 1s infinite;
+  z-index: 1000;
+  white-space: nowrap;
+}

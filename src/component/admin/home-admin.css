@@ -1,0 +1,9 @@
+/* Đổi màu ô đang sửa */
+.editable-cell {
+  background-color: #e6f7ff;
+  padding: 4px;
+}
+
+.editable-row:hover .editable-cell {
+  background-color: #bae7ff;
+}

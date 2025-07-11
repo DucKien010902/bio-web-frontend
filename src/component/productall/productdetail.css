@@ -1,0 +1,31 @@
+/* Style mặc định cho nút */
+.custom-radio {
+  position: relative;
+  border: 1px solid #d9d9d9;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  border-radius: 4px;
+  transition: all 0.3s;
+  padding-right: 24px; /* chừa chỗ cho icon tích */
+}
+
+/* Khi được chọn */
+.custom-radio-selected {
+  position: relative;
+  margin-bottom: 8px;
+  margin-right: 8px;
+  border: 2px solid #ff4d4f !important;
+  color: #d0011b;
+  background: #fff0f0;
+}
+
+/* Thêm dấu tích góc phải dưới */
+.custom-radio-selected::after {
+  content: '✓';
+  position: absolute;
+  bottom: -2px;
+  right: 2px;
+  font-size: 10px;
+  color: #ff4d4f;
+  font-weight: bold;
+}

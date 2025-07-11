@@ -1,0 +1,46 @@
+.voucher-container {
+  display: flex;
+  gap: 12px;
+  padding: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+}
+
+.voucher-card {
+  min-width: 300px;
+  max-width: 300px;
+  height: 100%;
+  background-color: #fff5f6;
+  border: 1px solid #ffd6d6;
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
+  border-radius: 6px;
+  scroll-snap-align: start;
+  position: relative;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.voucher-left {
+  flex: 1;
+}
+
+.voucher-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-left: 16px;
+  border-left: 1px dashed #f5a2a2;
+}
+
+.voucher-qty {
+  position: absolute;
+  top: -8px;
+  right: 16px;
+  background: #ffecec;
+  color: #d0011b;
+  padding: 2px 8px;
+  border-radius: 16px;
+  font-size: 12px;
+}

@@ -1,0 +1,59 @@
+/* Làm to ô ngày và thêm border mờ */
+.ant-picker-panel .ant-picker-cell {
+  height: 64px;
+  border: 1px solid #f0f0f0;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+  font-weight: 700; /* Đậm hơn */
+  /* color: #082966; */
+}
+
+/* Căn giữa số ngày */
+.ant-picker-cell-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+/* Ô ngày đang được chọn */
+.ant-picker-cell-selected .ant-picker-cell-inner {
+  background-color: #1890ff !important; /* Nền xanh */
+  color: #ffffff !important; /* Chữ trắng */
+  font-weight: 700;
+  border-radius: 6px;
+}
+
+/* Hover hiệu ứng */
+.ant-picker-cell:hover {
+  background-color: #f0faff;
+}
+.ant-picker-header-view,
+.ant-picker-month-btn,
+.ant-picker-year-btn {
+  font-weight: 700;
+  font-size: 16px;
+}
+
+/* Tên các thứ trong tuần (CN - T7) */
+.ant-picker-content thead th {
+  font-weight: 700;
+  font-size: 15px;
+  color: #333;
+}
+.booking-button {
+  width: 200px;
+  height: 50px;
+  border-radius: 30px;
+  font-size: 18px;
+  font-weight: 500;
+  background: linear-gradient(36deg, #00b5f1, #00e0ff);
+  transition: all 0.3s ease;
+  box-shadow: none;
+}
+
+.booking-button:hover {
+  box-shadow: 0 0 10px #00b5f1;
+}

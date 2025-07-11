@@ -1,0 +1,28 @@
+.clinic-card {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 1px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.clinic-card:hover {
+  box-shadow: 0 0 12px rgba(0, 181, 241, 0.4);
+  border: 2px solid #00b5f1;
+}
+.search-input {
+  max-width: 50% !important;
+  margin: 30px auto !important;
+}
+.search-input .ant-input {
+  height: 56px !important;
+  font-size: 18px !important;
+  padding: 8px 16px !important;
+}
+
+.search-input .ant-btn {
+  height: 56px !important;
+  font-size: 18px !important;
+  padding: 0 20px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
