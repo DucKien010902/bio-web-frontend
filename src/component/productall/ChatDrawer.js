@@ -223,351 +223,178 @@ const ChatPanel = ({ open, onClose, shopInfo }) => {
       setCurrentShopId(chats[0].shopId);
     }
   }, [chats, currentShopId]);
-  if (!isDesktop || !open) return null;
-  const DesktopLayOut = () => {
-    return (
+  if (!open) return null;
+  // const DesktopLayOut = () => {
+  return (
+    <div
+      ref={panelRef}
+      onMouseEnter={() => setIsHoveringPanel(true)}
+      onMouseLeave={() => setIsHoveringPanel(false)}
+      style={{
+        position: 'fixed',
+        bottom: 0,
+        right: 0,
+        width: '40%',
+        height: '80%',
+        background: '#fff',
+        boxShadow: '-2px 0 8px rgba(0,0,0,0.15)',
+        zIndex: 1000,
+        display: 'flex',
+        flexDirection: 'row',
+        borderLeft: '1px solid #f0f0f0',
+        overflow: 'hidden',
+      }}
+    >
+      {/* Sidebar */}
       <div
-        ref={panelRef}
-        onMouseEnter={() => setIsHoveringPanel(true)}
-        onMouseLeave={() => setIsHoveringPanel(false)}
         style={{
-          position: 'fixed',
-          bottom: 0,
-          right: 0,
-          width: '40%',
-          height: '80%',
-          background: '#fff',
-          boxShadow: '-2px 0 8px rgba(0,0,0,0.15)',
-          zIndex: 1000,
-          display: 'flex',
-          flexDirection: 'row',
-          borderLeft: '1px solid #f0f0f0',
-          overflow: 'hidden',
+          width: 200,
+          borderRight: '1px solid #f0f0f0',
+          overflowY: 'auto',
         }}
       >
-        {/* Sidebar */}
+        <List
+          itemLayout="horizontal"
+          dataSource={sortedChats}
+          renderItem={(item) => (
+            <List.Item
+              style={{
+                cursor: 'pointer',
+                background:
+                  item.shopId === currentShopId ? '#fafafa' : undefined,
+                paddingLeft: 16,
+              }}
+              onClick={() => {
+                setCurrentShopId(item.shopId);
+                console.log(item.shopId);
+              }}
+            >
+              <List.Item.Meta
+                avatar={<Avatar src={item.avatarUrl} />}
+                title={
+                  <span style={{ fontWeight: item.unreadCount ? 700 : 400 }}>
+                    {item.shopName}
+                    {item.unreadCount > 0 && (
+                      <span
+                        style={{
+                          marginLeft: 6,
+                          background: '#f53d2d',
+                          borderRadius: 8,
+                          padding: '0 6px',
+                          color: '#fff',
+                          fontSize: 12,
+                        }}
+                      >
+                        {item.unreadCount}
+                      </span>
+                    )}
+                  </span>
+                }
+                description={
+                  item.messages[item.messages.length - 1]?.content ?? '—'
+                }
+              />
+            </List.Item>
+          )}
+        />
+      </div>
+
+      {/* Chat content */}
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+        {/* Header */}
         <div
           style={{
-            width: 200,
-            borderRight: '1px solid #f0f0f0',
-            overflowY: 'auto',
+            height: 56,
+            borderBottom: '1px solid #f0f0f0',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: 12,
+            padding: '0 16px',
           }}
         >
-          <List
-            itemLayout="horizontal"
-            dataSource={sortedChats}
-            renderItem={(item) => (
-              <List.Item
-                style={{
-                  cursor: 'pointer',
-                  background:
-                    item.shopId === currentShopId ? '#fafafa' : undefined,
-                  paddingLeft: 16,
-                }}
-                onClick={() => {
-                  setCurrentShopId(item.shopId);
-                  console.log(item.shopId);
-                }}
-              >
-                <List.Item.Meta
-                  avatar={<Avatar src={item.avatarUrl} />}
-                  title={
-                    <span style={{ fontWeight: item.unreadCount ? 700 : 400 }}>
-                      {item.shopName}
-                      {item.unreadCount > 0 && (
-                        <span
-                          style={{
-                            marginLeft: 6,
-                            background: '#f53d2d',
-                            borderRadius: 8,
-                            padding: '0 6px',
-                            color: '#fff',
-                            fontSize: 12,
-                          }}
-                        >
-                          {item.unreadCount}
-                        </span>
-                      )}
-                    </span>
-                  }
-                  description={
-                    item.messages[item.messages.length - 1]?.content ?? '—'
-                  }
-                />
-              </List.Item>
-            )}
-          />
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <Avatar src={current?.avatarUrl} />
+            <Text strong style={{ fontSize: 16 }}>
+              {current?.shopName}
+            </Text>
+          </div>
+          <Button onClick={onClose}>Đóng</Button>
         </div>
 
-        {/* Chat content */}
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-          {/* Header */}
-          <div
-            style={{
-              height: 56,
-              borderBottom: '1px solid #f0f0f0',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              gap: 12,
-              padding: '0 16px',
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-              <Avatar src={current?.avatarUrl} />
-              <Text strong style={{ fontSize: 16 }}>
-                {current?.shopName}
-              </Text>
-            </div>
-            <Button onClick={onClose}>Đóng</Button>
-          </div>
-
-          {/* Messages */}
-          <div
-            ref={scrollRef}
-            style={{ flex: 1, padding: 16, overflowY: 'auto' }}
-          >
-            {current?.messages.map((m) => (
+        {/* Messages */}
+        <div
+          ref={scrollRef}
+          style={{ flex: 1, padding: 16, overflowY: 'auto' }}
+        >
+          {current?.messages.map((m) => (
+            <div
+              key={m.id}
+              style={{
+                display: 'flex',
+                justifyContent: m.fromShop ? 'flex-start' : 'flex-end',
+                marginBottom: 8,
+              }}
+            >
               <div
-                key={m.id}
                 style={{
-                  display: 'flex',
-                  justifyContent: m.fromShop ? 'flex-start' : 'flex-end',
-                  marginBottom: 8,
+                  background: m.fromShop ? '#f0f0f0' : '#f53d2d',
+                  color: m.fromShop ? 'black' : 'white',
+                  padding: '8px 12px',
+                  borderRadius: 16,
+                  maxWidth: '70%',
+                  fontSize: 13,
                 }}
               >
-                <div
-                  style={{
-                    background: m.fromShop ? '#f0f0f0' : '#f53d2d',
-                    color: m.fromShop ? 'black' : 'white',
-                    padding: '8px 12px',
-                    borderRadius: 16,
-                    maxWidth: '70%',
-                    fontSize: 13,
-                  }}
-                >
-                  {m.content}
-                </div>
+                {m.content}
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
+        </div>
 
-          {/* Input */}
-          <div
-            style={{
-              padding: 16,
-              borderTop: '1px solid #f0f0f0',
-              display: 'flex',
-              gap: 8,
-            }}
-          >
-            <Input.TextArea
-              autoSize={{ minRows: 1, maxRows: 4 }}
-              value={newMsg}
-              onChange={(e) => setNewMsg(e.target.value)}
-              placeholder="Nhập tin nhắn…"
-              onPressEnter={(e) => {
-                if (!e.shiftKey) {
-                  e.preventDefault();
-                  if (!newMsg.trim()) return;
-                  sendNewMessage(newMsg.trim());
-                  setNewMsg('');
-                }
-              }}
-            />
-            <Button
-              type="primary"
-              onClick={() => {
+        {/* Input */}
+        <div
+          style={{
+            padding: 16,
+            borderTop: '1px solid #f0f0f0',
+            display: 'flex',
+            gap: 8,
+          }}
+        >
+          <input
+            type="text"
+            value={newMsg}
+            onChange={(e) => setNewMsg(e.target.value)}
+            placeholder="Nhập tin nhắn…"
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
                 if (!newMsg.trim()) return;
                 sendNewMessage(newMsg.trim());
                 setNewMsg('');
-              }}
-            >
-              Gửi
-            </Button>
-          </div>
+              }
+            }}
+            style={{
+              flex: 1,
+              padding: '8px 12px',
+              borderRadius: 20,
+              border: '1px solid #d9d9d9',
+              outline: 'none',
+            }}
+          />
+
+          <Button
+            type="primary"
+            onClick={() => {
+              if (!newMsg.trim()) return;
+              sendNewMessage(newMsg.trim());
+              setNewMsg('');
+            }}
+          >
+            Gửi
+          </Button>
         </div>
       </div>
-    );
-  };
-  const MobileLayout = () => {
-    const [viewingChat, setViewingChat] = useState(false);
-
-    if (!open) return null;
-
-    return (
-      <div
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          background: '#fff',
-          zIndex: 1000,
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
-        {/* Danh sách chat hoặc nội dung chat */}
-        {!viewingChat ? (
-          <div style={{ flex: 1, overflowY: 'auto' }}>
-            {/* Header */}
-            <div
-              style={{
-                height: 56,
-                display: 'flex',
-                alignItems: 'center',
-                borderBottom: '1px solid #f0f0f0',
-                padding: '0 16px',
-                fontWeight: 'bold',
-                fontSize: 16,
-              }}
-            >
-              Chat
-            </div>
-            <List
-              itemLayout="horizontal"
-              dataSource={chats}
-              renderItem={(item) => (
-                <List.Item
-                  style={{ cursor: 'pointer', paddingLeft: 16 }}
-                  onClick={() => {
-                    setCurrentShopId(item.shopId);
-                    setViewingChat(true);
-                  }}
-                >
-                  <List.Item.Meta
-                    avatar={<Avatar src={item.avatarUrl} />}
-                    title={
-                      <span
-                        style={{ fontWeight: item.unreadCount ? 700 : 400 }}
-                      >
-                        {item.shopName}
-                        {item.unreadCount > 0 && (
-                          <span
-                            style={{
-                              marginLeft: 6,
-                              background: '#f53d2d',
-                              borderRadius: 8,
-                              padding: '0 6px',
-                              color: '#fff',
-                              fontSize: 12,
-                            }}
-                          >
-                            {item.unreadCount}
-                          </span>
-                        )}
-                      </span>
-                    }
-                    description={
-                      item.messages[item.messages.length - 1]?.content ?? '—'
-                    }
-                  />
-                </List.Item>
-              )}
-            />
-          </div>
-        ) : (
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-            {/* Header */}
-            <div
-              style={{
-                height: 56,
-                display: 'flex',
-                alignItems: 'center',
-                borderBottom: '1px solid #f0f0f0',
-                padding: '0 16px',
-                fontWeight: 'bold',
-                justifyContent: 'space-between',
-              }}
-            >
-              <div
-                onClick={() => setViewingChat(false)}
-                style={{ fontSize: 18, color: '#f53d2d' }}
-              >
-                ←
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                <Avatar src={current?.avatarUrl} />
-                <Text strong>{current?.shopName}</Text>
-              </div>
-            </div>
-
-            {/* Messages */}
-            <div
-              ref={scrollRef}
-              style={{ flex: 1, padding: 16, overflowY: 'auto' }}
-            >
-              {current?.messages.map((m) => (
-                <div
-                  key={m.id}
-                  style={{
-                    display: 'flex',
-                    justifyContent: m.fromShop ? 'flex-start' : 'flex-end',
-                    marginBottom: 8,
-                  }}
-                >
-                  <div
-                    style={{
-                      background: m.fromShop ? '#f0f0f0' : '#f53d2d',
-                      color: m.fromShop ? 'black' : 'white',
-                      padding: '8px 12px',
-                      borderRadius: 16,
-                      maxWidth: '80%',
-                      fontSize: 13,
-                    }}
-                  >
-                    {m.content}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Input */}
-            <div
-              style={{
-                padding: 12,
-                borderTop: '1px solid #f0f0f0',
-                display: 'flex',
-                gap: 8,
-              }}
-            >
-              <Input.TextArea
-                autoSize={{ minRows: 1, maxRows: 4 }}
-                value={newMsg}
-                onChange={(e) => setNewMsg(e.target.value)}
-                placeholder="Nhập tin nhắn…"
-                onPressEnter={(e) => {
-                  if (!e.shiftKey) {
-                    e.preventDefault();
-                    if (!newMsg.trim()) return;
-                    sendNewMessage(newMsg.trim());
-                    setNewMsg('');
-                  }
-                }}
-              />
-              <Button
-                type="primary"
-                onClick={() => {
-                  if (!newMsg.trim()) return;
-                  sendNewMessage(newMsg.trim());
-                  setNewMsg('');
-                }}
-              >
-                Gửi
-              </Button>
-            </div>
-          </div>
-        )}
-      </div>
-    );
-  };
-
-  return (
-    <div>
-      {isDesktop && <DesktopLayOut />}
-      {isMobile && <MobileLayout />}
     </div>
   );
 };

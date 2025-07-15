@@ -136,34 +136,18 @@ const ShopeeProfile = () => {
       <>
         <AllProductHeader />
         <Layout style={{ minHeight: '100vh', backgroundColor: '#fff' }}>
-          <Content style={{ paddingBottom: 60 }}>{renderContent()}</Content>
-
-          {/* Mobile Bottom Tab */}
+          {/* Thanh tab KHÔNG cố định, nằm đầu nội dung */}
           <div
             style={{
-              position: 'fixed',
-              bottom: 0,
-              left: 0,
-              right: 0,
-              height: 60,
-              borderTop: '1px solid #eee',
+              height: 40,
+              borderBottom: '1px solid #eee',
               display: 'flex',
               justifyContent: 'space-around',
               alignItems: 'center',
               backgroundColor: '#fff',
-              zIndex: 1000,
+              marginBottom: 12, // tạo khoảng cách nếu cần
             }}
           >
-            {/* <div
-              onClick={() => setSelectedKey('6')}
-              style={{
-                textAlign: 'center',
-                color: selectedKey === '6' ? 'orange' : '#aaa',
-              }}
-            >
-              <MdHome size={20} />
-              <div style={{ fontSize: 12 }}>Trang chủ</div>
-            </div> */}
             <div
               onClick={() => setSelectedKey('1')}
               style={{
@@ -171,19 +155,9 @@ const ShopeeProfile = () => {
                 color: selectedKey === '1' ? 'orange' : '#aaa',
               }}
             >
-              <CgProfile size={20} />
+              {/* <CgProfile size={20} /> */}
               <div style={{ fontSize: 12 }}>Hồ sơ</div>
             </div>
-            {/* <div
-              onClick={() => setSelectedKey('5')}
-              style={{
-                textAlign: 'center',
-                color: selectedKey === '5' ? '#2fe0d5' : '#aaa',
-              }}
-            >
-              <FaRegUser size={20} />
-              <div style={{ fontSize: 12 }}>Chi tiết</div>
-            </div> */}
             <div
               onClick={() => setSelectedKey('2')}
               style={{
@@ -191,7 +165,7 @@ const ShopeeProfile = () => {
                 color: selectedKey === '2' ? '#2b88d9' : '#aaa',
               }}
             >
-              <FaClipboardList size={20} />
+              {/* <FaClipboardList size={20} /> */}
               <div style={{ fontSize: 12 }}>Đơn mua</div>
             </div>
             <div
@@ -201,7 +175,7 @@ const ShopeeProfile = () => {
                 color: selectedKey === '3' ? '#eb4242' : '#aaa',
               }}
             >
-              <GrNotification size={20} />
+              {/* <GrNotification size={20} /> */}
               <div style={{ fontSize: 12 }}>Thông báo</div>
             </div>
             <div
@@ -211,15 +185,19 @@ const ShopeeProfile = () => {
                 color: selectedKey === '4' ? '#c712c1' : '#aaa',
               }}
             >
-              <SlEnvolopeLetter size={20} />
+              {/* <SlEnvolopeLetter size={20} /> */}
               <div style={{ fontSize: 12 }}>Voucher</div>
             </div>
           </div>
+
+          {/* Nội dung trang */}
+          <Content style={{ paddingBottom: 60 }}>{renderContent()}</Content>
         </Layout>
         <AllProductFooter />
       </>
     );
   };
+
   return (
     <div>
       {isDesktop && <DesktopLayout />}

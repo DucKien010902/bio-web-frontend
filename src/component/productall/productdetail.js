@@ -35,12 +35,14 @@ import 'dayjs/locale/vi';
 import ChatDrawer from './ChatDrawer';
 import { useMediaQuery } from 'react-responsive';
 import ChatPanel from './ChatDrawer';
+import ScrollToTopButton from './scrollToTop';
+import ChatPanelMobile from './ChatDrawerMobile';
 
 dayjs.extend(relativeTime);
 dayjs.locale('vi');
 const { Title, Text } = Typography;
 
-const ProductDetailPage = () => {
+const ProductDetailPage = ({ chatOpen, setChatOpen }) => {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const isDesktop = useMediaQuery({ minWidth: 992 });
   const location = useLocation();
@@ -53,7 +55,7 @@ const ProductDetailPage = () => {
   const [shopInfo, setShopInfo] = useState(null);
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(100); // ví dụ ban đầu
-  const [chatOpen, setChatOpen] = useState(false);
+  // const [chatOpen, setChatOpen] = useState(false);
   const phoneNumber = JSON.parse(localStorage.getItem('user'))?.phoneNumber;
   const [selectedType, setSelectedType] = useState(null);
   const handleAddtoCart = async () => {
@@ -713,11 +715,12 @@ const ProductDetailPage = () => {
           </div>
 
           <div style={{ height: 20, backgroundColor: '#f7f7f2' }}></div>
-          <ChatDrawer
+          <ChatPanel
             open={chatOpen}
             onClose={() => setChatOpen(false)}
             shopInfo={shopInfo}
           />
+          <ScrollToTopButton />
         </div>
         <AllProductFooter />
       </div>
@@ -1063,8 +1066,8 @@ const ProductDetailPage = () => {
             </div>
 
             {/* Dòng 1: Sản phẩm - Đánh giá - Người theo dõi */}
-            <Row gutter={16} style={{ marginTop: 16 }}>
-              <Col span={8}>
+            <Row gutter={16} style={{ marginTop: 16, textAlign: 'center' }}>
+              <Col span={8} style={{ alignItems: 'center' }}>
                 <Text>Sản phẩm</Text>
                 <div style={{ color: '#d0011b', fontWeight: 500 }}>
                   {shopInfo?.productsCount}
@@ -1159,7 +1162,7 @@ const ProductDetailPage = () => {
           </div>
 
           <div style={{ height: 20, backgroundColor: '#f7f7f2' }}></div>
-          <ChatPanel
+          <ChatPanelMobile
             open={chatOpen}
             onClose={() => setChatOpen(false)}
             shopInfo={shopInfo}

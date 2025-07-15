@@ -150,7 +150,7 @@ const VNPaySuccess = () => {
           }}
           onClick={() => {
             sessionStorage.removeItem('order_submitted');
-            navigate('/product');
+            navigate('/');
           }}
         >
           Đồng ý

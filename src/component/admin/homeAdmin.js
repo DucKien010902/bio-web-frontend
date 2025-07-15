@@ -15,6 +15,7 @@ import AdminTestPackages from './admin-service';
 import { useNavigate } from 'react-router-dom';
 import CoordinatorsList from './coordinators';
 import ShopManagementPage from './admin-allshop';
+import CategoryManager from './admin-category';
 const { Header, Sider, Content } = Layout;
 
 const Dashboard = () => <h2>Trang chính</h2>;
@@ -34,6 +35,8 @@ const AdminLayout = () => {
         return <AdminTestPackages />;
       case 'shops':
         return <ShopManagementPage />;
+      case 'categories':
+        return <CategoryManager />;
       case 'coordinator':
         return <CoordinatorsList />;
       default:
@@ -65,11 +68,14 @@ const AdminLayout = () => {
           <Menu.Item key="coordinator" icon={<IoIosPeople />}>
             Điều phối viên
           </Menu.Item>
-          <Menu.Item key="biostore" icon={<MdStorefront />}>
+          {/* <Menu.Item key="biostore" icon={<MdStorefront />}>
             Kho thuyết bị
-          </Menu.Item>
+          </Menu.Item> */}
           <Menu.Item key="shops" icon={<GiShop />}>
             Tất cả Shop
+          </Menu.Item>
+          <Menu.Item key="categories" icon={<GiShop />}>
+            Quản lý danh mục hệ thống
           </Menu.Item>
         </Menu>
       </Sider>

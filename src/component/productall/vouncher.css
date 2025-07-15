@@ -44,3 +44,47 @@
   border-radius: 16px;
   font-size: 12px;
 }
+/* === Mobile layout (<768px) === */
+@media (max-width: 767.98px) {
+  .voucher-container {
+    padding: 12px 8px; /* ôm sát hơn */
+    gap: 8px; /* thưa vừa */
+  }
+
+  .voucher-card {
+    min-width: 240px; /* bớt to => vừa tay lướt */
+    max-width: 240px;
+    padding: 12px;
+  }
+
+  .voucher-left div:first-child {
+    /* “Giảm xx%” */
+    font-size: 14px;
+  }
+  .voucher-left div:nth-child(2) {
+    /* Đơn tối thiểu… */
+    font-size: 13px;
+    line-height: 1.3;
+  }
+  .voucher-left div:nth-child(3) {
+    /* HSD */
+    font-size: 11px;
+  }
+
+  .voucher-right {
+    padding-left: 12px; /* thu hẹp mặt cắt răng cưa */
+  }
+
+  .voucher-qty {
+    right: 12px; /* badge sát viền hơn */
+    top: -6px;
+    font-size: 11px;
+    padding: 1px 6px;
+  }
+
+  .voucher-card button.ant-btn {
+    padding: 0 12px; /* nút “Lưu” nhỏ */
+    font-size: 12px;
+    height: 22px;
+  }
+}

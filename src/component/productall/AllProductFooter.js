@@ -11,6 +11,7 @@ const FooterSection = () => {
         backgroundColor: '#2f4699',
         color: '#fff',
         padding: '24px',
+        paddingBottom: 150,
       }}
     >
       <Row gutter={[16, 32]}>
@@ -104,11 +105,23 @@ const FooterSection = () => {
                 <Title level={5} style={{ color: '#fff', marginBottom: 12 }}>
                   {section.title}
                 </Title>
-                <Space direction="vertical" size={4}>
+                <Space direction="vertical" size={10}>
                   {section.items.map((item, i) => (
-                    <Text key={i} style={{ color: '#fff', fontSize: 13 }}>
+                    <a
+                      key={i}
+                      href="http://gennovax.vn"
+                      style={{
+                        color: '#fff',
+                        fontSize: 13,
+                        textDecoration: 'none',
+                        cursor: 'pointer',
+                        display: 'block',
+                      }}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       {item}
-                    </Text>
+                    </a>
                   ))}
                 </Space>
               </Col>

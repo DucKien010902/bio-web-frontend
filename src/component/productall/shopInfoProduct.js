@@ -176,7 +176,7 @@ const ShopInfoProduct = ({ shopInfo }) => {
           </Col>
         </Row>
       </div>
-      <FooterSection />
+      {/* <FooterSection /> */}
     </>
   );
 };

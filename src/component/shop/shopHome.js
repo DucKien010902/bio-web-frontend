@@ -122,6 +122,9 @@ const ShopLayout = () => {
           <Menu.Item key="products" icon={<CalendarOutlined />}>
             Danh sách sản phẩm
           </Menu.Item>
+          <Menu.Item key="propose" icon={<CalendarOutlined />}>
+            Đề xuất
+          </Menu.Item>
           <Menu.Item key="vouchers" icon={<CalendarOutlined />}>
             Kho voucher
           </Menu.Item>

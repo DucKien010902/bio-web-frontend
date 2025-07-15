@@ -22,15 +22,20 @@ const { Panel } = Collapse;
 const { Text, Title } = Typography;
 
 const ProductList = () => {
+  const [allCategories, setAllCategories] = useState([]);
   const [categories, setCategories] = useState([]);
   const [productsByCategory, setProductsByCategory] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
   const [form] = Form.useForm();
   const shopInfo = JSON.parse(localStorage.getItem('shopInfo'));
+  const [categoryOptions, setCategoryOptions] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [availableClassifies, setAvailableClassifies] = useState([]);
 
   const openModal = (product) => {
     setEditingProduct(product);
+    setSelectedCategory(product.pdCategory); // ⬅️ Đồng bộ để hiển thị phân loại đúng
     form.setFieldsValue({
       ...product,
       pdTypes: Array.isArray(product.pdTypes)
@@ -49,6 +54,15 @@ const ProductList = () => {
       setCategories(Object.keys(res.data)); // <-- trích danh mục từ keys
     } catch (error) {
       message.error('Không thể lấy danh sách sản phẩm');
+    }
+  };
+
+  const fetchAllGroupedProducts = async () => {
+    try {
+      const res = await axiosClient.get(`/category/getall`);
+      setCategoryOptions(res.data); // data = [{ name: 'ABC', classifies: [...] }]
+    } catch (error) {
+      message.error('Không thể lấy danh sách danh mục');
     }
   };
 
@@ -94,9 +108,14 @@ const ProductList = () => {
       message.error('Lưu thất bại');
     }
   };
+  useEffect(() => {
+    const found = categoryOptions.find((cat) => cat.name === selectedCategory);
+    setAvailableClassifies(found?.classifies || []);
+  }, [selectedCategory, categoryOptions]);
 
   useEffect(() => {
     fetchGroupedProducts();
+    fetchAllGroupedProducts();
   }, []);
 
   const columns = [
@@ -201,19 +220,40 @@ const ProductList = () => {
       >
         <Form layout="vertical" form={form}>
           <Form.Item
-            name="pdClassify"
+            name="pdCategory"
             label="Danh mục (Category)"
             rules={[{ required: true }]}
           >
-            <Select placeholder="Chọn danh mục">
-              {categories.map((cat) => (
-                <Select.Option key={cat} value={cat}>
-                  {cat}
+            <Select
+              placeholder="Chọn danh mục"
+              onChange={(value) => {
+                setSelectedCategory(value); // update để load phân loại tương ứng
+                form.setFieldValue('pdClassify', null); // reset classify khi đổi danh mục
+              }}
+            >
+              {categoryOptions.map((cat) => (
+                <Select.Option key={cat.name} value={cat.name}>
+                  {cat.name}
                 </Select.Option>
               ))}
             </Select>
           </Form.Item>
-          <Form.Item name="pdTypes" label="Phân loại">
+
+          <Form.Item
+            name="pdClassify"
+            label="Phân loại (Classify)"
+            rules={[{ required: true }]}
+          >
+            <Select placeholder="Chọn phân loại">
+              {availableClassifies.map((cls) => (
+                <Select.Option key={cls} value={cls}>
+                  {cls}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
+
+          <Form.Item name="pdTypes" label="Loại chi tiết">
             <Input />
           </Form.Item>
           <Form.Item name="Id" label="ID" rules={[{ required: true }]}>

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import { Input, Avatar } from 'antd';
-import { SearchOutlined } from '@ant-design/icons';
+import { MessageOutlined, SearchOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import { TbBrandShopee } from 'react-icons/tb';
 import { MdOutlineShoppingCart } from 'react-icons/md';
@@ -17,16 +17,21 @@ import { CiMedicalCase } from 'react-icons/ci';
 import { IoHome } from 'react-icons/io5';
 import axiosClient from '../../api/apiConfig';
 import { useMediaQuery } from 'react-responsive';
+import ChatPanel from './ChatDrawer';
+import ChatPanelMobile from './ChatDrawerMobile';
 
 const AllProductHeader = ({
   handleSearch,
   setProducts,
   allproducts,
   setSelectedProduct,
-  setCurrentPage, // Thêm props số lượng sản phẩm
+  setCurrentPage,
+  chatOpen,
+  setChatOpen, // Thêm props số lượng sản phẩm
 }) => {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const isDesktop = useMediaQuery({ minWidth: 992 });
+  // const [chatOpen, setChatOpen] = useState(false);
   const navigate = useNavigate();
   const phoneNumber = JSON.parse(localStorage.getItem('user'))?.phoneNumber;
   const fullName =
@@ -160,12 +165,12 @@ const AllProductHeader = ({
                 display: 'flex',
                 alignItems: 'center',
                 cursor: 'pointer',
-                fontWeight: 'bold',
-                color: '#f7f705',
+                // fontWeight: 'bold',
+                // color: '#f7f705',
               }}
               onClick={() => navigate('/')}
             >
-              <IoHome style={{ marginRight: '6px' }} /> Trang chủ
+              <IoHome style={{ marginRight: '6px' }} /> Tin tức
             </div>
             <div
               style={{
@@ -428,7 +433,7 @@ const AllProductHeader = ({
           {/* Giỏ hàng */}
           <div style={{ position: 'relative', cursor: 'pointer' }}>
             <MdOutlineShoppingCart
-              size={28}
+              size={24}
               color="white"
               onClick={() => {
                 if (!phoneNumber) {
@@ -467,26 +472,42 @@ const AllProductHeader = ({
 
           {/* Avatar hoặc Đăng nhập */}
           <div
-            style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              cursor: 'pointer',
+              marginLeft: 8,
+              marginRight: 4,
+            }}
+            // onClick={() => {
+            //   if (phoneNumber) {
+            //     navigate('/product/profile');
+            //   } else {
+            //     localStorage.setItem(
+            //       'redirectAfterLogin',
+            //       window.location.pathname
+            //     );
+            //     navigate('/login');
+            //   }
+            // }}
             onClick={() => {
-              if (phoneNumber) {
-                navigate('/product/profile');
-              } else {
-                localStorage.setItem(
-                  'redirectAfterLogin',
-                  window.location.pathname
-                );
-                navigate('/login');
-              }
+              setChatOpen(true);
             }}
           >
-            <Avatar
+            {/* <Avatar
               size={28}
               src={
                 avatarImage ||
                 'https://www.shutterstock.com/image-vector/default-avatar-profile-icon-social-260nw-1913928688.jpg'
               }
               style={{ marginRight: 5 }}
+            /> */}
+            <MessageOutlined
+              size={40}
+              style={{ color: 'white', fontSize: 20, marginBottom: 4 }}
+              // onClick={() => {
+              //   setChatOpen(true);
+              // }}
             />
           </div>
         </div>
@@ -510,6 +531,7 @@ const AllProductHeader = ({
           <span style={{ fontWeight: 'bold' }}>khuyến mãi</span>&nbsp; tại đây!
           &gt;&gt;
         </div>
+        <ChatPanelMobile open={chatOpen} onClose={() => setChatOpen(false)} />
       </div>
     );
   };

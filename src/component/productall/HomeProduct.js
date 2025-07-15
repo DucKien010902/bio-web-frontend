@@ -35,7 +35,7 @@ import AllProductContentMobile2 from './AllProductContentMobile2';
 
 const { Title, Paragraph, Text, Link } = Typography;
 
-const HomePageProduct = () => {
+const HomePageProduct = ({ chatOpen, setChatOpen }) => {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const isDesktop = useMediaQuery({ minWidth: 992 });
   const location = useLocation();
@@ -607,7 +607,7 @@ const HomePageProduct = () => {
                       display: 'flex',
                       overflowX: 'auto',
                       gap: 24,
-                      padding: '0 30px',
+                      padding: '10px 30px',
                       scrollBehavior: 'smooth',
                       scrollbarWidth: 'none',
                       msOverflowStyle: 'none',
@@ -692,6 +692,9 @@ const HomePageProduct = () => {
                               borderRadius: 8,
                               backgroundColor: '#3a7fd5',
                               fontWeight: 600,
+                            }}
+                            onClick={() => {
+                              window.open('https://genlabvn.com/', '_blank');
                             }}
                           >
                             Xem cơ sở
@@ -1026,13 +1029,14 @@ const HomePageProduct = () => {
                     {/* Link xem thêm */}
                     <Paragraph style={{ marginBottom: 0 }}>
                       <a
-                        href="#"
+                        href="http://gennovax.vn"
                         style={{
                           fontWeight: 600,
                           color: '#1c3380',
                           textDecoration: 'underline',
                           fontSize: 16,
                         }}
+                        target="_blank"
                       >
                         Xem thêm về GenApp &gt;&gt;
                       </a>
@@ -1056,7 +1060,7 @@ const HomePageProduct = () => {
   const MobileLayout = () => {
     return (
       <>
-        <AllProductHeader />
+        <AllProductHeader chatOpen={chatOpen} setChatOpen={setChatOpen} />
         <div style={{ width: '100%', backgroundColor: '#e4f5f7' }}>
           <div
             style={{
@@ -1117,7 +1121,7 @@ const HomePageProduct = () => {
                 style={{
                   // height: 360,
                   backgroundColor: 'white',
-                  marginTop: 30,
+                  marginTop: 20,
                   padding: '10px 20px',
                   display: 'flex',
                   flexDirection: 'column',
@@ -1329,7 +1333,7 @@ const HomePageProduct = () => {
                 style={{
                   // height: 540,
                   backgroundColor: 'white',
-                  marginTop: 30,
+                  marginTop: 20,
                   padding: '10px 10px',
                   display: 'flex',
                   flexDirection: 'column',
@@ -1364,6 +1368,209 @@ const HomePageProduct = () => {
                 <div style={{ flex: 5 }}>
                   <AllProductContentMobile2 />
                 </div>
+              </div>
+              <div
+                style={{
+                  width: '100%',
+                  padding: '20px 16px',
+                  backgroundColor: 'white',
+                  // borderRadius: 20,
+                  margin: '20px auto 20px',
+                  maxWidth: 600,
+                }}
+              >
+                <Title
+                  level={4}
+                  style={{
+                    textAlign: 'center',
+                    color: '#1c3380',
+                    fontSize: 20,
+                    fontWeight: 700,
+                    marginBottom: 20,
+                  }}
+                >
+                  TIN TỨC Y TẾ
+                </Title>
+
+                {/* Bài viết nổi bật */}
+                <Card
+                  style={{
+                    borderRadius: 20,
+                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+                    marginBottom: 20,
+                  }}
+                  bodyStyle={{ padding: 12 }}
+                >
+                  <img
+                    src={articles[0].image}
+                    alt="news"
+                    style={{
+                      width: '100%',
+                      height: 160,
+                      objectFit: 'cover',
+                      borderRadius: 8,
+                      marginBottom: 12,
+                    }}
+                  />
+                  <Title level={5} style={{ fontWeight: 600, fontSize: 16 }}>
+                    {articles[0].title}
+                  </Title>
+                  <div
+                    style={{
+                      height: 2,
+                      width: 40,
+                      backgroundColor: '#b33030',
+                      margin: '6px 0',
+                    }}
+                  />
+                  <Paragraph
+                    italic
+                    style={{ fontSize: 13, marginBottom: 6, color: '#444' }}
+                  >
+                    {articles[0].summary}
+                  </Paragraph>
+                  <Paragraph style={{ fontSize: 13, color: '#444' }}>
+                    {articles[0].detail}
+                  </Paragraph>
+                </Card>
+
+                {/* Danh sách bài viết khác */}
+                <div
+                  style={{ display: 'flex', flexDirection: 'column', gap: 16 }}
+                >
+                  {articles.slice(1).map((item, index) => (
+                    <Card
+                      key={index}
+                      style={{
+                        borderRadius: 20,
+                        boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                      }}
+                      bodyStyle={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        padding: 12,
+                        gap: 8,
+                      }}
+                    >
+                      {/* Hàng trên: ảnh + tiêu đề */}
+                      <div
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 12,
+                        }}
+                      >
+                        <img
+                          src={item.image}
+                          alt="news"
+                          style={{
+                            width: 90,
+                            height: 60,
+                            objectFit: 'cover',
+                            borderRadius: 8,
+                          }}
+                        />
+                        <div>
+                          <Text strong style={{ fontSize: 14 }}>
+                            {item.title}
+                          </Text>
+                          <div
+                            style={{
+                              height: 2,
+                              width: 30,
+                              backgroundColor: '#b33030',
+                              marginTop: 6,
+                            }}
+                          />
+                        </div>
+                      </div>
+
+                      {/* Hàng dưới: summary */}
+                      <Text italic style={{ fontSize: 12, color: '#444' }}>
+                        {item.summary}
+                      </Text>
+                    </Card>
+                  ))}
+                </div>
+              </div>
+
+              {/* Section giới thiệu GenApp */}
+              <div
+                style={{
+                  marginBottom: 20,
+                  padding: '20px 16px',
+                  backgroundColor: 'white',
+                  // borderRadius: 20,
+                  maxWidth: 600,
+                }}
+              >
+                {/* Ảnh ở trên, nội dung dưới */}
+                <img
+                  src="https://nld.mediacdn.vn/2020/3/23/89963885102126374520495725234434303294701568o-15849685424641174163940.jpg"
+                  alt="Doctors"
+                  style={{
+                    width: '100%',
+                    height: 180,
+                    objectFit: 'cover',
+                    borderRadius: 20,
+                    marginBottom: 16,
+                  }}
+                />
+                <Title level={4} style={{ color: '#1c3380', fontWeight: 700 }}>
+                  Về GenApp
+                </Title>
+                <Title
+                  level={5}
+                  style={{
+                    color: '#4d8dde',
+                    fontWeight: 500,
+                    marginBottom: 12,
+                  }}
+                >
+                  Nền tảng kết nối hệ thống Y Tế toàn quốc
+                </Title>
+                <Paragraph style={{ fontSize: 15 }}>
+                  Sứ mệnh của chúng tôi là giúp người Việt tiếp cận các dịch vụ
+                  Y tế{' '}
+                  <strong>
+                    nhanh chóng, tiện lợi với chất lượng dịch vụ cao nhất
+                  </strong>
+                </Paragraph>
+
+                {/* Tính năng */}
+                <Paragraph style={{ fontSize: 15 }}>
+                  <SiTicktick
+                    style={{ marginRight: 10, color: '#4d8dde', fontSize: 18 }}
+                  />
+                  Thanh toán tiện lợi ngay trên nền tảng
+                </Paragraph>
+                <Paragraph style={{ fontSize: 15 }}>
+                  <SiTicktick
+                    style={{ marginRight: 10, color: '#4d8dde', fontSize: 18 }}
+                  />
+                  Đối tác Y tế Toàn quốc (Bệnh viện, bác sĩ, nhà thuốc, ...)
+                </Paragraph>
+                <Paragraph style={{ fontSize: 15 }}>
+                  <SiTicktick
+                    style={{ marginRight: 10, color: '#4d8dde', fontSize: 18 }}
+                  />
+                  Quản lý Dữ liệu người bệnh trực tuyến
+                </Paragraph>
+
+                <Paragraph style={{ marginBottom: 0 }}>
+                  <a
+                    href="http://gennovax.vn"
+                    style={{
+                      fontWeight: 600,
+                      color: '#1c3380',
+                      textDecoration: 'underline',
+                      fontSize: 15,
+                    }}
+                    target="_blank"
+                  >
+                    Xem thêm về GenApp &gt;&gt;
+                  </a>
+                </Paragraph>
               </div>
             </div>
           </div>

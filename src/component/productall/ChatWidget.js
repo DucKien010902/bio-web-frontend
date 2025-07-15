@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Drawer, Button } from 'antd';
 import { MessageOutlined } from '@ant-design/icons';
-import ChatDrawer from './ChatDrawer';
 import ChatPanel from './ChatDrawer';
 
 const ChatWidget = () => {
@@ -21,7 +20,10 @@ const ChatWidget = () => {
           zIndex: 1000,
           boxShadow: '0 0 10px rgba(0,0,0,0.2)',
         }}
-        onClick={() => setChatOpen(true)}
+        onClick={() => {
+          setChatOpen(true);
+          console.log('kkk');
+        }}
       />
 
       <ChatPanel

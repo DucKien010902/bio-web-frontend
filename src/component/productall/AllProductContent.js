@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Layout, Menu, Checkbox, Input, Button, Divider } from 'antd';
+import { Layout, Menu, Checkbox, Input, Button, Divider, Select } from 'antd';
 import ProductDetailPage from './productdetail';
 import ShopeeProductCard from './productcard';
 import axiosClient from '../../api/apiConfig';
@@ -18,6 +18,8 @@ import { AiFillFire } from 'react-icons/ai';
 const { Sider, Content } = Layout;
 
 const AllProductContent = () => {
+  const [selectedPriceRange, setSelectedPriceRange] = useState(null);
+
   const isMobile = useMediaQuery({ maxWidth: 797 });
   const isDesktop = useMediaQuery({ minWidth: 992 });
   const [danhmuc, setDanhmuc] = useState('');
@@ -136,18 +138,6 @@ const AllProductContent = () => {
               ))}
             </Menu>
 
-            <Divider orientation="left" style={{ color: 'red' }}>
-              Thương hiệu
-            </Divider>
-            <Checkbox.Group
-              style={{ display: 'flex', flexDirection: 'column', gap: 8 }}
-            >
-              <Checkbox value="jvc">JVC (Japan Vietnam Medical)</Checkbox>
-              <Checkbox value="vinamed">VINAMED</Checkbox>
-              <Checkbox value="armephaco">Armephaco</Checkbox>
-              <Checkbox value="asmed">AS-MED</Checkbox>
-            </Checkbox.Group>
-
             <Divider style={{ marginTop: 20, color: 'red' }} orientation="left">
               Đơn vị vận chuyển
             </Divider>
@@ -160,43 +150,58 @@ const AllProductContent = () => {
             </Checkbox.Group>
 
             <Divider style={{ marginTop: 20, color: 'red' }} orientation="left">
-              Khoảng giá (.000đ)
+              Khoảng giá
             </Divider>
-            <div style={{ display: 'flex', gap: 8, marginBottom: 10 }}>
-              <Input
-                placeholder="TỪ"
-                value={inputMinPrice}
-                onChange={(e) => setInputMinPrice(e.target.value)}
-              />
-              <Input
-                placeholder="ĐẾN"
-                value={inputMaxPrice}
-                onChange={(e) => setInputMaxPrice(e.target.value)}
-              />
-            </div>
-            <Button
-              type="primary"
-              block
-              onClick={() => {
-                const min = parseFloat(inputMinPrice) || 0;
-                const max = parseFloat(inputMaxPrice) || Infinity;
+            <Select
+              style={{ width: '100%', marginBottom: 10 }}
+              placeholder="Chọn khoảng giá"
+              onChange={(value) => {
+                setSelectedPriceRange(value);
 
-                setMinPrice(min);
-                setMaxPrice(max);
+                let min = 0;
+                let max = Infinity;
+
+                switch (value) {
+                  case '0-200k':
+                    min = 0;
+                    max = 200;
+                    break;
+                  case '200k-500k':
+                    min = 200;
+                    max = 500;
+                    break;
+                  case '500k-1m':
+                    min = 500;
+                    max = 1000;
+                    break;
+                  case '1m+':
+                    min = 1000;
+                    max = Infinity;
+                    break;
+                  default:
+                    break;
+                }
 
                 const filtered = allproducts.filter((p) => {
-                  const price = parseFloat(
-                    p.pdPrice * (1 - p.pdVouncher / 100)
-                  );
+                  const price = p.pdPrice * (1 - p.pdVouncher / 100);
                   return price >= min && price <= max;
                 });
 
                 setProducts(filtered);
                 setSelectedProduct(null);
               }}
+              value={selectedPriceRange}
+              allowClear
             >
-              Áp dụng
-            </Button>
+              <Select.Option value="0-200k">0 - 200.000đ</Select.Option>
+              <Select.Option value="200k-500k">
+                200.000 - 500.000đ
+              </Select.Option>
+              <Select.Option value="500k-1m">
+                500.000 - 1.000.000đ
+              </Select.Option>
+              <Select.Option value="1m+">Trên 1.000.000đ</Select.Option>
+            </Select>
           </Sider>
 
           <Content style={{ padding: '40px', background: '#f5f5f5' }}>

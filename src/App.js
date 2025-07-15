@@ -25,34 +25,22 @@ import CheckoutPage from './component/productall/productinvoice';
 import ProductDetailPage from './component/productall/productdetail';
 import ShopLayout from './component/shop/shopHome';
 import ShopProfile from './component/productall/shopInfo';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import HomePageProduct from './component/productall/HomeProduct';
 import ChatWidget from './component/productall/ChatWidget';
 import ChatWidgetAI from './component/productall/ChatWidgetAI';
-const LayoutWrapper = ({ children }) => {
-  const isMobile = useMediaQuery({ maxWidth: 767 });
-  const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 991 });
-  const isDesktop = useMediaQuery({ minWidth: 992 });
-  const MobileLayout = () => {
-    return <div>{children}</div>;
-  };
-  const DesktopLayout = () => {
-    return <div>{children}</div>;
-  };
-  return (
-    <div>
-      {isMobile && <MobileLayout />}
-      {/* {isTablet && <TabletLayout />} */}
-      {isDesktop && <DesktopLayout />}
-    </div>
-  );
-};
+import BottomTabBar from './component/productall/BottomTab';
+
 const ScrollToTop = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    // KHÔNG cuộn nếu là về trang chủ "/"
+    if (pathname === '/') return;
+
+    const scrollTarget = document.scrollingElement || document.documentElement;
+    scrollTarget.scrollTo({ top: 0, behavior: 'smooth' });
   }, [pathname]);
 
   return null;
@@ -72,7 +60,9 @@ function ServiceStaff() {
     </Routes>
   );
 }
-const Product = () => {
+const Product = ({ chatOpen, setChatOpen }) => {
+  const isDesktop = useMediaQuery({ minWidth: 992 });
+  const isMobile = useMediaQuery({ maxWidth: 797 });
   return (
     <>
       {/* <AllProductHeader/> */}
@@ -82,11 +72,14 @@ const Product = () => {
         <Route path="cart" element={<CartPage />} />
         <Route path="profile" element={<ShopeeProfile />} />
         <Route path="invoice" element={<CheckoutPage />} />
-        <Route path="detail" element={<ProductDetailPage />} />
-        {/* <Route path="shopInfo" element={<ShopProfile />} /> */}
+        <Route
+          path="detail"
+          element={
+            <ProductDetailPage chatOpen={chatOpen} setChatOpen={setChatOpen} />
+          }
+        />
       </Routes>
-      <ChatWidget />
-      {/* <AllProductFooter/> */}
+      {isDesktop && <ChatWidget />}
     </>
   );
 };
@@ -109,37 +102,47 @@ function MainApp() {
   );
 }
 function App() {
+  const [chatOpen, setChatOpen] = useState(false);
   const location = useLocation();
   const { pathname } = location;
 
   // Kiểm tra các path cần hiển thị chat
+  const isDesktop = useMediaQuery({ minWidth: 992 });
+  const isMobile = useMediaQuery({ maxWidth: 797 });
   const shouldShowChat =
-    pathname === '/' ||
-    pathname.startsWith('/product') ||
-    pathname === '/shopInfo';
-  const shouldShowChatAI = pathname === '/mainbio';
-
+    (pathname === '/' && isDesktop) ||
+    (pathname.startsWith('/product') && isDesktop) ||
+    (pathname === '/shopInfo' && isDesktop);
+  const shouldShowChatAI = pathname === '/mainbio' && isDesktop;
   return (
-    <>
-      <LayoutWrapper>
-        <ScrollToTop />
-        {shouldShowChat && <ChatWidget />}
-        {shouldShowChatAI && <ChatWidgetAI />}
-        <Routes>
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/quan-tri-vien/*" element={<Admin />} />
-          <Route path="/dieu-phoi-vien/*" element={<ClinicLayout />} />
-          <Route path="/tu-van-vien/*" element={<ServiceStaff />} />
-          <Route path="/product/*" element={<Product />} />
-          <Route path="/shopInfo" element={<ShopProfile />} />
-          <Route path="/shop/*" element={<ShopLayout />} />
-          <Route path="/error" element={<Error />} />
-          <Route path="/*" element={<HomePageProduct />} />
-          <Route path="/mainbio*" element={<MainApp />} />
-        </Routes>
-      </LayoutWrapper>
-    </>
+    <div className="app-wrapper">
+      <ScrollToTop />
+      {shouldShowChat && <ChatWidget />}
+      {shouldShowChatAI && <ChatWidgetAI />}
+
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/quan-tri-vien/*" element={<Admin />} />
+        <Route path="/dieu-phoi-vien/*" element={<ClinicLayout />} />
+        <Route path="/tu-van-vien/*" element={<ServiceStaff />} />
+        <Route
+          path="/product/*"
+          element={<Product chatOpen={chatOpen} setChatOpen={setChatOpen} />}
+        />
+        <Route path="/shopInfo" element={<ShopProfile />} />
+        <Route path="/shop/*" element={<ShopLayout />} />
+        <Route path="/error" element={<Error />} />
+        <Route
+          path="/*"
+          element={
+            <HomePageProduct chatOpen={chatOpen} setChatOpen={setChatOpen} />
+          }
+        />
+        <Route path="/mainbio*" element={<MainApp />} />
+      </Routes>
+      {!chatOpen && isMobile && <BottomTabBar />}
+    </div>
   );
 }
 

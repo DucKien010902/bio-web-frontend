@@ -1,4 +1,4 @@
-import React, { use } from 'react';
+import React from 'react';
 import {
   Form,
   Input,
@@ -10,15 +10,22 @@ import {
   Avatar,
 } from 'antd';
 import { UserOutlined, UploadOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom'; // thêm dòng này
 
 const { Title } = Typography;
 
 const ProfileContent = () => {
   const [form] = Form.useForm();
+  const navigate = useNavigate(); // khởi tạo hook điều hướng
   const user = JSON.parse(localStorage.getItem('user'));
-  console.log(user);
+
   const onFinish = (values) => {
     console.log('Form submitted:', values);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('user'); // xoá thông tin đăng nhập
+    navigate('/login'); // điều hướng về trang đăng nhập
   };
 
   return (
@@ -30,10 +37,10 @@ const ProfileContent = () => {
         layout="vertical"
         onFinish={onFinish}
         initialValues={{
-          phoneNumber: user.phoneNumber,
-          name: user.fullName,
-          email: user.email,
-          address: user.address,
+          phoneNumber: user?.phoneNumber,
+          name: user?.fullName,
+          email: user?.email,
+          address: user?.address,
           gender: 'male',
           birthday: null,
         }}
@@ -44,7 +51,7 @@ const ProfileContent = () => {
         <Form.Item label="Tên" name="name">
           <Input />
         </Form.Item>
-        <Form.Item label="email" name="email">
+        <Form.Item label="Email" name="email">
           <Input />
         </Form.Item>
         <Form.Item label="Địa chỉ" name="address">
@@ -63,6 +70,11 @@ const ProfileContent = () => {
         <Form.Item>
           <Button type="primary" htmlType="submit">
             Lưu
+          </Button>
+        </Form.Item>
+        <Form.Item>
+          <Button danger onClick={handleLogout}>
+            Đăng xuất
           </Button>
         </Form.Item>
       </Form>
