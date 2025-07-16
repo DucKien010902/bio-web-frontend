@@ -37,14 +37,18 @@ import { useMediaQuery } from 'react-responsive';
 import ChatPanel from './ChatDrawer';
 import ScrollToTopButton from './scrollToTop';
 import ChatPanelMobile from './ChatDrawerMobile';
+import { useDispatch, useSelector } from 'react-redux';
+import { openChatPanel, closeChatPanel } from '../../redux/slices/chatSlice';
 
 dayjs.extend(relativeTime);
 dayjs.locale('vi');
 const { Title, Text } = Typography;
 
-const ProductDetailPage = ({ chatOpen, setChatOpen }) => {
+const ProductDetailPage = () => {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const isDesktop = useMediaQuery({ minWidth: 992 });
+  const dispatch = useDispatch();
+  const chatOpen = useSelector((state) => state.chat.openChat);
   const location = useLocation();
   const productState = location.state;
   const [searchParams] = useSearchParams();
@@ -55,7 +59,6 @@ const ProductDetailPage = ({ chatOpen, setChatOpen }) => {
   const [shopInfo, setShopInfo] = useState(null);
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(100); // ví dụ ban đầu
-  // const [chatOpen, setChatOpen] = useState(false);
   const phoneNumber = JSON.parse(localStorage.getItem('user'))?.phoneNumber;
   const [selectedType, setSelectedType] = useState(null);
   const handleAddtoCart = async () => {
@@ -487,7 +490,7 @@ const ProductDetailPage = ({ chatOpen, setChatOpen }) => {
                             borderRadius: 4,
                             cursor: 'pointer',
                           }}
-                          onClick={() => setChatOpen(true)}
+                          onClick={() => dispatch(openChatPanel())}
                         >
                           Chat Ngay
                         </div>
@@ -717,7 +720,7 @@ const ProductDetailPage = ({ chatOpen, setChatOpen }) => {
           <div style={{ height: 20, backgroundColor: '#f7f7f2' }}></div>
           <ChatPanel
             open={chatOpen}
-            onClose={() => setChatOpen(false)}
+            onClose={() => dispatch(closeChatPanel())}
             shopInfo={shopInfo}
           />
           <ScrollToTopButton />
@@ -1051,7 +1054,7 @@ const ProductDetailPage = ({ chatOpen, setChatOpen }) => {
                 <Button
                   size="small"
                   type="primary"
-                  onClick={() => setChatOpen(true)}
+                  onClick={() => dispatch(openChatPanel())}
                   style={{ marginBottom: 4 }}
                 >
                   Chat
@@ -1164,7 +1167,7 @@ const ProductDetailPage = ({ chatOpen, setChatOpen }) => {
           <div style={{ height: 20, backgroundColor: '#f7f7f2' }}></div>
           <ChatPanelMobile
             open={chatOpen}
-            onClose={() => setChatOpen(false)}
+            onClose={() => dispatch(closeChatPanel())}
             shopInfo={shopInfo}
           />
         </div>

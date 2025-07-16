@@ -31,7 +31,7 @@ import HomePageProduct from './component/productall/HomeProduct';
 import ChatWidget from './component/productall/ChatWidget';
 import ChatWidgetAI from './component/productall/ChatWidgetAI';
 import BottomTabBar from './component/productall/BottomTab';
-
+import { useSelector } from 'react-redux';
 const ScrollToTop = () => {
   const { pathname } = useLocation();
 
@@ -102,7 +102,7 @@ function MainApp() {
   );
 }
 function App() {
-  const [chatOpen, setChatOpen] = useState(false);
+  const chatOpen = useSelector((state) => state.chat.openChat);
   const location = useLocation();
   const { pathname } = location;
 
@@ -126,19 +126,11 @@ function App() {
         <Route path="/quan-tri-vien/*" element={<Admin />} />
         <Route path="/dieu-phoi-vien/*" element={<ClinicLayout />} />
         <Route path="/tu-van-vien/*" element={<ServiceStaff />} />
-        <Route
-          path="/product/*"
-          element={<Product chatOpen={chatOpen} setChatOpen={setChatOpen} />}
-        />
+        <Route path="/product/*" element={<Product />} />
         <Route path="/shopInfo" element={<ShopProfile />} />
         <Route path="/shop/*" element={<ShopLayout />} />
         <Route path="/error" element={<Error />} />
-        <Route
-          path="/*"
-          element={
-            <HomePageProduct chatOpen={chatOpen} setChatOpen={setChatOpen} />
-          }
-        />
+        <Route path="/*" element={<HomePageProduct />} />
         <Route path="/mainbio*" element={<MainApp />} />
       </Routes>
       {!chatOpen && isMobile && <BottomTabBar />}

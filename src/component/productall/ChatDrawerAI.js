@@ -12,8 +12,8 @@ const ChatDrawerAI = ({ open, onClose }) => {
   const askQuestion1 = async (question) => {
     try {
       const response = await fetch(
-        // 'https://rationally-pleased-antelope.ngrok-free.app/webhook/ai-train-GPT',
-        'https://rationally-pleased-antelope.ngrok-free.app/webhook/dangbaigenlab',
+        'https://rationally-pleased-antelope.ngrok-free.app/webhook/ai-train-GPT',
+        // 'https://rationally-pleased-antelope.ngrok-free.app/webhook/dangbaigenlab',
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },

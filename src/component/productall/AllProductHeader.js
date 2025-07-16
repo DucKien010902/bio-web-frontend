@@ -19,6 +19,8 @@ import axiosClient from '../../api/apiConfig';
 import { useMediaQuery } from 'react-responsive';
 import ChatPanel from './ChatDrawer';
 import ChatPanelMobile from './ChatDrawerMobile';
+import { useSelector, useDispatch } from 'react-redux';
+import { openChatPanel, closeChatPanel } from '../../redux/slices/chatSlice';
 
 const AllProductHeader = ({
   handleSearch,
@@ -26,12 +28,12 @@ const AllProductHeader = ({
   allproducts,
   setSelectedProduct,
   setCurrentPage,
-  chatOpen,
-  setChatOpen, // Thêm props số lượng sản phẩm
 }) => {
+  const dispatch = useDispatch();
+  const chatOpen = useSelector((state) => state.chat.openChat);
+  console.log('====' + chatOpen);
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const isDesktop = useMediaQuery({ minWidth: 992 });
-  // const [chatOpen, setChatOpen] = useState(false);
   const navigate = useNavigate();
   const phoneNumber = JSON.parse(localStorage.getItem('user'))?.phoneNumber;
   const fullName =
@@ -491,7 +493,7 @@ const AllProductHeader = ({
             //   }
             // }}
             onClick={() => {
-              setChatOpen(true);
+              dispatch(openChatPanel());
             }}
           >
             {/* <Avatar
@@ -531,7 +533,10 @@ const AllProductHeader = ({
           <span style={{ fontWeight: 'bold' }}>khuyến mãi</span>&nbsp; tại đây!
           &gt;&gt;
         </div>
-        <ChatPanelMobile open={chatOpen} onClose={() => setChatOpen(false)} />
+        <ChatPanelMobile
+          open={chatOpen}
+          onClose={() => dispatch(closeChatPanel())}
+        />
       </div>
     );
   };

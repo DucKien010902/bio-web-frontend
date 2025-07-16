@@ -35,7 +35,7 @@ import AllProductContentMobile2 from './AllProductContentMobile2';
 
 const { Title, Paragraph, Text, Link } = Typography;
 
-const HomePageProduct = ({ chatOpen, setChatOpen }) => {
+const HomePageProduct = () => {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const isDesktop = useMediaQuery({ minWidth: 992 });
   const location = useLocation();
@@ -1060,7 +1060,7 @@ const HomePageProduct = ({ chatOpen, setChatOpen }) => {
   const MobileLayout = () => {
     return (
       <>
-        <AllProductHeader chatOpen={chatOpen} setChatOpen={setChatOpen} />
+        <AllProductHeader />
         <div style={{ width: '100%', backgroundColor: '#e4f5f7' }}>
           <div
             style={{

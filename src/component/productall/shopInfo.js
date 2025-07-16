@@ -30,6 +30,10 @@ import { useMediaQuery } from 'react-responsive';
 import { ImOffice } from 'react-icons/im';
 import { StarFilled } from '@ant-design/icons';
 import FooterSection from './AllProductFooter';
+import ChatPanelMobile from './ChatDrawerMobile';
+import { useSelector, useDispatch } from 'react-redux';
+import { openChatPanel, closeChatPanel } from '../../redux/slices/chatSlice';
+
 const { Title } = Typography;
 
 const { Text } = Typography;
@@ -37,13 +41,14 @@ const { Text } = Typography;
 const ShopProfile = () => {
   const isMobile = useMediaQuery({ maxWidth: 797 });
   const isDesktop = useMediaQuery({ minWidth: 992 });
+  const chatOpen = useSelector((state) => state.chat.openChat);
+  const dispatch = useDispatch();
   const shopProductRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
   const shopInfo = location.state;
   const [tabs, setTabs] = useState([]);
   const [activeTab, setActiveTab] = useState(0);
-  const [chatOpen, setChatOpen] = useState(false);
   const category = shopInfo.productCategories.map((item) => item.categoryName);
   useEffect(() => {
     setTabs(['Dạo', 'Sản phẩm', ...category]);
@@ -183,7 +188,7 @@ const ShopProfile = () => {
                             fontWeight: 500,
                           }}
                           // onClick={() => navigate('/product/shopInfo')}
-                          onClick={() => setChatOpen(true)}
+                          onClick={() => dispatch(openChatPanel())}
                         >
                           Tin nhắn
                         </div>
@@ -406,7 +411,10 @@ const ShopProfile = () => {
 
           {/* <Row style={{ height: 100, }}></Row> */}
         </div>
-        <ChatDrawer open={chatOpen} onClose={() => setChatOpen(false)} />
+        <ChatDrawer
+          open={chatOpen}
+          onClose={() => dispatch(closeChatPanel())}
+        />
         <FooterSection />
       </>
     );
@@ -585,7 +593,7 @@ const ShopProfile = () => {
                           fontWeight: 500,
                           fontSize: 13,
                         }}
-                        onClick={() => setChatOpen(true)}
+                        onClick={() => dispatch(openChatPanel())}
                       >
                         Chat
                       </div>
@@ -714,7 +722,10 @@ const ShopProfile = () => {
           {/* <Row style={{ height: 100, }}></Row> */}
         </div>
         <FooterSection />
-        <ChatDrawer open={chatOpen} onClose={() => setChatOpen(false)} />
+        <ChatPanelMobile
+          open={chatOpen}
+          onClose={() => dispatch(closeChatPanel())}
+        />
       </>
     );
   };
