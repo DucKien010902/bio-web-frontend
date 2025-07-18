@@ -185,11 +185,17 @@ const BookingPage = () => {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const datas1 = localStorage.getItem('allclinics');
-        const datas2 = localStorage.getItem('alltests');
+        const res1 = await axiosClient.get('/clinic/fetchall');
+        const res2 = await axiosClient.get('/testservice/fetchall');
+
+        // const datas1 = localStorage.getItem('allclinics');
+        // const datas2 = localStorage.getItem('alltests');
+        const datas1 = res1.data;
+        const datas2 = res2.data;
+        console.log(datas1, datas2);
         if (datas1 && datas2) {
-          const parsed1 = JSON.parse(datas1);
-          const parsed2 = JSON.parse(datas2);
+          const parsed1 = datas1;
+          const parsed2 = datas2;
           setAllclinics(parsed1);
 
           const groupedServices = parsed2.map((testType) => ({

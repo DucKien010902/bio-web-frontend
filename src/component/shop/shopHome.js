@@ -134,31 +134,46 @@ const ShopLayout = () => {
         </Menu>
       </Sider>
       <Layout>
-        <Header style={{ background: '#fff', padding: 0 }}>
-          <h1
+        <Header
+          style={{ background: '#fff', padding: 0, position: 'relative' }}
+        >
+          <div
             style={{
-              margin: '0 16px',
-              color: '#1890ff',
-              fontFamily: 'cursive',
-              fontSize: 40,
-              textAlign: 'center',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '100%',
+              position: 'relative',
             }}
           >
-            {shopInfo.shopName}
+            <h1
+              style={{
+                margin: 0,
+                color: '#1890ff',
+                fontFamily: 'cursive',
+                fontSize: 40,
+                lineHeight: '64px',
+              }}
+            >
+              {shopInfo.shopName}
+            </h1>
+
             <LogoutOutlined
               style={{
-                fontSize: 30,
+                fontSize: 28,
                 fontWeight: 700,
                 color: '#ff4d4f',
-                position: 'fixed',
-                right: 50,
-                top: 20,
+                position: 'absolute',
+                right: 30,
+                top: '50%',
+                transform: 'translateY(-50%)',
                 cursor: 'pointer',
               }}
               onClick={handleLogout}
             />
-          </h1>
+          </div>
         </Header>
+
         <Content style={{ margin: '16px', padding: 24, background: '#fff' }}>
           {renderContent()}
         </Content>

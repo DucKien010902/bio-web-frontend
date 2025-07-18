@@ -67,17 +67,29 @@ const LoginPage = () => {
 
         setConfirmResult(confirmation);
         setStep('otp');
+        sessionStorage.setItem('tempUser', JSON.stringify(user));
         message.success('Đã gửi mã OTP');
       } else {
-        if (user.role === 'advisor') navigate('/tu-van-vien');
-        else if (user.role === 'coordinator') navigate('/dieu-phoi-vien');
-        else if (user.role === 'shop') {
-          navigate('/shop');
-        } else navigate('/quan-tri-vien');
+        // 👉 Lưu thông tin user vào localStorage
+        localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('phoneNumber', user.phoneNumber);
+
+        // 👉 Điều hướng theo vai trò
+        switch (user.role) {
+          case 'advisor':
+            navigate('/tu-van-vien');
+            break;
+          case 'coordinator':
+            navigate('/dieu-phoi-vien');
+            break;
+          case 'shop':
+            navigate('/shop');
+            break;
+          default:
+            navigate('/quan-tri-vien');
+            break;
+        }
       }
-      localStorage.setItem('user', JSON.stringify(user));
-      localStorage.setItem('phoneNumber', phoneNumber);
-      localStorage.removeItem('redirectAfterLogin');
     } catch (error) {
       console.error('Login error:', error);
       if (error.response) {
@@ -95,6 +107,13 @@ const LoginPage = () => {
     try {
       await confirmResult.confirm(otp);
       message.success('Xác thực thành công');
+      const tempUser = JSON.parse(sessionStorage.getItem('tempUser'));
+      if (!tempUser) return message.error('Không tìm thấy người dùng tạm thời');
+
+      localStorage.setItem('user', JSON.stringify(tempUser));
+      localStorage.setItem('phoneNumber', tempUser.phoneNumber);
+      sessionStorage.removeItem('tempUser');
+
       navigate(redirectPath);
     } catch (error) {
       console.error('OTP error:', error);

@@ -98,29 +98,33 @@ const ProductDetailPage = () => {
     }
   };
   const handleOrder = async () => {
-    if (!selectedType) {
-      message.warning('Vui lòng chọn loại sản phẩm');
+    if (!phoneNumber) {
+      navigate('/login');
     } else {
-      navigate('/product/invoice', {
-        state: [
-          {
-            Id: product.Id,
-            productName: product.pdName,
-            productShopID: product.pdShopID,
-            productShopName: product.pdShopName,
+      if (!selectedType) {
+        message.warning('Vui lòng chọn loại sản phẩm');
+      } else {
+        navigate('/product/invoice', {
+          state: [
+            {
+              Id: product.Id,
+              productName: product.pdName,
+              productShopID: product.pdShopID,
+              productShopName: product.pdShopName,
 
-            image: product.pdImage,
-            category: selectedType,
-            productPrice: product.pdPrice,
-            price:
-              Math.floor(product.pdPrice * (1 - product.pdVouncher / 100)) +
-              '.000',
-            originalPrice: product.pdPrice + '.000',
-            quantify: counts,
-            vouncher: product.pdVouncher,
-          },
-        ],
-      });
+              image: product.pdImage,
+              category: selectedType,
+              productPrice: product.pdPrice,
+              price:
+                Math.floor(product.pdPrice * (1 - product.pdVouncher / 100)) +
+                '.000',
+              originalPrice: product.pdPrice + '.000',
+              quantify: counts,
+              vouncher: product.pdVouncher,
+            },
+          ],
+        });
+      }
     }
   };
 
@@ -490,7 +494,11 @@ const ProductDetailPage = () => {
                             borderRadius: 4,
                             cursor: 'pointer',
                           }}
-                          onClick={() => dispatch(openChatPanel())}
+                          onClick={() => {
+                            if (phoneNumber) {
+                              dispatch(openChatPanel());
+                            }
+                          }}
                         >
                           Chat Ngay
                         </div>

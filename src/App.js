@@ -32,6 +32,8 @@ import ChatWidget from './component/productall/ChatWidget';
 import ChatWidgetAI from './component/productall/ChatWidgetAI';
 import BottomTabBar from './component/productall/BottomTab';
 import { useSelector } from 'react-redux';
+import LiveStreamLayOut from './component/productall/LiveStream';
+import NotificationLayOut from './component/productall/NotificationLayOut';
 const ScrollToTop = () => {
   const { pathname } = useLocation();
 
@@ -131,6 +133,8 @@ function App() {
         <Route path="/shop/*" element={<ShopLayout />} />
         <Route path="/error" element={<Error />} />
         <Route path="/*" element={<HomePageProduct />} />
+        <Route path="/livestream*" element={<LiveStreamLayOut />} />
+        <Route path="/notification*" element={<NotificationLayOut />} />
         <Route path="/mainbio*" element={<MainApp />} />
       </Routes>
       {!chatOpen && isMobile && <BottomTabBar />}

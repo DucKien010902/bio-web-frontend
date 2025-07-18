@@ -21,6 +21,8 @@ import ChatPanel from './ChatDrawer';
 import ChatPanelMobile from './ChatDrawerMobile';
 import { useSelector, useDispatch } from 'react-redux';
 import { openChatPanel, closeChatPanel } from '../../redux/slices/chatSlice';
+import AnimatedSearch from './InputSearch';
+import AnimatedSearchMobile from './InputSearchMobile';
 
 const AllProductHeader = ({
   handleSearch,
@@ -31,7 +33,6 @@ const AllProductHeader = ({
 }) => {
   const dispatch = useDispatch();
   const chatOpen = useSelector((state) => state.chat.openChat);
-  console.log('====' + chatOpen);
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const isDesktop = useMediaQuery({ minWidth: 992 });
   const navigate = useNavigate();
@@ -237,13 +238,7 @@ const AllProductHeader = ({
           </div>
 
           {/* Thanh tìm kiếm */}
-          <Input.Search
-            placeholder="Tìm kiếm"
-            enterButton={<SearchOutlined />}
-            style={{ flex: 10, border: 'none' }}
-            size="large"
-            onChange={handleSearch}
-          />
+          <AnimatedSearch />
 
           {/* Icon giỏ hàng + badge */}
           <div
@@ -421,16 +416,7 @@ const AllProductHeader = ({
           }}
         >
           {/* Ô tìm kiếm */}
-          <Input
-            placeholder="Tìm kiếm"
-            prefix={<SearchOutlined />}
-            style={{
-              flex: 1,
-              borderRadius: 20,
-              backgroundColor: 'white',
-            }}
-            onChange={handleSearch}
-          />
+          <AnimatedSearchMobile />
 
           {/* Giỏ hàng */}
           <div style={{ position: 'relative', cursor: 'pointer' }}>

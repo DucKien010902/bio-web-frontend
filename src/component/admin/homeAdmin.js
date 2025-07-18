@@ -16,6 +16,7 @@ import { useNavigate } from 'react-router-dom';
 import CoordinatorsList from './coordinators';
 import ShopManagementPage from './admin-allshop';
 import CategoryManager from './admin-category';
+import AdminApproveSuggestions from './admin-approve';
 const { Header, Sider, Content } = Layout;
 
 const Dashboard = () => <h2>Trang chính</h2>;
@@ -39,6 +40,8 @@ const AdminLayout = () => {
         return <CategoryManager />;
       case 'coordinator':
         return <CoordinatorsList />;
+      case 'approve':
+        return <AdminApproveSuggestions />;
       default:
         return <Dashboard />;
     }
@@ -76,6 +79,9 @@ const AdminLayout = () => {
           </Menu.Item>
           <Menu.Item key="categories" icon={<GiShop />}>
             Quản lý danh mục hệ thống
+          </Menu.Item>
+          <Menu.Item key="approve" icon={<GiShop />}>
+            Phê duyệt
           </Menu.Item>
         </Menu>
       </Sider>

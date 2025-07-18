@@ -12,9 +12,9 @@ const tabItems = [
   {
     label: 'Live & Video',
     icon: <VideoCameraOutlined />,
-    path: '/product/live',
+    path: '/livestream',
   },
-  { label: 'Thông báo', icon: <BellOutlined />, path: '/product/notification' },
+  { label: 'Thông báo', icon: <BellOutlined />, path: '/notification' },
   { label: 'Tài khoản', icon: <UserOutlined />, path: '/product/profile' },
 ];
 

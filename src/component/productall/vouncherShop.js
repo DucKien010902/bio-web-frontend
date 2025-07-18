@@ -11,35 +11,37 @@ const VoucherCard = ({ data }) => {
   const formattedMaxDiscount = `₫${data.maxDiscount.toLocaleString()}k`;
   const formattedQuantity = `x${quantity}`;
   const formattedExpiry = dayjs(data.expiry).format('DD.MM.YYYY');
-  const phoneNumber = JSON.parse(localStorage.getItem('user')).phoneNumber;
+  const phoneNumber = JSON.parse(localStorage.getItem('user'))?.phoneNumber;
   const onSaveVoucher = async () => {
-    try {
-      const res = await axiosClient.post('/voucher/saveUserVoucher', {
-        phoneNumber: phoneNumber,
-        shopID: data.shopID,
-        voucherID: data.voucherID,
-        shopName: data.shopName,
-        discount: data.discount,
-        minOrder: data.minOrder,
-        maxDiscount: data.maxDiscount,
-        expiry: data.expiry,
-      });
+    if (phoneNumber) {
+      try {
+        const res = await axiosClient.post('/voucher/saveUserVoucher', {
+          phoneNumber: phoneNumber,
+          shopID: data.shopID,
+          voucherID: data.voucherID,
+          shopName: data.shopName,
+          discount: data.discount,
+          minOrder: data.minOrder,
+          maxDiscount: data.maxDiscount,
+          expiry: data.expiry,
+        });
 
-      message.success('Đã lưu voucher thành công');
-      setQuantity(res.data.remainingQuantity);
-    } catch (error) {
-      if (error.response) {
-        const { status, data } = error.response;
+        message.success('Đã lưu voucher thành công');
+        setQuantity(res.data.remainingQuantity);
+      } catch (error) {
+        if (error.response) {
+          const { status, data } = error.response;
 
-        if (status === 400) {
-          message.warning(data.message || 'Yêu cầu không hợp lệ');
-        } else if (status === 500) {
-          message.error('Lỗi máy chủ, vui lòng thử lại sau');
+          if (status === 400) {
+            message.warning(data.message || 'Yêu cầu không hợp lệ');
+          } else if (status === 500) {
+            message.error('Lỗi máy chủ, vui lòng thử lại sau');
+          } else {
+            message.error('Có lỗi xảy ra, vui lòng thử lại');
+          }
         } else {
-          message.error('Có lỗi xảy ra, vui lòng thử lại');
+          message.error('Không thể kết nối đến server');
         }
-      } else {
-        message.error('Không thể kết nối đến server');
       }
     }
   };

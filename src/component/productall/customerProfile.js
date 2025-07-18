@@ -176,7 +176,7 @@ const ShopeeProfile = () => {
               }}
             >
               {/* <GrNotification size={20} /> */}
-              <div style={{ fontSize: 12 }}>Thông báo</div>
+              <div style={{ fontSize: 12 }}>Tiện ích</div>
             </div>
             <div
               onClick={() => setSelectedKey('4')}

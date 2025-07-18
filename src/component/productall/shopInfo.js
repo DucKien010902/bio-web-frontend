@@ -49,11 +49,22 @@ const ShopProfile = () => {
   const shopInfo = location.state;
   const [tabs, setTabs] = useState([]);
   const [activeTab, setActiveTab] = useState(0);
+  const user = JSON.parse(localStorage.getItem('user'));
   const category = shopInfo.productCategories.map((item) => item.categoryName);
   useEffect(() => {
     setTabs(['Dạo', 'Sản phẩm', ...category]);
   }, []);
+
   const DesktopLayout = () => {
+    useEffect(() => {
+      if (activeTab > 0 && shopProductRef.current) {
+        const timer = setTimeout(() => {
+          shopProductRef.current.scrollIntoView({ behavior: 'smooth' });
+        }, 100); // Delay nhỏ đảm bảo DOM render xong
+        return () => clearTimeout(timer);
+      }
+    }, [activeTab]);
+
     return (
       <>
         <AllProductHeader />
@@ -188,7 +199,11 @@ const ShopProfile = () => {
                             fontWeight: 500,
                           }}
                           // onClick={() => navigate('/product/shopInfo')}
-                          onClick={() => dispatch(openChatPanel())}
+                          onClick={() => {
+                            if (user) {
+                              dispatch(openChatPanel());
+                            }
+                          }}
                         >
                           Tin nhắn
                         </div>
@@ -322,13 +337,6 @@ const ShopProfile = () => {
                     }}
                     onClick={() => {
                       setActiveTab(index);
-                      if (index > 0 && shopProductRef.current) {
-                        setTimeout(() => {
-                          shopProductRef.current.scrollIntoView({
-                            behavior: 'smooth',
-                          });
-                        }, 100); // Delay nhỏ để đảm bảo DOM sẵn sàng
-                      }
                     }}
                   >
                     <span

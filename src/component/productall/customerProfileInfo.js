@@ -72,11 +72,6 @@ const ProfileContent = () => {
             Lưu
           </Button>
         </Form.Item>
-        <Form.Item>
-          <Button danger onClick={handleLogout}>
-            Đăng xuất
-          </Button>
-        </Form.Item>
       </Form>
     </div>
   );

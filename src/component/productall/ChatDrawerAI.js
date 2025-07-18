@@ -1,7 +1,7 @@
 // src/components/ChatDrawerAI.jsx
 import React, { useState, useEffect, useRef } from 'react';
 import { Drawer, Input, Button } from 'antd';
-import './ChatDrawerAI.css'; // 👈 Thêm file CSS riêng
+import './ChatDrawerAI.css'; // 👈 Thêm file CSS riêng nếu có
 
 const ChatDrawerAI = ({ open, onClose }) => {
   const [newMsg, setNewMsg] = useState('');
@@ -12,8 +12,8 @@ const ChatDrawerAI = ({ open, onClose }) => {
   const askQuestion1 = async (question) => {
     try {
       const response = await fetch(
-        'https://rationally-pleased-antelope.ngrok-free.app/webhook/ai-train-GPT',
-        // 'https://rationally-pleased-antelope.ngrok-free.app/webhook/dangbaigenlab',
+        // 'https://rationally-pleased-antelope.ngrok-free.app/webhook/ai-train-GPT',
+        'https://rationally-pleased-antelope.ngrok-free.app/webhook/ai-blog',
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -64,6 +64,57 @@ const ChatDrawerAI = ({ open, onClose }) => {
     }
   }, [messages, loading]);
 
+  const renderLine = (line, index) => {
+    // Regex cho markdown link dạng: [text](url)
+    const markdownLinkRegex =
+      /\[([^\]]+)\]\((https:\/\/genapp\.vn\/mainbio\/dat-lich-xet-nghiem)\)/g;
+
+    const parts = [];
+    let lastIndex = 0;
+    let match;
+
+    while ((match = markdownLinkRegex.exec(line)) !== null) {
+      const [fullMatch, text, url] = match;
+      const start = match.index;
+
+      // Thêm đoạn trước link
+      if (start > lastIndex) {
+        parts.push(
+          <span key={`${index}-text-${start}`}>
+            {line.slice(lastIndex, start)}
+          </span>
+        );
+      }
+
+      // Thêm thẻ <a>
+      parts.push(
+        <a
+          key={`${index}-link-${start}`}
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            color: '#1677ff',
+            textDecoration: 'underline',
+            wordBreak: 'break-word',
+          }}
+        >
+          {text}
+        </a>
+      );
+
+      lastIndex = start + fullMatch.length;
+    }
+    if (lastIndex < line.length) {
+      parts.push(<span key={`${index}-rest`}>{line.slice(lastIndex)}</span>);
+    }
+    if (parts.length === 0) {
+      return <span key={index}>{line}</span>;
+    }
+
+    return <>{parts}</>;
+  };
+
   return (
     <Drawer
       open={open}
@@ -98,19 +149,16 @@ const ChatDrawerAI = ({ open, onClose }) => {
                 padding: '8px 12px',
                 borderRadius: 16,
                 maxWidth: '70%',
+                whiteSpace: 'pre-wrap',
               }}
             >
               {m.content.split('\n').map((line, index) => (
-                <React.Fragment key={index}>
-                  {line.replace(/\*/g, '')}
-                  <br />
-                </React.Fragment>
+                <div key={index}>{renderLine(line, index)}</div>
               ))}
             </div>
           </div>
         ))}
 
-        {/* Bubble loading AI trả lời */}
         {loading && (
           <div
             style={{

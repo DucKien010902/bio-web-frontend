@@ -52,7 +52,7 @@ const CategoryManager = () => {
 
   const deleteCategory = async (name) => {
     try {
-      await axiosClient.post('/category/delelecategory', { name });
+      await axiosClient.post('/category/deletecategory', { name });
       message.success('Đã xóa danh mục');
       fetchCategories();
     } catch {

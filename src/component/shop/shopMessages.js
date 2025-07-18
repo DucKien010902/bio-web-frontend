@@ -1,25 +1,21 @@
-// src/components/ShopChatPanel.jsx
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { List, Avatar, Input, Button, Typography } from 'antd';
 import dayjs from 'dayjs';
 import axiosClient from '../../api/apiConfig';
-import { io, Socket } from 'socket.io-client';
+import { io } from 'socket.io-client';
 
 const { Text } = Typography;
 
 const ShopChatPanel = ({ height = '100%' }) => {
-  // Thêm trên đầu
   const shopInfo = JSON.parse(localStorage.getItem('shopInfo'));
   const [newMsg, setNewMsg] = useState('');
-  const [convs, setConvs] = useState([]); // toàn bộ hội thoại (mỗi customer)
-  const [currentCusId, setCurrentCusId] = useState(null); // phoneNumber của KH đang xem
+  const [convs, setConvs] = useState([]);
+  const [currentCusId, setCurrentCusId] = useState(null);
   const scrollRef = useRef(null);
   const socketRef = useRef(null);
 
-  // Khởi tạo socket & listener
   useEffect(() => {
     socketRef.current = io(process.env.REACT_APP_API_URL);
-
     const handleBackMessage = (msg) => addIncomingMessage(msg);
     socketRef.current.on('backmessage', handleBackMessage);
 
@@ -68,55 +64,20 @@ const ShopChatPanel = ({ height = '100%' }) => {
     [currentCusId]
   );
 
-  /* ------------------------------------------------------------------ */
-  /*  STATE                                                             */
-  /* ------------------------------------------------------------------ */
-
-  /* ------------------------------------------------------------------ */
-  /*  HELPER                                                            */
-  /* ------------------------------------------------------------------ */
-  /** Lấy time của tin nhắn cuối */
   const getLastTs = (c) =>
     c.messages.length
       ? dayjs(c.messages[c.messages.length - 1].timestamp).valueOf()
       : 0;
 
-  /** Nếu KH chưa từng chat thì tạo phòng trống */
-  const ensureConvExists = useCallback(
-    (list, cusPhone, cusName = 'Khách mới', cusAvatar = '') => {
-      if (!cusPhone) return list;
-      const found = list.find((c) => c.customerId === cusPhone);
-      if (found) return list;
-
-      return [
-        {
-          customerId: cusPhone,
-          customerName: cusName,
-          avatarUrl: cusAvatar || 'https://i.pravatar.cc/60',
-          messages: [],
-          unreadCount: 0,
-        },
-        ...list,
-      ];
-    },
-    []
-  );
-
   const sortedConvs = [...convs].sort((a, b) => getLastTs(b) - getLastTs(a));
   const current = convs.find((c) => c.customerId === currentCusId);
 
-  /* ------------------------------------------------------------------ */
-  /*  API                                                               */
-  /* ------------------------------------------------------------------ */
-  /** Lấy tất cả hội thoại của shop */
   const fetchConvs = async () => {
-    console.log(shopInfo.shopID);
     if (!shopInfo?.shopID) return;
     try {
       const res = await axiosClient.get(
         `/chat/getAllMessageByShop?shopID=${shopInfo.shopID}`
       );
-      console.log(res.data);
       const data = (res.data ?? []).map((conv) => ({
         customerId: conv.members.customer?.userID,
         customerName:
@@ -127,17 +88,13 @@ const ShopChatPanel = ({ height = '100%' }) => {
         unreadCount: 0,
       }));
       setConvs(data);
-      // auto chọn hội thoại đầu tiên
       if (data.length && !currentCusId) setCurrentCusId(data[0].customerId);
     } catch (err) {
       console.error('Fetch conversations failed', err);
     }
   };
 
-  /** Gửi tin nhắn mới */
   const sendMessage = async (content) => {
-    console.log(content);
-    console.log(currentCusId, shopInfo);
     if (!currentCusId || !shopInfo) return;
 
     const payload = {
@@ -147,7 +104,6 @@ const ShopChatPanel = ({ height = '100%' }) => {
       timestamp: new Date().toISOString(),
     };
 
-    // update UI optimistically
     setConvs((prev) =>
       prev.map((c) =>
         c.customerId === currentCusId
@@ -155,8 +111,8 @@ const ShopChatPanel = ({ height = '100%' }) => {
           : c
       )
     );
+
     socketRef.current.emit('sendmessage', {
-      // ✅ ĐÚNG – dùng instance đã kết nối
       sender: {
         senderID: shopInfo.shopID,
         shopName: shopInfo.shopName,
@@ -168,6 +124,7 @@ const ShopChatPanel = ({ height = '100%' }) => {
       content,
       fromShop: true,
     });
+
     try {
       await axiosClient.post('/chat/sendmessage', {
         sender: {
@@ -183,31 +140,23 @@ const ShopChatPanel = ({ height = '100%' }) => {
       });
     } catch (err) {
       console.error('Send message error', err);
-      // rollback UI nếu cần
     }
   };
 
-  /* ------------------------------------------------------------------ */
-  /*  EFFECTS                                                           */
-  /* ------------------------------------------------------------------ */
-  // load lần đầu & khi shopInfo thay đổi
   useEffect(() => {
     fetchConvs();
   }, []);
 
-  // auto-scroll khi có tin mới
   useEffect(() => {
+    // Auto-scroll to bottom on message change
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [current?.messages]);
 
-  /* ------------------------------------------------------------------ */
-  /*  RENDER                                                            */
-  /* ------------------------------------------------------------------ */
   return (
     <div style={{ display: 'flex', height }}>
-      {/* === SIDEBAR KHÁCH HÀNG === */}
+      {/* === DANH SÁCH KHÁCH HÀNG === */}
       <div
         style={{
           width: 260,
@@ -260,28 +209,29 @@ const ShopChatPanel = ({ height = '100%' }) => {
       </div>
 
       {/* === KHUNG CHAT === */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-        {/* HEADER – thông tin KH */}
-        <div
-          style={{
-            height: 60,
-            borderBottom: '1px solid #f0f0f0',
-            display: 'flex',
-            alignItems: 'center',
-            gap: 12,
-            padding: '0 20px',
-          }}
-        >
-          <Avatar src={current?.avatarUrl} />
-          <Text strong style={{ fontSize: 16 }}>
-            {current?.customerName}
-          </Text>
-        </div>
-
-        {/* NỘI DUNG TIN NHẮN */}
+      {/* === KHUNG CHAT === */}
+      <div
+        style={{
+          margin: '0px auto',
+          width: '100%',
+          // maxWidth: 900,
+          // border: '1px solid #ddd',
+          // borderRadius: 8,
+          background: '#fff',
+          display: 'flex',
+          flexDirection: 'column',
+          height: 560, // ⬅️ Chiều cao cố định
+          // boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+        }}
+      >
+        {/* KHUNG CUỘN NỘI DUNG */}
         <div
           ref={scrollRef}
-          style={{ flex: 1, padding: 20, overflowY: 'auto' }}
+          style={{
+            flex: 1,
+            overflowY: 'auto',
+            padding: 16,
+          }}
         >
           {current?.messages.map((m) => (
             <div
@@ -299,6 +249,7 @@ const ShopChatPanel = ({ height = '100%' }) => {
                   padding: '8px 12px',
                   borderRadius: 16,
                   maxWidth: '70%',
+                  wordBreak: 'break-word',
                 }}
               >
                 {m.content}
@@ -307,22 +258,23 @@ const ShopChatPanel = ({ height = '100%' }) => {
           ))}
         </div>
 
+        {/* Ô NHẬP + GỬI */}
         <div
           style={{
             display: 'flex',
             gap: 8,
             borderTop: '1px solid #f0f0f0',
-            padding: 16,
+            padding: 12,
           }}
         >
           <Input.TextArea
             autoSize={{ minRows: 1, maxRows: 4 }}
             value={newMsg}
             onChange={(e) => setNewMsg(e.target.value)}
-            placeholder="Trả lời khách hàng…"
+            placeholder="Nhập tin nhắn..."
             onPressEnter={(e) => {
               if (!e.shiftKey) {
-                e.preventDefault(); // Ngăn xuống dòng
+                e.preventDefault();
                 if (!newMsg.trim()) return;
                 sendMessage(newMsg.trim());
                 setNewMsg('');
