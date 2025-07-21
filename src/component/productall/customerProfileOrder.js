@@ -80,7 +80,7 @@ const OrderHistory = () => {
   return (
     <Layout style={{ background: '#f5f5f5', minHeight: '100vh', padding: 20 }}>
       <Content>
-        <Title level={3}>📑 Lịch sử đơn hàng</Title>
+        <Title level={4}>🍟 Lịch sử đơn hàng</Title>
 
         {loading ? (
           <Spin />

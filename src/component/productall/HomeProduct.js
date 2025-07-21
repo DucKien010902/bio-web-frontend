@@ -4,7 +4,7 @@ import { Col, Row, Divider, Carousel } from 'antd';
 import { AiOutlineBars } from 'react-icons/ai';
 import { AiFillFire } from 'react-icons/ai';
 import { SiTicktick } from 'react-icons/si';
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import { Button, Card, Typography, Rate, Avatar } from 'antd';
 import { useMediaQuery } from 'react-responsive';
 import dichvu from '../../assets/images/dichvu.webp';
@@ -180,6 +180,7 @@ const HomePageProduct = () => {
     'https://static.maysols.com/apollo/chir/655030097442508800/img_Hv8cQpyp7EuPJP.webp',
     'https://www.happyvisa.vn/wp-content/uploads/2019/10/banner_du-lich-nhat-ban-y-te-3.jpg',
   ];
+
   const DesktopLayout = () => {
     return (
       <>
@@ -205,7 +206,6 @@ const HomePageProduct = () => {
               >
                 <div>
                   <Row gutter={24} style={{ height: '100%' }}>
-                    {/* import {Carousel} from 'antd'; */}
                     <Col span={16} style={{ height: '100%' }}>
                       <Carousel autoplay effect="fade">
                         {bannerImages.map((src, index) => (
@@ -562,11 +562,11 @@ const HomePageProduct = () => {
                   backgroundColor: 'white',
                   display: 'flex',
                   flexDirection: 'column',
-                  boxShadow: `
-      0 0 0 10px #f5fbfd,
-      0 0 0 20px #eaf7fa,
-      0 0 0 30px #e1f4f7
-    `,
+                  //               boxShadow: `
+                  //   0 0 0 10px #f5fbfd,
+                  //   0 0 0 20px #eaf7fa,
+                  //   0 0 0 30px #e1f4f7
+                  // `,
                   borderRadius: 16, // tuỳ chọn nếu muốn bo nhẹ góc
                 }}
               >
@@ -721,6 +721,7 @@ const HomePageProduct = () => {
                   />
                 </div>
               </div>
+
               <div
                 style={{
                   height: 420,
@@ -1067,7 +1068,7 @@ const HomePageProduct = () => {
               width: '100%',
               maxWidth: 1300,
               margin: '0 auto',
-              paddingTop: 20,
+              paddingTop: 10,
               backgroundColor: '#e4f5f7',
             }}
           >
@@ -1121,7 +1122,7 @@ const HomePageProduct = () => {
                 style={{
                   // height: 360,
                   backgroundColor: 'white',
-                  marginTop: 20,
+                  marginTop: 10,
                   padding: '10px 20px',
                   display: 'flex',
                   flexDirection: 'column',

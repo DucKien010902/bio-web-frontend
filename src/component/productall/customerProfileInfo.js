@@ -10,22 +10,19 @@ import {
   Avatar,
 } from 'antd';
 import { UserOutlined, UploadOutlined } from '@ant-design/icons';
-import { useNavigate } from 'react-router-dom'; // thêm dòng này
+import { useLocation, useNavigate } from 'react-router-dom'; // thêm dòng này
+import { useMediaQuery } from 'react-responsive';
 
 const { Title } = Typography;
 
 const ProfileContent = () => {
+  const isMobile = useMediaQuery({ maxWidth: 797 });
   const [form] = Form.useForm();
   const navigate = useNavigate(); // khởi tạo hook điều hướng
   const user = JSON.parse(localStorage.getItem('user'));
 
   const onFinish = (values) => {
     console.log('Form submitted:', values);
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem('user'); // xoá thông tin đăng nhập
-    navigate('/login'); // điều hướng về trang đăng nhập
   };
 
   return (
@@ -72,6 +69,19 @@ const ProfileContent = () => {
             Lưu
           </Button>
         </Form.Item>
+        {isMobile && (
+          <Form.Item>
+            <Button
+              type="primary"
+              danger
+              onClick={() => {
+                navigate('/login');
+              }}
+            >
+              Đăng xuất
+            </Button>
+          </Form.Item>
+        )}
       </Form>
     </div>
   );

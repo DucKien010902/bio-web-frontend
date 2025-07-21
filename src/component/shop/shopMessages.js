@@ -224,6 +224,21 @@ const ShopChatPanel = ({ height = '100%' }) => {
           // boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
         }}
       >
+        {current && (
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              padding: '12px 16px',
+              borderBottom: '1px solid #f0f0f0',
+            }}
+          >
+            <Avatar src={current?.avatarUrl} size={40} />
+            <Text style={{ marginLeft: 12, fontWeight: 500, fontSize: 16 }}>
+              {current?.customerName}
+            </Text>
+          </div>
+        )}
         {/* KHUNG CUỘN NỘI DUNG */}
         <div
           ref={scrollRef}

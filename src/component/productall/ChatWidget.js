@@ -24,7 +24,7 @@ const ChatWidget = () => {
             style={{
               position: 'fixed',
               bottom: 120,
-              right: 24,
+              right: 12,
               zIndex: 1000,
               // width: 48,
               // height: 48,
@@ -76,7 +76,7 @@ const ChatWidget = () => {
             style={{
               position: 'fixed',
               bottom: 72,
-              right: 24,
+              right: 12,
               zIndex: 1000,
               // width: 48,
               // height: 48,
@@ -121,7 +121,7 @@ const ChatWidget = () => {
           style={{
             position: 'fixed',
             bottom: 24,
-            right: 24,
+            right: 12,
             zIndex: 1000,
             boxShadow: '0 0 10px rgba(0,0,0,0.2)',
           }}

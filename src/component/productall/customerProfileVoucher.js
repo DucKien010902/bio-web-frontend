@@ -13,19 +13,20 @@ const VoucherCard = ({ data }) => {
   const [isHovered, setIsHovered] = useState(false);
   return (
     <div
+      className="voucher-card"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       style={{
-        height: 140,
-        width: 260,
-        backgroundColor: '#fff5f6',
-        border: '1px solid rgb(231, 66, 66)',
-        display: 'flex',
-        justifyContent: 'space-between',
-        padding: 16,
-        borderRadius: 6,
-        scrollSnapAlign: 'start',
-        position: 'relative',
+        // height: 140,
+        // width: 260,
+        // backgroundColor: '#fff5f6',
+        // border: '1px solid rgb(231, 66, 66)',
+        // display: 'flex',
+        // justifyContent: 'space-between',
+        // padding: 16,
+        // borderRadius: 6,
+        // scrollSnapAlign: 'start',
+        // position: 'relative',
         boxShadow: isHovered
           ? '0 4px 12px rgba(0, 0, 0, 0.2)'
           : '0 2px 4px rgba(0, 0, 0, 0.05)',
@@ -42,17 +43,17 @@ const VoucherCard = ({ data }) => {
           justifyContent: 'space-evenly',
         }}
       >
-        <div style={{ fontWeight: 700, fontSize: 16, color: '#c712c1' }}>
+        <div style={{ fontWeight: 700, fontSize: 14, color: '#c712c1' }}>
           <GiShop style={{ color: 'orange', marginRight: 5 }} />
           {data.shopName}
         </div>
-        <div style={{ fontWeight: 600, fontSize: 15, color: '#d0011b' }}>
+        <div style={{ fontWeight: 600, fontSize: 13, color: '#d0011b' }}>
           Giảm {formattedDiscount}
         </div>
-        <div style={{ color: '#d0011b', fontSize: 15 }}>
+        <div style={{ color: '#d0011b', fontSize: 13 }}>
           Đơn Tối Thiểu {formattedMinOrder} Giảm tối đa {formattedMaxDiscount}
         </div>
-        <div style={{ marginTop: 8, color: '#888', fontSize: 12 }}>
+        <div style={{ marginTop: 8, color: '#888', fontSize: 10 }}>
           HSD: {formattedExpiry}
         </div>
       </div>
@@ -95,7 +96,7 @@ const VoucherListUser = ({ shopInfo }) => {
         style={{
           display: 'flex',
           flexWrap: 'wrap',
-          //   justifyContent: 'space-evenly',
+          // justifyContent: 'space-evenly',
         }}
       >
         {vouchers.map((voucher, index) => (

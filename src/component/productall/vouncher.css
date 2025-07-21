@@ -7,8 +7,8 @@
 }
 
 .voucher-card {
-  min-width: 300px;
-  max-width: 300px;
+  min-width: 260px;
+  max-width: 260px;
   height: 100%;
   background-color: #fff5f6;
   border: 1px solid #ffd6d6;
@@ -47,13 +47,13 @@
 /* === Mobile layout (<768px) === */
 @media (max-width: 767.98px) {
   .voucher-container {
-    padding: 12px 8px; /* ôm sát hơn */
-    gap: 8px; /* thưa vừa */
+    gap: 8px;
+    padding: 12px 8px;
+    justify-content: space-between;
   }
 
   .voucher-card {
-    min-width: 240px; /* bớt to => vừa tay lướt */
-    max-width: 240px;
+    width: calc(50% - 6px);
     padding: 12px;
   }
 

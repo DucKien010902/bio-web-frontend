@@ -15,7 +15,7 @@ const { Title, Text, Link } = Typography;
 const FooterComponent = () => {
   const navigate = useNavigate();
   return (
-    <Footer style={{ backgroundColor: '#fff', padding: '0px 0px 0' }}>
+    <Footer style={{ backgroundColor: '#e8f8fd', padding: '0px 0px 0' }}>
       <Row gutter={[48, 32]} style={{ padding: 40 }}>
         <Col xs={24} md={12} style={{ paddingLeft: 150 }}>
           <Title

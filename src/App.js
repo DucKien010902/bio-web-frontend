@@ -34,6 +34,7 @@ import BottomTabBar from './component/productall/BottomTab';
 import { useSelector } from 'react-redux';
 import LiveStreamLayOut from './component/productall/LiveStream';
 import NotificationLayOut from './component/productall/NotificationLayOut';
+import AllProductContentSearch from './component/productall/AllproductContentForSearch';
 const ScrollToTop = () => {
   const { pathname } = useLocation();
 
@@ -70,6 +71,7 @@ const Product = ({ chatOpen, setChatOpen }) => {
       {/* <AllProductHeader/> */}
       <Routes>
         <Route path="" element={<AllProductContent />} />
+        <Route path="search" element={<AllProductContentSearch />} />
         <Route path="result" element={<VNPaySuccess />} />
         <Route path="cart" element={<CartPage />} />
         <Route path="profile" element={<ShopeeProfile />} />

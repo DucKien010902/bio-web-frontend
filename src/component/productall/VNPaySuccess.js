@@ -6,6 +6,8 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/vi';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
+import { useMediaQuery } from 'react-responsive';
+
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
@@ -13,6 +15,7 @@ const VNPaySuccess = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const params = new URLSearchParams(location.search);
+  const isMobile = useMediaQuery({ maxWidth: 767 });
 
   const paymentData = {};
   for (let [key, value] of params.entries()) {
@@ -27,7 +30,6 @@ const VNPaySuccess = () => {
     JSON.parse(localStorage.getItem('productInvoice')) || [];
   const user = JSON.parse(localStorage.getItem('user'));
 
-  // Format số tiền
   const formatAmount = (amount) => {
     return (parseInt(amount, 10) / 100).toLocaleString('vi-VN', {
       style: 'currency',
@@ -35,7 +37,6 @@ const VNPaySuccess = () => {
     });
   };
 
-  // Format ngày thanh toán
   const formatDate = (vnpDate) => {
     if (!vnpDate || vnpDate.length !== 14) return vnpDate;
     const yyyy = vnpDate.slice(0, 4);
@@ -86,7 +87,7 @@ const VNPaySuccess = () => {
     }
   }, [isSuccess]);
 
-  return (
+  const DesktopLayout = () => (
     <div style={styles.container}>
       <div style={styles.card}>
         <h1 style={{ color: isSuccess ? '#2ecc71' : '#e74c3c' }}>
@@ -149,8 +150,13 @@ const VNPaySuccess = () => {
             color: 'white',
           }}
           onClick={() => {
-            sessionStorage.removeItem('order_submitted');
-            navigate('/');
+            if (isSuccess) {
+              sessionStorage.removeItem('order_submitted');
+              navigate('/product/profile?case=2');
+            } else {
+              sessionStorage.removeItem('order_submitted');
+              navigate('/product/cart');
+            }
           }}
         >
           Đồng ý
@@ -158,6 +164,83 @@ const VNPaySuccess = () => {
       </div>
     </div>
   );
+
+  const MobileLayout = () => (
+    <div style={stylesMobile.container}>
+      <div style={stylesMobile.card}>
+        <h2 style={{ color: isSuccess ? '#2ecc71' : '#e74c3c' }}>
+          {isSuccess ? '🎉 Thành công' : '❌ Thất bại'}
+        </h2>
+        <p style={stylesMobile.message}>
+          {isSuccess
+            ? 'Cảm ơn bạn đã thanh toán qua VNPay.'
+            : 'Giao dịch không thành công. Vui lòng thử lại.'}
+        </p>
+
+        <div style={stylesMobile.infoBox}>
+          <h4>Thông tin giao dịch:</h4>
+          <ul style={stylesMobile.list}>
+            <li>
+              <strong>Mã GD:</strong> {paymentData.vnp_TransactionNo}
+            </li>
+            <li>
+              <strong>Đơn hàng:</strong> {paymentData.vnp_TxnRef}
+            </li>
+            <li>
+              <strong>Khách:</strong> {user?.fullName} ({user?.phoneNumber})
+            </li>
+            <li>
+              <strong>Sản phẩm:</strong> {productInvoice.length}
+            </li>
+            <li>
+              <strong>Tổng tiền:</strong> {formatAmount(paymentData.vnp_Amount)}
+            </li>
+            <li>
+              <strong>Ngân hàng:</strong> {paymentData.vnp_BankCode}
+            </li>
+            <li>
+              <strong>Thời gian:</strong> {formatDate(paymentData.vnp_PayDate)}
+            </li>
+          </ul>
+
+          <Divider />
+
+          <h4>Chi tiết đơn hàng:</h4>
+          <ul style={stylesMobile.list}>
+            {productInvoice.map((item, index) => (
+              <li key={index}>
+                🛍 <strong>{item.productName}</strong>
+                <br />
+                💰 {formatAmount(item.productPrice * 100000)} | SL:{' '}
+                {item.quantify}
+                <br />
+                🏬 {item.productShopName}
+                <Divider />
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <Button
+          block
+          type="primary"
+          onClick={() => {
+            if (isSuccess) {
+              sessionStorage.removeItem('order_submitted');
+              navigate('/product/profile?case=2');
+            } else {
+              sessionStorage.removeItem('order_submitted');
+              navigate('/product/cart');
+            }
+          }}
+        >
+          Đồng ý
+        </Button>
+      </div>
+    </div>
+  );
+
+  return <div>{isMobile ? <MobileLayout /> : <DesktopLayout />}</div>;
 };
 
 const styles = {
@@ -193,6 +276,38 @@ const styles = {
     padding: 0,
     lineHeight: '1.8em',
     color: '#333',
+  },
+};
+
+const stylesMobile = {
+  container: {
+    fontFamily: 'Segoe UI, sans-serif',
+    background: '#f4f6f8',
+
+    minHeight: '100vh',
+    padding: '100px 12px', // margin tránh tabbar trên/dưới
+  },
+  card: {
+    background: '#fff',
+    borderRadius: 12,
+    padding: 16,
+    boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+  },
+  message: {
+    fontSize: 14,
+    color: '#555',
+    marginBottom: 12,
+    textAlign: 'center',
+  },
+  infoBox: {
+    fontSize: 14,
+    color: '#333',
+  },
+  list: {
+    listStyle: 'none',
+    padding: 0,
+    fontSize: 13,
+    lineHeight: '1.6em',
   },
 };
 

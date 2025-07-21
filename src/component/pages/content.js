@@ -3,7 +3,9 @@ import { Input, Row, Col, Card, Typography, Carousel } from 'antd';
 import './content.css';
 import axiosClient from '../../api/apiConfig';
 import { RxCaretLeft, RxCaretRight } from 'react-icons/rx';
-import image from '../../assets/images/dichvu.png';
+import dichvu from '../../assets/images/dichvu.png';
+import dichvu1 from '../../assets/images/dichvu1.png';
+import dichvu2 from '../../assets/images/dichvu2.png';
 import imagehoptac1 from '../../assets/images/hoptac1.png';
 import imagehoptac2 from '../../assets/images/hoptac2.png';
 import imagehoptac3 from '../../assets/images/hoptac3.png';
@@ -14,9 +16,9 @@ import phone from '../../assets/images/phone.png';
 const { Title, Paragraph } = Typography;
 
 const bannerImages = [
-  'https://res.cloudinary.com/da6f4dmql/image/upload/v1748336183/pngtree-medical-icon-simple-banner-background-picture-image_1539751_lbymi7.png',
-  'https://res.cloudinary.com/da6f4dmql/image/upload/v1748336182/5917.jpg_wh860_kh7esi.jpg',
-  'https://res.cloudinary.com/da6f4dmql/image/upload/v1748336181/design-de-modelo-de-centro-medico_23-2150144640_sgculr.avif',
+  'https://medpro.vn/_next/image?url=https%3A%2F%2Fcdn.medpro.vn%2Fprod-partner%2F5ddb363f-8886-4b33-bde9-f57bec34a86b-care247-tro-ly-ca-nhan-ho-tro-nguoi-dan-di-kham.png&w=1200&q=100',
+  'https://medpro.vn/_next/image?url=https%3A%2F%2Fcdn.medpro.vn%2Fprod-partner%2Fda64c9ee-fdd6-4a13-bc52-fe74255fc079-promote-vaccine-d.jpg&w=1200&q=100',
+  'https://medpro.vn/_next/image?url=https%3A%2F%2Fcdn.medpro.vn%2Fprod-partner%2F2ef4ca2e-7283-457f-a9c1-e7d9a08d94db-giai-phap-quan-ly-phong-mach.png&w=1200&q=100',
 ];
 
 const doctorList = [
@@ -59,7 +61,7 @@ const newsList = [
   {
     title: 'Chăm sóc sức khỏe người cao tuổi',
     image:
-      'https://image.nhandan.vn/w800/Uploaded/2025/zdjwperwq/2025_01_26/42222-8072-9336.jpg.webp',
+      'https://cloudpro.vn/public/media/images/mo-hinh-cham-soc-suc-khoe-tai-nha1%402x-100.jpg',
   },
 ];
 
@@ -164,7 +166,7 @@ const ContentComponent = () => {
         </div>
       </div>
       {/* Phần chính */}
-      <div className="main-content" style={{ backgroundColor: '#e8f4fd' }}>
+      <div className="main-content" style={{ backgroundColor: 'white' }}>
         <div className="banner">
           <Title
             level={1}
@@ -207,38 +209,38 @@ const ContentComponent = () => {
           </ul>
           <div className="service-carousel-wrapper">
             <button className="scroll-btn left" onClick={() => scrollCards(-1)}>
-              <RxCaretLeft size={30} color="black" />
+              <RxCaretLeft size={24} color="black" />
             </button>
 
             <div className="service-cards-container" id="carousel">
               {[
                 {
                   title: 'Xét nghiệm tổng quát',
-                  image: image,
+                  image: dichvu,
                 },
                 {
                   title: 'Xét nghiệm máu',
-                  image: image,
+                  image: dichvu1,
                 },
                 {
                   title: 'Xét nghiệm ADN huyết thống',
-                  image: image,
+                  image: dichvu2,
                 },
                 {
                   title: 'Xét nghiệm dị tật thai nhi (NIPT)',
-                  image: image,
+                  image: dichvu,
                 },
                 {
                   title: 'Xét nghiệm bệnh lây qua đường tình dục',
-                  image: image,
+                  image: dichvu1,
                 },
                 {
                   title: 'Xét nghiệm miễn dịch',
-                  image: image,
+                  image: dichvu2,
                 },
                 {
                   title: 'Xét nghiệm COVID-19 PCR',
-                  image: image,
+                  image: dichvu,
                 },
               ].map((item, index) => (
                 <div key={index} className="service-card">
@@ -259,12 +261,90 @@ const ContentComponent = () => {
             </div>
 
             <button className="scroll-btn right" onClick={() => scrollCards(1)}>
-              <RxCaretRight size={30} color="black" />
+              <RxCaretRight size={24} color="black" />
             </button>
           </div>
         </div>
+        <Title
+          level={2}
+          style={{
+            margin: '20px 0 10px',
+            color: '#065c8c',
+            textAlign: 'center',
+            fontWeight: 700,
+          }}
+        >
+          Được tin tưởng hợp tác và đồng hành
+        </Title>
+        <div className="service-carousel-wrapper" style={{ marginTop: 40 }}>
+          <button className="scroll-btn left" onClick={() => scrollCards1(-1)}>
+            <RxCaretLeft size={24} color="black" />
+          </button>
+
+          <div className="service-cards-container" id="carousel1">
+            {[
+              {
+                title: 'Xét nghiệm tổng quát',
+                image: imagehoptac1,
+              },
+              {
+                title: 'Xét nghiệm máu',
+                image: imagehoptac2,
+              },
+              {
+                title: 'Xét nghiệm ADN huyết thống',
+                image: imagehoptac3,
+              },
+              {
+                title: 'Xét nghiệm dị tật thai nhi (NIPT)',
+                image: imagehoptac1,
+              },
+              {
+                title: 'Xét nghiệm bệnh lây qua đường tình dục',
+                image: imagehoptac2,
+              },
+              {
+                title: 'Xét nghiệm miễn dịch',
+                image: imagehoptac3,
+              },
+              {
+                title: 'Xét nghiệm COVID-19 PCR',
+                image: imagehoptac1,
+              },
+              {
+                title: 'Xét nghiệm COVID-19 PCR',
+                image: imagehoptac1,
+              },
+              {
+                title: 'Xét nghiệm COVID-19 PCR',
+                image: imagehoptac1,
+              },
+              {
+                title: 'Xét nghiệm COVID-19 PCR',
+                image: imagehoptac1,
+              },
+            ].map((item, index) => (
+              <img
+                src={item.image}
+                alt=""
+                className="card-image"
+                style={{
+                  width: '40%',
+                  height: '90px',
+                  marginLeft: 40,
+                  marginRight: 40,
+                  objectFit: 'contain',
+                }}
+              />
+            ))}
+          </div>
+
+          <button className="scroll-btn right" onClick={() => scrollCards1(1)}>
+            <RxCaretRight size={24} color="black" />
+          </button>
+        </div>
         {/* Banner y tế */}
-        <div style={{ width: '80%', margin: '30px auto' }}>
+        <div style={{ width: '80%', margin: '50px auto' }}>
           <Carousel autoplay>
             {bannerImages.map((src, i) => (
               <div key={i}>
@@ -276,190 +356,137 @@ const ContentComponent = () => {
                     height: 'auto',
                     borderRadius: 20,
                     objectFit: 'cover',
-                    maxHeight: 400,
+                    maxHeight: 320,
                   }}
                 />
               </div>
             ))}
           </Carousel>
         </div>
-        <Title
-          level={2}
-          style={{
-            margin: '60px 0 10px',
-            color: '#065c8c',
-            textAlign: 'center',
-            fontWeight: 700,
-          }}
-        >
-          Được tin tưởng hợp tác và đồng hành
-        </Title>
-        <div className="service-carousel-wrapper" style={{ marginTop: 0 }}>
-          <button className="scroll-btn left" onClick={() => scrollCards1(-1)}>
-            <RxCaretLeft size={30} color="black" />
-          </button>
-
-          <div className="service-cards-container" id="carousel1">
-            {[
-              {
-                // title: 'Xét nghiệm tổng quát',
-                image: imagehoptac1,
-              },
-              {
-                // title: 'Xét nghiệm máu',
-                image: imagehoptac2,
-              },
-              {
-                // title: 'Xét nghiệm ADN huyết thống',
-                image: imagehoptac3,
-              },
-              {
-                // title: 'Xét nghiệm dị tật thai nhi (NIPT)',
-                image: imagehoptac1,
-              },
-              {
-                // title: 'Xét nghiệm bệnh lây qua đường tình dục',
-                image: imagehoptac2,
-              },
-              {
-                // title: 'Xét nghiệm miễn dịch',
-                image: imagehoptac3,
-              },
-              {
-                // title: 'Xét nghiệm COVID-19 PCR',
-                image: imagehoptac1,
-              },
-              {
-                // title: 'Xét nghiệm COVID-19 PCR',
-                image: imagehoptac1,
-              },
-              {
-                // title: 'Xét nghiệm COVID-19 PCR',
-                image: imagehoptac1,
-              },
-              {
-                // title: 'Xét nghiệm COVID-19 PCR',
-                image: imagehoptac1,
-              },
-            ].map((item, index) => (
-              <img
-                src={item.image}
-                alt=""
-                className="card-image"
-                style={{
-                  width: '50%',
-                  height: '120px',
-                  marginLeft: 30,
-                  objectFit: 'contain',
-                }}
-              />
-            ))}
-          </div>
-
-          <button className="scroll-btn right" onClick={() => scrollCards1(1)}>
-            <RxCaretRight size={30} color="black" />
-          </button>
-        </div>
         {/* Danh sách bác sĩ */}
-        <Title
-          level={2}
+        <div
           style={{
-            margin: '60px 0 10px',
-            color: '#065c8c',
-            textAlign: 'center',
-            fontWeight: 700,
+            background: `linear-gradient(
+      to bottom,
+      white 0px,
+      #e8f8fd 50px,
+      #e8f8fd calc(100% - 50px),
+      white 100%
+    )`,
           }}
         >
-          Đội ngũ bác sĩ
-        </Title>
-        <Row
-          gutter={[32, 32]}
-          style={{ padding: '2% 10%', paddingTop: 10, paddingBottom: 40 }}
-        >
-          {doctorList.map((doc, i) => (
-            <Col xs={24} sm={12} md={6} key={i}>
-              <Card
-                hoverable
-                style={{
-                  textAlign: 'center',
-                  borderRadius: 12,
-                  padding: 16,
-                  boxShadow: '4px 2px 8px rgba(0, 191, 255, 0.4)', // shadow màu xanh
-                }}
-              >
-                <img
-                  alt={doc.name}
-                  src={doc.image}
+          <Title
+            level={2}
+            style={{
+              margin: '60px 0 10px',
+              color: '#065c8c',
+              textAlign: 'center',
+              fontWeight: 700,
+            }}
+          >
+            Đội ngũ bác sĩ
+          </Title>
+          <Row
+            gutter={[32, 32]}
+            style={{ padding: '2% 10%', paddingTop: 40, paddingBottom: 40 }}
+          >
+            {doctorList.map((doc, i) => (
+              <Col xs={24} sm={12} md={6} key={i}>
+                <Card
+                  hoverable
                   style={{
-                    width: 100,
-                    height: 100,
-                    borderRadius: '50%',
-                    objectFit: 'cover',
-                    marginBottom: 16,
-                  }}
-                />
-                <Title level={5} style={{ margin: 0 }}>
-                  {doc.name}
-                </Title>
-                <p style={{ color: 'gray', margin: '4px 0 12px' }}>
-                  {doc.specialty}
-                </p>
-                <button
-                  style={{
-                    backgroundColor: '#00bfff',
-                    color: 'white',
-                    border: 'none',
-                    padding: '8px 16px',
-                    borderRadius: 8,
-                    width: '100%',
-                    height: 40,
-                    cursor: 'pointer',
+                    textAlign: 'center',
+                    borderRadius: 12,
+                    padding: 16,
+                    boxShadow: '4px 2px 8px rgba(0, 191, 255, 0.4)', // shadow màu xanh
                   }}
                 >
-                  Tư vấn ngay
-                </button>
-              </Card>
-            </Col>
-          ))}
-        </Row>
-        {/* Tin tức y tế */}
-        <Title
-          level={2}
-          style={{
-            margin: '40px 0 10px',
-            color: '#065c8c',
-            textAlign: 'center',
-            fontWeight: 700,
-          }}
-        >
-          Tin tức y tế
-        </Title>
-        <Row
-          gutter={[32, 32]}
-          style={{ padding: '2% 10%', paddingTop: 10, paddingBottom: 40 }}
-        >
-          {newsList.map((news, i) => (
-            <Col xs={24} sm={12} md={8} key={i}>
-              <Card
-                style={{ boxShadow: '4px 2px 8px rgba(0, 191, 255, 0.4)' }}
-                hoverable
-                cover={
                   <img
-                    alt={news.title}
-                    src={news.image}
+                    alt={doc.name}
+                    src={doc.image}
                     style={{
-                      height: 180,
+                      width: 100,
+                      height: 100,
+                      borderRadius: '50%',
                       objectFit: 'cover',
-                      // shadow màu xanh
+                      marginBottom: 16,
                     }}
                   />
-                }
-              >
-                <Card.Meta title={news.title} />
-              </Card>
-            </Col>
-          ))}
-        </Row>
+                  <Title level={5} style={{ margin: 0 }}>
+                    {doc.name}
+                  </Title>
+                  <p style={{ color: 'gray', margin: '4px 0 12px' }}>
+                    {doc.specialty}
+                  </p>
+                  <button
+                    style={{
+                      backgroundColor: '#00bfff',
+                      color: 'white',
+                      border: 'none',
+                      padding: '8px 16px',
+                      borderRadius: 8,
+                      width: '100%',
+                      height: 40,
+                      cursor: 'pointer',
+                    }}
+                  >
+                    Tư vấn ngay
+                  </button>
+                </Card>
+              </Col>
+            ))}
+          </Row>
+        </div>
+        <div
+          style={{
+            background: `linear-gradient(
+      to bottom,
+      white 0px,
+      #e8f8fd 50px,
+      #e8f8fd calc(100% - 50px),
+      white 100%
+    )`,
+          }}
+        >
+          {/* Tin tức y tế */}
+          <Title
+            level={2}
+            style={{
+              margin: '40px 0 10px',
+              color: '#065c8c',
+              textAlign: 'center',
+              fontWeight: 700,
+            }}
+          >
+            Tin tức y tế
+          </Title>
+          <Row
+            gutter={[32, 32]}
+            style={{ padding: '2% 10%', paddingTop: 40, paddingBottom: 40 }}
+          >
+            {newsList.map((news, i) => (
+              <Col xs={24} sm={12} md={8} key={i}>
+                <Card
+                  style={{ boxShadow: '4px 2px 8px rgba(0, 191, 255, 0.4)' }}
+                  hoverable
+                  cover={
+                    <img
+                      alt={news.title}
+                      src={news.image}
+                      style={{
+                        height: 180,
+                        objectFit: 'cover',
+                        // shadow màu xanh
+                      }}
+                    />
+                  }
+                >
+                  <Card.Meta title={news.title} />
+                </Card>
+              </Col>
+            ))}
+          </Row>
+        </div>
         (
         <div style={{ padding: '40px 20px' }}>
           <Title

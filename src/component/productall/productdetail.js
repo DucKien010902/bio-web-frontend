@@ -13,6 +13,7 @@ import {
   Radio,
   Tooltip,
   message,
+  Spin,
 } from 'antd';
 import './productdetail.css';
 import { ShoppingCartOutlined, ThunderboltOutlined } from '@ant-design/icons';
@@ -61,6 +62,9 @@ const ProductDetailPage = () => {
   const [likeCount, setLikeCount] = useState(100); // ví dụ ban đầu
   const phoneNumber = JSON.parse(localStorage.getItem('user'))?.phoneNumber;
   const [selectedType, setSelectedType] = useState(null);
+  const [loadingProduct, setLoadingProduct] = useState(true);
+  const [loadingShop, setLoadingShop] = useState(true);
+
   const handleAddtoCart = async () => {
     if (phoneNumber) {
       if (!selectedType) {
@@ -135,6 +139,8 @@ const ProductDetailPage = () => {
         setProduct(res.data);
       } catch (error) {
         console.log('Không thể lấy thông tin sản phẩm');
+      } finally {
+        setLoadingProduct(false); // ✅ Đặt lại dù thành công hay thất bại
       }
     };
 
@@ -143,7 +149,7 @@ const ProductDetailPage = () => {
 
   useEffect(() => {
     const fetchShopInfo = async () => {
-      if (!product?.pdShopID) return; // Đảm bảo có ID
+      if (!product?.pdShopID) return;
       try {
         const res = await axiosClient.get(
           `/shop/fetchShopInfoByID?shopID=${product.pdShopID}`
@@ -151,11 +157,30 @@ const ProductDetailPage = () => {
         setShopInfo(res.data);
       } catch (error) {
         console.log('Không thể lấy thông tin shop');
+      } finally {
+        setLoadingShop(false); // ✅
       }
     };
 
-    fetchShopInfo();
-  }, [product?.pdShopID]); // Chờ product có pdShopID rồi mới gọi
+    if (product?.pdShopID) {
+      fetchShopInfo();
+    }
+  }, [product?.pdShopID]);
+  if (loadingProduct & !product) {
+    return (
+      <div
+        style={{
+          height: '100vh',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Spin size="large" tip="Đang tải sản phẩm..." />
+      </div>
+    );
+  }
+
   const DesktopLayout = () => {
     return (
       <div style={{ backgroundColor: '#f7f7f2' }}>
