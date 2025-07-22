@@ -7,7 +7,7 @@
 
 .banner {
   position: relative;
-  background-image: url('https://img.lovepik.com/photo/50092/7925.jpg_wh860.jpg');
+  background-image: url('https://static.vecteezy.com/system/resources/thumbnails/004/449/845/small_2x/abstract-geometric-medical-cross-shape-medicine-and-science-concept-background-medicine-medical-health-cross-healthcare-decoration-for-flyers-poster-web-banner-and-card-illustration-vector.jpg');
   background-size: cover;
   background-position: center;
   height: 550px;
@@ -28,25 +28,40 @@
   background: linear-gradient(to bottom, transparent 0%, white 100%);
   pointer-events: none; /* không ảnh hưởng đến sự kiện chuột */
 }
+@media (max-width: 768px) {
+  .banner::after {
+    content: none;
+  }
+}
 
-.search-input {
-  max-width: 50% !important;
+/* content.css */
+.search-input-custom {
+  width: 50%;
   margin: 16px auto;
   border-radius: 20px !important;
-}
-.search-input .ant-input {
-  height: 56px !important;
-  font-size: 18px !important;
-  padding: 8px 16px !important;
+  background: white;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
 }
 
-.search-input .ant-btn {
-  height: 56px !important;
-  font-size: 18px !important;
-  padding: 0 20px !important;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* input bên trong */
+.search-input-custom .ant-input {
+  height: 42px !important;
+  font-size: 20px !important;
+  padding: 8px 16px !important;
+  border-radius: 20px !important;
+}
+
+/* Responsive: Mobile < 768px */
+@media (max-width: 768px) {
+  .search-input-custom {
+    width: 95% !important;
+  }
+
+  .search-input-custom .ant-input {
+    font-size: 16px !important;
+    height: 32px !important;
+    border-radius: 15px !important;
+  }
 }
 
 .advantages {
@@ -141,18 +156,65 @@
   color: #555;
   margin: 0;
 }
+@media (max-width: 768px) {
+  .service-carousel-wrapper {
+    padding: 0;
+    justify-content: center;
+    margin-top: 0px;
+  }
+
+  .service-cards-container {
+    width: 95%;
+    overflow-x: auto;
+    gap: 12px;
+    padding: 12px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    -ms-overflow-style: none; /* IE 10+ */
+    scrollbar-width: none;
+  }
+  .service-cards-container::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+  }
+
+  .service-card {
+    flex: 0 0 auto;
+    width: 100px;
+    aspect-ratio: 1 / 1;
+    padding: 8px;
+    text-align: center;
+    scroll-snap-align: start;
+  }
+
+  .card-image {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 6px;
+  }
+
+  .card-title,
+  .service-card h3 {
+    font-size: 10px;
+    line-height: 1.2;
+    white-space: normal;
+  }
+}
 
 .scroll-btn {
   background-color: #fff;
   border: none;
-  font-size: 24px;
+  font-size: 20px;
   font-weight: bold;
   cursor: pointer;
-  padding: 8px 12px;
+  padding: 4px 6px;
   border-radius: 50%;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   /* position: absolute; */
   top: 50%;
+  z-index: 10;
   /* transform: translateY(-50%); */
   /* z-index: 1; */
 }

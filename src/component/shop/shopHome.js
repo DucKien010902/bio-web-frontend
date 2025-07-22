@@ -11,6 +11,7 @@ import ProductList from './shopProducts';
 import axiosClient from '../../api/apiConfig';
 import VoucherTable from './shopVoucher';
 import ShopMessages from './shopMessages';
+import ShopPropose from './shopPropose';
 
 const { Header, Sider, Content } = Layout;
 
@@ -82,6 +83,8 @@ const ShopLayout = () => {
         return <VoucherTable />;
       case 'messages':
         return <ShopMessages />;
+      case 'propose':
+        return <ShopPropose />;
       default:
         return <Dashboard />;
     }

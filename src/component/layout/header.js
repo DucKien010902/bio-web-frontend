@@ -17,6 +17,7 @@ import {
   BellOutlined,
   LogoutOutlined,
   ProfileOutlined,
+  UnorderedListOutlined,
 } from '@ant-design/icons';
 import { Dropdown, Menu, Modal } from 'antd';
 import './header.css';
@@ -28,7 +29,7 @@ const { Header } = Layout;
 const HeaderComponent = () => {
   const navigate = useNavigate();
   const isMobile = useMediaQuery({ maxWidth: 767 });
-  const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 991 });
+
   const isDesktop = useMediaQuery({ minWidth: 992 });
   const accountMenu = (
     <Menu
@@ -173,27 +174,18 @@ const HeaderComponent = () => {
             }}
           >
             <div
-              // level={2}
               style={{
                 margin: 0,
-                color: '#1890ff',
                 fontFamily: 'cursive',
-                fontSize: 40,
-                paddingLeft: '0 auto',
+                fontSize: 42,
                 fontWeight: 700,
+                background: 'linear-gradient(to right, #1890ff, #cf1952)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                display: 'inline-block',
               }}
             >
-              Gennova
-              <span
-                style={{
-                  color: '#cf1952',
-                  fontFamily: 'cursive',
-                  fontWeight: 'bold',
-                  fontSize: 50,
-                }}
-              >
-                X
-              </span>
+              GennovaX
             </div>
           </div>
 
@@ -478,25 +470,114 @@ const HeaderComponent = () => {
   };
   const MobileLayout = () => {
     return (
-      <div
-        style={{
-          minHeight: 40,
-          backgroundColor: 'green',
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          zIndex: 10,
-        }}
-      >
-        Mobile
+      <div>
+        <Header
+          style={{
+            background: '#fff',
+            padding: '0 24px',
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            borderBottom: '1px solid #f0f0f0',
+            // height: 140,
+          }}
+        >
+          <div
+            style={{
+              flex: 3,
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              cursor: 'pointer',
+            }}
+            onClick={() => {
+              navigate('/');
+            }}
+          >
+            <div
+              style={{
+                margin: 0,
+                fontFamily: 'cursive',
+                fontSize: 30,
+                fontWeight: 600,
+                background: 'linear-gradient(to right, #1890ff, #cf1952)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                display: 'inline-block',
+              }}
+            >
+              GennovaX
+            </div>
+          </div>
+          <div style={{ paddingTop: 5 }}>
+            <UnorderedListOutlined style={{ fontSize: 22 }} />
+          </div>
+        </Header>
+
+        {/* Dòng chữ chạy */}
+
+        {/* Custom CSS */}
+        <style>
+          {`
+    @keyframes scroll-left {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    @keyframes slide-down {
+      0% {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .custom-dropdown .ant-dropdown-menu {
+  animation: slide-down 0.3s ease-out;
+  border-radius: 8px;
+  background-color: #fcf7f7;
+}
+
+.custom-dropdown .ant-dropdown-menu .ant-dropdown-menu-item {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  background-color: #fcf7f7 !important;
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+  line-height: 1.6 !important;
+}
+
+
+
+    .custom-dropdown .ant-dropdown-menu-item:hover {
+      color: #1890ff !important;
+      background-color: #f0f0f0 !important;
+    }
+
+    .menu-item {
+  display: flex;
+  align-items: center; /* Căn icon và text cùng hàng */
+  font-size: 16px;
+  color: #333;
+  cursor: pointer;
+  font-weight: 500;
+  white-space: nowrap; /* Ngăn chữ và icon bị xuống dòng */
+}
+
+    .menu-item:hover {
+      border-bottom: 2px solid #1890ff;
+    }
+  `}
+        </style>
       </div>
     );
   };
   return (
     <div>
       {isMobile && <MobileLayout />}
-      {/* {isTablet && <TabletLayout />} */}
       {isDesktop && <DesktopLayout />}
     </div>
   );

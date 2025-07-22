@@ -3,16 +3,16 @@ import React from 'react';
 import { useLocation, useNavigate, matchPath } from 'react-router-dom';
 import {
   HomeOutlined,
-  VideoCameraOutlined,
+  MedicineBoxOutlined,
   BellOutlined,
   UserOutlined,
 } from '@ant-design/icons';
 const tabItems = [
   { label: 'Trang chủ', icon: <HomeOutlined />, path: '/' },
   {
-    label: 'Live & Video',
-    icon: <VideoCameraOutlined />,
-    path: '/livestream',
+    label: 'Xét nghiệm',
+    icon: <MedicineBoxOutlined />,
+    path: '/mainbio',
   },
   { label: 'Thông báo', icon: <BellOutlined />, path: '/notification' },
   { label: 'Tài khoản', icon: <UserOutlined />, path: '/product/profile' },

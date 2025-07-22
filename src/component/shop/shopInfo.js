@@ -1,29 +1,31 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
   Descriptions,
   Avatar,
   Input,
-  Switch,
   DatePicker,
   InputNumber,
   Button,
   Form,
   Typography,
-  Space,
   Tag,
   message,
+  Modal,
 } from 'antd';
+import { CameraOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import axiosClient from '../../api/apiConfig';
-dayjs.extend(relativeTime);
 
+dayjs.extend(relativeTime);
 const { Title, Text } = Typography;
 
 const ShopDetail = () => {
   const [form] = Form.useForm();
   const [shop, setShop] = useState(null);
-  const phoneNumber = JSON.parse(localStorage.getItem('user')).phoneNumber;
+  const coverInputRef = useRef(null);
+  const avatarInputRef = useRef(null);
+
   const fetchShopInfo = async () => {
     try {
       const data = JSON.parse(localStorage.getItem('shopInfo'));
@@ -32,12 +34,58 @@ const ShopDetail = () => {
         ...data,
         joinedAt: dayjs(data.joinedAt),
       });
-    } catch (error) {}
+    } catch (error) {
+      console.error('Lỗi khi lấy dữ liệu shop:', error);
+    }
   };
 
   useEffect(() => {
     fetchShopInfo();
   }, []);
+
+  const uploadToCloudinary = async (file) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', 'DucKien');
+    try {
+      const res = await fetch(
+        'https://api.cloudinary.com/v1_1/da6f4dmql/image/upload',
+        {
+          method: 'POST',
+          body: formData,
+        }
+      );
+      const data = await res.json();
+      return data.secure_url;
+    } catch (err) {
+      console.error('Lỗi upload ảnh:', err);
+      message.error('Không thể tải ảnh lên');
+      return null;
+    }
+  };
+
+  const handleImageChange = (type, file) => {
+    Modal.confirm({
+      title: `Xác nhận thay đổi ${
+        type === 'coverUrl' ? 'ảnh bìa' : 'ảnh đại diện'
+      }`,
+      content: 'Bạn có chắc muốn thay ảnh này không?',
+      okText: 'Đồng ý',
+      cancelText: 'Hủy',
+      onOk: async () => {
+        const cloudUrl = await uploadToCloudinary(file);
+        if (cloudUrl) {
+          const updatedData = { ...shop, [type]: cloudUrl };
+          await axiosClient.put(`/shop/update/${shop.shopID}`, updatedData);
+          localStorage.setItem('shopInfo', JSON.stringify(updatedData));
+          setShop(updatedData);
+          form.setFieldsValue({ [type]: cloudUrl });
+          message.success('Ảnh đã được cập nhật');
+        }
+      },
+    });
+  };
+
   const onFinish = async (values) => {
     try {
       const updatedData = {
@@ -45,7 +93,6 @@ const ShopDetail = () => {
         ...values,
         joinedAt: values.joinedAt.toISOString(),
       };
-
       await axiosClient.put(`/shop/update/${shop.shopID}`, updatedData);
       message.success('Cập nhật thành công');
       localStorage.setItem('shopInfo', JSON.stringify(updatedData));
@@ -59,15 +106,72 @@ const ShopDetail = () => {
 
   return (
     <div style={{ padding: 24 }}>
-      {/* <Title level={3}>Thông tin chi tiết Shop</Title> */}
+      <div
+        style={{
+          position: 'relative',
+          textAlign: 'start',
+          marginBottom: 80,
+        }}
+      >
+        {/* Ảnh bìa */}
+        <img
+          src={shop.coverUrl}
+          alt="cover"
+          style={{
+            width: '40%',
+            height: 160,
+            objectFit: 'cover',
+            borderRadius: 8,
+          }}
+        />
+        {/* Nút đổi ảnh bìa */}
+        <Button
+          shape="circle"
+          icon={<CameraOutlined />}
+          style={{
+            position: 'absolute',
+            top: 16,
+            left: '36%',
+            background: '#fff',
+            boxShadow: '0 2px 6px rgba(0,0,0,0.3)',
+          }}
+          onClick={() => coverInputRef.current.click()}
+        />
+        <input
+          type="file"
+          accept="image/*"
+          ref={coverInputRef}
+          onChange={(e) => handleImageChange('coverUrl', e.target.files[0])}
+          style={{ display: 'none' }}
+        />
 
-      <Space style={{ marginBottom: 24 }}>
-        <Avatar size={100} src={shop.avatarUrl} />
-        <div>
-          <Title level={4}>{shop.shopName}</Title>
-          <Text type="secondary">Mã Shop: {shop.shopID}</Text>
+        {/* Ảnh đại diện */}
+        <div
+          style={{
+            position: 'absolute',
+            bottom: -70,
+            left: '20%',
+            transform: 'translateX(-50%)',
+          }}
+        >
+          <Avatar size={80} src={shop.avatarUrl} />
+          <Button
+            size="small"
+            icon={<CameraOutlined />}
+            style={{ display: 'block', margin: '8px auto' }}
+            onClick={() => avatarInputRef.current.click()}
+          >
+            Đổi ảnh
+          </Button>
+          <input
+            type="file"
+            accept="image/*"
+            ref={avatarInputRef}
+            onChange={(e) => handleImageChange('avatarUrl', e.target.files[0])}
+            style={{ display: 'none' }}
+          />
         </div>
-      </Space>
+      </div>
 
       <Form form={form} layout="vertical" onFinish={onFinish}>
         <Descriptions bordered column={2} size="middle">
@@ -88,18 +192,18 @@ const ShopDetail = () => {
           </Descriptions.Item>
 
           <Descriptions.Item label="Đang theo dõi">
-            <Text style={{ marginLeft: 8 }}>14</Text>
+            <Text>14</Text>
           </Descriptions.Item>
 
           <Descriptions.Item label="Ảnh bìa (cover)">
             <Form.Item name="coverUrl" noStyle>
-              <Input />
+              <Input disabled />
             </Form.Item>
           </Descriptions.Item>
 
           <Descriptions.Item label="Ảnh đại diện (avatar)">
             <Form.Item name="avatarUrl" noStyle>
-              <Input />
+              <Input disabled />
             </Form.Item>
           </Descriptions.Item>
 
@@ -142,16 +246,6 @@ const ShopDetail = () => {
               {shop.verified ? 'Đã xác minh' : 'Chưa xác minh'}
             </Tag>
           </Descriptions.Item>
-
-          {/* <Descriptions.Item label="Danh sách sản phẩm" span={2}>
-            <ul style={{ paddingLeft: 20 }}>
-              {shop.productIds?.map((id) => (
-                <li key={id}>
-                  <Text copyable>{id}</Text>
-                </li>
-              ))}
-            </ul>
-          </Descriptions.Item> */}
         </Descriptions>
 
         <Button type="primary" htmlType="submit" style={{ marginTop: 24 }}>

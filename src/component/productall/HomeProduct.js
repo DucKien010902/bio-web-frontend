@@ -176,26 +176,26 @@ const HomePageProduct = () => {
     },
   ];
   const bannerImages = [
-    'https://digital.fpt.com/wp-content/uploads/2020/07/xetnghiemyte.jpg',
-    'https://static.maysols.com/apollo/chir/655030097442508800/img_Hv8cQpyp7EuPJP.webp',
-    'https://www.happyvisa.vn/wp-content/uploads/2019/10/banner_du-lich-nhat-ban-y-te-3.jpg',
+    'https://cf.shopee.vn/file/sg-11134258-7rdvo-mcbsynano63k01_xxhdpi',
+    'https://cf.shopee.vn/file/sg-11134258-7rdxx-mcgboanz9cwjc8_xxhdpi',
+    'https://cf.shopee.vn/file/sg-11134258-7rdvj-mcg0m0mv44zb37_xxhdpi',
   ];
 
   const DesktopLayout = () => {
     return (
       <>
         <AllProductHeader />
-        <div style={{ width: '100%', backgroundColor: '#e4f5f7' }}>
+        <div style={{ width: '100%', backgroundColor: 'white' }}>
           <div
             style={{
               width: '100%',
               maxWidth: 1300,
               margin: '0 auto',
               paddingTop: 20,
-              backgroundColor: '#e4f5f7',
+              backgroundColor: 'white',
             }}
           >
-            <div style={{ width: '100%', backgroundColor: '#e1f4f7' }}>
+            <div style={{ width: '100%', backgroundColor: 'white' }}>
               <div
                 style={{
                   // height: 480,
@@ -226,7 +226,7 @@ const HomePageProduct = () => {
                     <Col span={8} style={{ height: '100%' }}>
                       <Row style={{ height: '50%', paddingBottom: 5 }}>
                         <img
-                          src="https://hongngochospital.vn/_default_upload_bucket/uu-dai-kham-suc-khoe-tong-quat-2.png"
+                          src="https://cf.shopee.vn/file/sg-11134258-7rdwk-mcg0sfmh622adc_xhdpi"
                           style={{
                             width: '100%',
                             height: '100%',
@@ -237,7 +237,7 @@ const HomePageProduct = () => {
                       </Row>
                       <Row style={{ height: '50%', paddingTop: 5 }}>
                         <img
-                          src="https://cdn.tuoitrethudo.vn/stores/news_dataimages/tuoitrethudocomvn/032020/23/14/doi-ngu-y-bac-si-keu-goi-chung-tay-day-lui-dai-dich-covid-19-08-.6096.jpg"
+                          src="https://cf.shopee.vn/file/sg-11134258-7rdxa-mcg0shzxks785a_xhdpi"
                           style={{
                             width: '100%',
                             height: '100%',
