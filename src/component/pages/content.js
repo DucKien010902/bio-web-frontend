@@ -13,14 +13,20 @@ import appstore from '../../assets/images/appleStore.png';
 import googleplay from '../../assets/images/googleplay.png';
 import round from '../../assets/images/round.png';
 import phone from '../../assets/images/phone.png';
-import { SearchOutlined } from '@ant-design/icons';
+import { FaQuoteLeft } from 'react-icons/fa';
 import {
   CheckCircleFilled,
   EnvironmentOutlined,
   StarFilled,
+  BankOutlined,
+  DollarOutlined,
 } from '@ant-design/icons';
 import { useMediaQuery } from 'react-responsive';
 import TypingInput from './contentSearchInput';
+import { Avatar, Divider } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
+
+const { Text } = Typography;
 
 const { Title, Paragraph } = Typography;
 
@@ -28,6 +34,11 @@ const bannerImages = [
   'https://medpro.vn/_next/image?url=https%3A%2F%2Fcdn.medpro.vn%2Fprod-partner%2F5ddb363f-8886-4b33-bde9-f57bec34a86b-care247-tro-ly-ca-nhan-ho-tro-nguoi-dan-di-kham.png&w=1200&q=100',
   'https://medpro.vn/_next/image?url=https%3A%2F%2Fcdn.medpro.vn%2Fprod-partner%2Fda64c9ee-fdd6-4a13-bc52-fe74255fc079-promote-vaccine-d.jpg&w=1200&q=100',
   'https://medpro.vn/_next/image?url=https%3A%2F%2Fcdn.medpro.vn%2Fprod-partner%2F2ef4ca2e-7283-457f-a9c1-e7d9a08d94db-giai-phap-quan-ly-phong-mach.png&w=1200&q=100',
+];
+const bannerImagesMobile = [
+  'https://medpro.vn/_next/image?url=https%3A%2F%2Fcdn.medpro.vn%2Fprod-partner%2Fb391767a-71b5-4b43-a50c-ee0956c52dff-promote-vaccine-m.jpg&w=828&q=100',
+  'https://medpro.vn/_next/image?url=https%3A%2F%2Fcdn.medpro.vn%2Fprod-partner%2Fd748611c-3d49-4d5b-b22b-a5eca0fe390f-care247-tro-ly-ca-nhan-ho-tro-nguoi-dan-di-kham.png&w=828&q=100',
+  'https://medpro.vn/_next/image?url=https%3A%2F%2Fcdn.medpro.vn%2Fprod-partner%2F2ec142a8-0bc6-495d-a9bb-463dba4dec95-dat-kham-medpro-zalopay-mobile.jpg&w=828&q=100',
 ];
 
 const clinicList = [
@@ -67,7 +78,48 @@ const clinicList = [
     verified: true,
   },
 ];
-
+const serviceList = [
+  {
+    name: 'Tiêm ngừa viêm gan B',
+    image:
+      'https://medpro.vn/_next/image?url=https%3A%2F%2Fcdn.medpro.vn%2Fprod-partner%2Fcce223da-f510-40d2-9d96-21fcac5d4bd8-tiaaam_ngaaaa_-_banner_section_-_277x150_px_.png&w=640&q=75',
+    clinic: 'Trung tâm nội soi tiêu hóa Doctor Check',
+    verified: true,
+    price: 300,
+  },
+  {
+    name: 'Tiêm ngừa viêm gan B',
+    image:
+      'https://medpro.vn/_next/image?url=https%3A%2F%2Fcdn.medpro.vn%2Fprod-partner%2Fcce223da-f510-40d2-9d96-21fcac5d4bd8-tiaaam_ngaaaa_-_banner_section_-_277x150_px_.png&w=640&q=75',
+    clinic: 'Trung tâm nội soi tiêu hóa Doctor Check',
+    verified: true,
+    price: 300,
+  },
+  {
+    name: 'Tiêm ngừa viêm gan B',
+    image:
+      'https://medpro.vn/_next/image?url=https%3A%2F%2Fcdn.medpro.vn%2Fprod-partner%2Fcce223da-f510-40d2-9d96-21fcac5d4bd8-tiaaam_ngaaaa_-_banner_section_-_277x150_px_.png&w=640&q=75',
+    clinic: 'Trung tâm nội soi tiêu hóa Doctor Check',
+    verified: true,
+    price: 300,
+  },
+  {
+    name: 'Tiêm ngừa viêm gan B',
+    image:
+      'https://medpro.vn/_next/image?url=https%3A%2F%2Fcdn.medpro.vn%2Fprod-partner%2Fcce223da-f510-40d2-9d96-21fcac5d4bd8-tiaaam_ngaaaa_-_banner_section_-_277x150_px_.png&w=640&q=75',
+    clinic: 'Trung tâm nội soi tiêu hóa Doctor Check',
+    verified: true,
+    price: 300,
+  },
+  {
+    name: 'Tiêm ngừa viêm gan B',
+    image:
+      'https://medpro.vn/_next/image?url=https%3A%2F%2Fcdn.medpro.vn%2Fprod-partner%2Fcce223da-f510-40d2-9d96-21fcac5d4bd8-tiaaam_ngaaaa_-_banner_section_-_277x150_px_.png&w=640&q=75',
+    clinic: 'Trung tâm nội soi tiêu hóa Doctor Check',
+    verified: true,
+    price: 300,
+  },
+];
 const newsList = [
   {
     title: '5 dấu hiệu cảnh báo bệnh tiểu đường',
@@ -817,6 +869,7 @@ const ContentComponent = () => {
           <Title
             level={4}
             style={{
+              fontSize: 18,
               margin: '20px 0 10px',
               color: '#065c8c',
               textAlign: 'center',
@@ -906,9 +959,9 @@ const ContentComponent = () => {
             </div>
           </div>
           {/* Banner y tế */}
-          <div style={{ width: '80%', margin: '60px auto' }}>
+          <div style={{ width: '90%', margin: '40px auto' }}>
             <Carousel autoplay>
-              {bannerImages.map((src, i) => (
+              {bannerImagesMobile.map((src, i) => (
                 <div key={i}>
                   <img
                     src={src}
@@ -925,7 +978,6 @@ const ContentComponent = () => {
               ))}
             </Carousel>
           </div>
-          {/* Danh sách bác sĩ */}
           <div
             style={{
               background: `linear-gradient(
@@ -938,37 +990,39 @@ const ContentComponent = () => {
             }}
           >
             <Title
-              level={2}
+              level={4}
               style={{
-                margin: '60px 0 10px',
+                fontSize: 18,
+                margin: '20px 0 10px',
                 color: '#065c8c',
                 textAlign: 'center',
-                fontWeight: 700,
+                fontWeight: 600,
+                // marginTop: 100,
               }}
             >
               Cơ sở y tế được yêu thích
             </Title>
             <div
               style={{
-                width: '80%',
+                width: '90%',
                 margin: '0 auto',
                 overflowX: 'auto',
-                padding: '40px 0',
+                padding: '20px 0',
               }}
             >
               <Row
-                gutter={[32, 32]}
+                gutter={[8, 8]}
                 wrap={false} // quan trọng: không xuống dòng
                 style={{ minWidth: 'max-content' }} // giữ các item theo chiều ngang
               >
                 {clinicList.map((clinic, i) => (
-                  <Col key={i} style={{ width: 310 }}>
+                  <Col key={i} style={{ width: 200 }}>
                     <Card
                       hoverable
-                      bodyStyle={{ padding: 0 }}
+                      bodyStyle={{ padding: 0, margin: '0 5px' }}
                       style={{
                         borderRadius: 16,
-                        padding: '36px 16px',
+                        padding: '16px 8px',
                         boxShadow: '0 4px 12px rgba(0, 191, 255, 0.3)',
                         textAlign: 'start',
                       }}
@@ -977,6 +1031,7 @@ const ContentComponent = () => {
                         style={{
                           display: 'flex',
                           justifyContent: 'center',
+                          margin: 0,
                           marginBottom: 16,
                         }}
                       >
@@ -984,13 +1039,16 @@ const ContentComponent = () => {
                           src={clinic.logo}
                           alt={clinic.name}
                           style={{
-                            width: 120,
-                            height: 120,
+                            width: 60,
+                            height: 60,
                             objectFit: 'contain',
                           }}
                         />
                       </div>
-                      <Title level={4} style={{ marginBottom: 8 }}>
+                      <Title
+                        level={5}
+                        style={{ marginBottom: 8, fontSize: 14 }}
+                      >
                         {clinic.name}{' '}
                         {clinic.verified && (
                           <CheckCircleFilled
@@ -1002,12 +1060,12 @@ const ContentComponent = () => {
                         style={{
                           color: '#003553',
                           marginBottom: 8,
-                          fontSize: 16,
+                          fontSize: 13,
                           fontWeight: 500,
                         }}
                       >
                         <EnvironmentOutlined
-                          style={{ marginRight: 6, fontSize: 18 }}
+                          style={{ marginRight: 6, fontSize: 15 }}
                         />
                         {clinic.address}
                       </p>
@@ -1016,7 +1074,7 @@ const ContentComponent = () => {
                         style={{
                           marginBottom: 12,
                           color: '#003553',
-                          fontSize: 18,
+                          fontSize: 15,
                         }}
                       >
                         <span style={{ marginRight: 6 }}>(5)</span>
@@ -1025,7 +1083,7 @@ const ContentComponent = () => {
                             key={i}
                             style={{
                               color: '#ffb54a',
-                              fontSize: 20,
+                              fontSize: 14,
                               marginRight: 2,
                             }}
                           />
@@ -1037,10 +1095,10 @@ const ContentComponent = () => {
                           backgroundColor: '#00bfff',
                           color: 'white',
                           border: 'none',
-                          padding: '8px 16px',
+                          padding: '4px 8px',
                           borderRadius: 8,
                           width: '100%',
-                          height: 40,
+                          height: 30,
                           cursor: 'pointer',
                           fontWeight: 'bold',
                         }}
@@ -1064,172 +1122,224 @@ const ContentComponent = () => {
     )`,
             }}
           >
-            {/* Tin tức y tế */}
             <Title
-              level={2}
+              level={4}
               style={{
-                margin: '40px 0 10px',
+                fontSize: 18,
+                margin: '20px 0 10px',
                 color: '#065c8c',
                 textAlign: 'center',
-                fontWeight: 700,
+                fontWeight: 600,
+                // marginTop: 100,
               }}
             >
-              Tin tức y tế
+              Các dịch vụ xét nghiệm
             </Title>
-            <Row
-              gutter={[32, 32]}
-              style={{ padding: '2% 10%', paddingTop: 40, paddingBottom: 40 }}
-            >
-              {newsList.map((news, i) => (
-                <Col xs={24} sm={12} md={8} key={i}>
-                  <Card
-                    style={{ boxShadow: '4px 2px 8px rgba(0, 191, 255, 0.4)' }}
-                    hoverable
-                    cover={
-                      <img
-                        alt={news.title}
-                        src={news.image}
-                        style={{
-                          height: 180,
-                          objectFit: 'cover',
-                          // shadow màu xanh
-                        }}
-                      />
-                    }
-                  >
-                    <Card.Meta title={news.title} />
-                  </Card>
-                </Col>
-              ))}
-            </Row>
-          </div>
-          (
-          <div style={{ padding: '40px 20px' }}>
-            <Title
-              level={2}
+            <div
               style={{
-                textAlign: 'center',
-                color: '#065c8c',
-                fontWeight: 700,
+                width: '90%',
+                margin: '0 auto',
+                overflowX: 'auto',
+                padding: '20px 0',
               }}
             >
-              Tải ứng dụng đặt xét nghiệm tại{' '}
-              <span style={{ color: 'blue' }}>GennovaX</span>
+              <Row
+                gutter={[8, 8]}
+                wrap={false} // quan trọng: không xuống dòng
+                style={{ minWidth: 'max-content' }} // giữ các item theo chiều ngang
+              >
+                {serviceList.map((service, i) => (
+                  <Col key={i} style={{ width: 200 }}>
+                    <Card
+                      hoverable
+                      bodyStyle={{ padding: 0, margin: '0 0px' }}
+                      style={{
+                        borderRadius: 16,
+                        // padding: '16px 8px',
+                        boxShadow: '0 4px 12px rgba(0, 191, 255, 0.3)',
+                        textAlign: 'start',
+                      }}
+                    >
+                      <div
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                          margin: 0,
+                          marginBottom: 16,
+                        }}
+                      >
+                        <img
+                          src={service.image}
+                          alt={service.name}
+                          style={{
+                            width: '100%',
+                            // height: 60,
+                            objectFit: 'contain',
+                            borderTopLeftRadius: 16,
+                            borderTopRightRadius: 16,
+                          }}
+                        />
+                      </div>
+                      <div style={{ padding: '16px 8px', paddingTop: 0 }}>
+                        <Title
+                          level={5}
+                          style={{ marginBottom: 8, fontSize: 14 }}
+                        >
+                          {service.name}{' '}
+                          {service.verified && (
+                            <CheckCircleFilled
+                              style={{ color: '#1890ff', fontSize: 16 }}
+                            />
+                          )}
+                        </Title>
+                        <p
+                          style={{
+                            color: '#003553',
+                            marginBottom: 8,
+                            fontSize: 13,
+                            fontWeight: 500,
+                          }}
+                        >
+                          <BankOutlined
+                            style={{ marginRight: 6, fontSize: 15 }}
+                          />
+                          {service.clinic}
+                        </p>
+
+                        <div
+                          style={{
+                            marginBottom: 12,
+                            color: '#003553',
+                            fontSize: 15,
+                          }}
+                        >
+                          <span style={{ marginRight: 6 }}>
+                            <DollarOutlined />
+                          </span>
+                          {service.price.toString()}.000đ
+                        </div>
+
+                        <button
+                          style={{
+                            backgroundColor: '#00bfff',
+                            color: 'white',
+                            border: 'none',
+                            padding: '4px 8px',
+                            borderRadius: 8,
+                            width: '100%',
+                            height: 30,
+                            cursor: 'pointer',
+                            fontWeight: 'bold',
+                          }}
+                        >
+                          Đặt khám ngay
+                        </button>
+                      </div>
+                    </Card>
+                  </Col>
+                ))}
+              </Row>
+            </div>
+          </div>
+
+          <div style={{ padding: '0px 20px' }}>
+            <Title
+              level={4}
+              style={{
+                fontSize: 18,
+                margin: '20px 0 10px',
+                color: '#065c8c',
+                textAlign: 'center',
+                fontWeight: 600,
+                // marginTop: 100,
+              }}
+            >
+              Tải ứng dụng{' '}
+              <span style={{ color: '#00b5f1', fontWeight: 700 }}>GENAPP</span>
             </Title>
 
-            <div style={{ textAlign: 'center', marginTop: 16 }}>
+            <div
+              style={{
+                textAlign: 'center',
+                marginTop: 16,
+                display: 'flex',
+                justifyContent: 'space-evenly',
+              }}
+            >
               <img
                 src={appstore}
                 alt="App Store"
-                style={{ height: 50, marginRight: 10 }}
+                style={{ height: 45, marginRight: 10 }}
               />
-              <img src={googleplay} alt="Google Play" style={{ height: 50 }} />
+              <img src={googleplay} alt="Google Play" style={{ height: 45 }} />
             </div>
-
-            {/* Main layout */}
-            <Row
-              justify="center"
-              align="middle"
-              gutter={32}
-              style={{ marginTop: 60 }}
+          </div>
+          <div
+            style={{
+              background: `linear-gradient(
+      to bottom,
+      white 0px,
+      #e8f8fd 50px,
+      #e8f8fd calc(100% - 50px),
+      white 100%
+    )`,
+            }}
+          >
+            <Title
+              level={4}
+              style={{
+                fontSize: 18,
+                margin: '30px 0 10px',
+                color: '#065c8c',
+                textAlign: 'center',
+                fontWeight: 600,
+                // marginTop: 100,
+              }}
             >
-              {/* Left Info */}
-              <Col xs={24} md={6} style={{ textAlign: 'end' }}>
-                <Paragraph strong style={{ fontSize: 20, color: '#065c8c' }}>
-                  Lấy số thứ tự khám nhanh trực tuyến
-                </Paragraph>
-                <Paragraph type="secondary">
-                  Đăng ký khám, tái khám theo bác sĩ chuyên khoa, theo lịch hẹn
-                </Paragraph>
+              Cảm nhận từ khách hàng
+            </Title>
+            <div
+              style={{
+                width: '90%',
+                margin: 'auto',
+                padding: 16,
+                borderRadius: 16,
+                backgroundColor: '#f4f9fd',
+                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+                textAlign: 'center',
+              }}
+            >
+              <div style={{ fontSize: 24, color: '#ccc' }}>
+                <FaQuoteLeft size={20} color="#ccc" />
+              </div>
+              <Text style={{ fontSize: 16, color: '#2b4263', lineHeight: 1.6 }}>
+                Đặt lịch xét nghiệm bên này rất gọn, có ngày giờ cụ thể luôn lên
+                là được xét nghiệm liền không rườm rà gì mấy. An tâm đặt cho gia
+                đình, có cả xét nghiệm tận nhà, không mất thời gian.
+              </Text>
 
-                <Paragraph
-                  strong
-                  style={{ fontSize: 20, color: '#065c8c', paddingRight: 50 }}
-                >
-                  Tư vấn sức khỏe từ xa
-                </Paragraph>
-                <Paragraph type="secondary" style={{ paddingRight: 50 }}>
-                  Gọi video với bác sĩ, chuyên gia
-                </Paragraph>
+              <Divider style={{ margin: '16px 0' }} />
 
-                <Paragraph strong style={{ fontSize: 20, color: '#065c8c' }}>
-                  Tra cứu kết quả cận lâm sàng
-                </Paragraph>
-                <Paragraph type="secondary">
-                  Xem kết quả xét nghiệm trực tuyến dễ dàng
-                </Paragraph>
-              </Col>
-
-              {/* Phone in center */}
-              <Col
-                xs={24}
-                md={8}
+              <div
                 style={{
-                  position: 'relative',
-                  height: 400,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
+                  gap: 8,
                 }}
               >
-                {/* Ảnh tròn phía sau */}
-                <img
-                  src={round}
-                  alt="Background Circle"
-                  style={{
-                    width: 500,
-                    position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    zIndex: 1,
-                  }}
+                <Avatar
+                  src="https://i.pinimg.com/736x/b7/91/44/b79144e03dc4996ce319ff59118caf65.jpg"
+                  icon={<UserOutlined />}
                 />
-
-                {/* Ảnh điện thoại phía trước */}
-                <img
-                  src={phone}
-                  alt="App Screenshot"
-                  style={{
-                    width: 220,
-                    position: 'relative',
-                    zIndex: 2,
-                  }}
-                />
-              </Col>
-
-              {/* Right Info */}
-              <Col xs={24} md={6}>
-                <Paragraph strong style={{ fontSize: 20, color: '#065c8c' }}>
-                  Thanh toán viện phí
-                </Paragraph>
-                <Paragraph type="secondary">
-                  Hỗ trợ nhiều hình thức thanh toán trực tuyến tiện lợi
-                </Paragraph>
-
-                <Paragraph
-                  strong
-                  style={{ fontSize: 20, color: '#065c8c', paddingLeft: 50 }}
-                >
-                  Chăm sóc y tế tại nhà
-                </Paragraph>
-                <Paragraph type="secondary" style={{ paddingLeft: 50 }}>
-                  Điều dưỡng, xét nghiệm tại nhà chuyên nghiệp
-                </Paragraph>
-
-                <Paragraph strong style={{ fontSize: 20, color: '#065c8c' }}>
-                  Mạng lưới cơ sở hợp tác
-                </Paragraph>
-                <Paragraph type="secondary">
-                  Kết nối phòng khám, bệnh viện khắp cả nước
-                </Paragraph>
-              </Col>
-            </Row>
+                <Text strong>Kiên Nguyễn</Text>
+              </div>
+            </div>
           </div>
-          <div style={{ marginTop: 100 }}>
+          <div style={{}}>
             <iframe
-              width="900"
-              height="500"
+              width="320"
+              height="180"
               src="https://www.youtube.com/embed/qb9kSd-e8_s"
               title="Tập 1: Làm thế nào để cả nhà cùng sống vui - sống khỏe? | PGS.TS.BS Nguyễn Văn Trí | Video AloBacsi"
               frameborder="0"

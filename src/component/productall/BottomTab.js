@@ -4,7 +4,7 @@ import { useLocation, useNavigate, matchPath } from 'react-router-dom';
 import {
   HomeOutlined,
   MedicineBoxOutlined,
-  BellOutlined,
+  AppleOutlined,
   UserOutlined,
 } from '@ant-design/icons';
 const tabItems = [
@@ -14,7 +14,7 @@ const tabItems = [
     icon: <MedicineBoxOutlined />,
     path: '/mainbio',
   },
-  { label: 'Thông báo', icon: <BellOutlined />, path: '/notification' },
+  { label: 'Tin tức', icon: <AppleOutlined />, path: '/notification' },
   { label: 'Tài khoản', icon: <UserOutlined />, path: '/product/profile' },
 ];
 

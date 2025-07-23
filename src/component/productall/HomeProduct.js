@@ -1103,21 +1103,92 @@ const HomePageProduct = () => {
                     </Col>
                   </Row>
                 </div>
-                {/* <div style={{ height: 30, backgroundColor: 'white' }}></div> */}
+                <div
+                  style={{
+                    paddingTop: 10,
+                    paddingBottom: 10,
+                    backgroundColor: 'white',
+                  }}
+                >
+                  <div
+                    style={{
+                      display: 'flex',
+                      overflowX: 'auto',
+                      scrollbarWidth: 'none', // Firefox
+                      msOverflowStyle: 'none', // IE 10+
+                    }}
+                    className="scroll-container"
+                  >
+                    {[
+                      {
+                        label: 'Mã Giảm Giá',
+                        image:
+                          'https://cf.shopee.vn/file/vn-50009109-8a387d78a7ad954ec489d3ef9abd60b4_xxhdpi',
+                      },
+                      {
+                        label: 'GenshopVip',
+                        image:
+                          'https://cf.shopee.vn/file/vn-11134258-7ras8-may04c8sak759f_xxhdpi',
+                      },
+                      {
+                        label: 'Hàng Chọn Giá Hời Cực Sốc',
+                        image:
+                          'https://cf.shopee.vn/file/vn-50009109-5bf65d4dc0eb8f6b42074751e8b736a7_xxhdpi',
+                      },
+                      {
+                        label: 'Deal Giờ Vàng',
+                        image:
+                          'https://cf.shopee.vn/file/vn-11134258-7ras8-mb6e1ufaxoldb9_xxhdpi',
+                      },
+                      {
+                        label: 'Săn xu',
+                        image:
+                          'https://cf.shopee.vn/file/1d25d74d6900b85cfde8f967e613041d_xxhdpi',
+                      },
+                      {
+                        label: 'Khách hàng thân thiết',
+                        image:
+                          'https://cf.shopee.vn/file/vn-50009109-f692e9b0be05d1a11cded7f9f72b5f0b_xxhdpi',
+                      },
+                    ].map((item, index) => (
+                      <div
+                        key={index}
+                        style={{
+                          minWidth: 80,
+                          margin: '0 8px',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                        }}
+                      >
+                        <img
+                          src={item.image}
+                          alt={item.label}
+                          style={{
+                            width: 40,
+                            height: 40,
+                            borderRadius: 8,
+                            marginBottom: 6,
+                            objectFit: 'cover',
+                            flexShrink: 0,
+                          }}
+                        />
+                        <div
+                          style={{
+                            fontSize: 10,
+                            lineHeight: '16px',
+                            textAlign: 'center',
+                            wordBreak: 'break-word',
+                            maxWidth: 70,
+                          }}
+                        >
+                          {item.label}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
-              {/* <div
-              style={{
-                // height: 360,
-                backgroundColor: 'white',
-                marginTop: 30,
-                padding: '10px 70px',
-                display: 'flex',
-                flexDirection: 'column',
-                boxShadow: '0px 8px 16px rgba(0, 0, 0, 0.1)',
-              }}
-            >
-              <VoucherGen />
-            </div> */}
               <div
                 style={{
                   // height: 360,

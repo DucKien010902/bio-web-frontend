@@ -4,7 +4,7 @@ const NotificationLayOut = () => {
   return (
     <>
       <AllProductHeader />
-      <h5>Chức năng thông báo đang được phát triển</h5>
+      <h5>Trang cập nhật tin tức đang được phát triển</h5>
     </>
   );
 };

@@ -6,6 +6,7 @@ import {
   YoutubeFilled,
   CaretDownOutlined,
 } from '@ant-design/icons';
+import { Badge } from 'antd';
 import { FaUser } from 'react-icons/fa';
 import { BiSupport } from 'react-icons/bi';
 import { SiZalo, SiTiktok } from 'react-icons/si';
@@ -509,7 +510,22 @@ const HeaderComponent = () => {
               GennovaX
             </div>
           </div>
-          <div style={{ paddingTop: 5 }}>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 12,
+              paddingTop: 5,
+              width: 70,
+              justifyContent: 'space-between',
+            }}
+          >
+            {/* Chuông có badge */}
+            <Badge count={6} offset={[-2, 2]}>
+              <BellOutlined style={{ fontSize: 22, color: '#1890ff' }} />
+            </Badge>
+
+            {/* Icon danh sách */}
             <UnorderedListOutlined style={{ fontSize: 22 }} />
           </div>
         </Header>
