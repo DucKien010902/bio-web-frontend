@@ -94,26 +94,84 @@ const HomePageProduct = () => {
     // Thêm nữa nếu cần
   ];
   const categories = [
-    { title: 'Thuyết bị điện tử', image: dichvu },
-    { title: 'Balo & Túi xách', image: dichvu1 },
-    { title: 'Thuyết bị quay phim', image: dichvu2 },
-    { title: 'Thuyết bị điện gia dụng', image: dichvu3 },
-    { title: 'Ô tô & xe máy', image: dichvu4 },
-    { title: 'Sức khỏe', image: dichvu5 },
-    { title: 'Mẹ và bé', image: dichvu4 },
-    { title: 'Mẹ và bé', image: dichvu4 },
-    { title: 'Mẹ và bé', image: dichvu4 },
-    { title: 'Mẹ và bé', image: dichvu4 },
-    { title: 'Mẹ và bé', image: dichvu4 },
-    { title: 'Mẹ và bé', image: dichvu4 },
-    { title: 'Mẹ và bé', image: dichvu4 },
-    { title: 'Mẹ và bé', image: dichvu4 },
-    { title: 'Mẹ và bé', image: dichvu4 },
-    { title: 'Mẹ và bé', image: dichvu4 },
-    { title: 'Mẹ và bé', image: dichvu4 },
-    { title: 'Mẹ và bé', image: dichvu4 },
-    { title: 'Mẹ và bé', image: dichvu4 },
-    { title: 'Mẹ và bé', image: dichvu4 },
+    {
+      title: 'Găng tay y tế',
+      image:
+        'https://donganhsafety.com.vn/wp-content/uploads/2024/05/gang-tay-nitrile-thuc-pham-ssglove.png',
+    },
+    {
+      title: 'Khẩu trang y tế',
+      image:
+        'https://rando.com.vn/upload/products/khau-trang-khang-khuan-eco-fresh-rando-1-1-500x500-A1D1732257697.webp',
+    },
+    {
+      title: 'Bơm kim tiêm',
+      image: 'https://cdnus.globalso.com/kindly-group/IMG_8968_11.png',
+    },
+    {
+      title: 'Bộ kit xét nghiệm',
+      image:
+        'https://png.pngtree.com/png-clipart/20250516/original/pngtree-medical-diagnostic-test-kit-illustration-png-image_20998979.png',
+    },
+    {
+      title: 'Máy đo huyết áp, đường huyết',
+      image:
+        'https://bizweb.dktcdn.net/100/099/321/products/may-do-huyet-ap-mj710.png?v=1487409965640',
+    },
+    {
+      title: 'Nhiệt kế, máy xông mũi họng',
+      image:
+        'https://bwell-swiss.ch/wp-content/uploads/2017/12/WF-1000_galereya.png',
+    },
+    {
+      title: 'Sản phẩm chăm sóc người cao tuổi',
+      image:
+        'https://png.pngtree.com/png-vector/20250430/ourmid/pngtree-nurse-supporting-an-elderly-patient-caring-for-the-aging-population-png-image_16149510.png',
+    },
+    {
+      title: 'Ghế massage, đai lưng y tế',
+      image:
+        'https://thegioidodung.vn/wp-content/uploads/2025/06/ghe-massage-daikiosan-dkgm-30002-lcd-phai-truoc-832.png',
+    },
+    {
+      title: 'Găng tay y tế',
+      image:
+        'https://donganhsafety.com.vn/wp-content/uploads/2024/05/gang-tay-nitrile-thuc-pham-ssglove.png',
+    },
+    {
+      title: 'Khẩu trang y tế',
+      image:
+        'https://rando.com.vn/upload/products/khau-trang-khang-khuan-eco-fresh-rando-1-1-500x500-A1D1732257697.webp',
+    },
+    {
+      title: 'Bơm kim tiêm',
+      image: 'https://cdnus.globalso.com/kindly-group/IMG_8968_11.png',
+    },
+    {
+      title: 'Bộ kit xét nghiệm',
+      image:
+        'https://png.pngtree.com/png-clipart/20250516/original/pngtree-medical-diagnostic-test-kit-illustration-png-image_20998979.png',
+    },
+    {
+      title: 'Máy đo huyết áp, đường huyết',
+      image:
+        'https://bizweb.dktcdn.net/100/099/321/products/may-do-huyet-ap-mj710.png?v=1487409965640',
+    },
+    {
+      title: 'Nhiệt kế, máy xông mũi họng',
+      image:
+        'https://bwell-swiss.ch/wp-content/uploads/2017/12/WF-1000_galereya.png',
+    },
+    {
+      title: 'Sản phẩm chăm sóc người cao tuổi',
+      image:
+        'https://png.pngtree.com/png-vector/20250430/ourmid/pngtree-nurse-supporting-an-elderly-patient-caring-for-the-aging-population-png-image_16149510.png',
+    },
+    {
+      title: 'Ghế massage, đai lưng y tế',
+      image:
+        'https://thegioidodung.vn/wp-content/uploads/2025/06/ghe-massage-daikiosan-dkgm-30002-lcd-phai-truoc-832.png',
+    },
   ];
   const feedbacks = [
     {
@@ -380,8 +438,8 @@ const HomePageProduct = () => {
                                   src={item.image}
                                   alt="icon"
                                   style={{
-                                    width: '80%',
-                                    height: '80%',
+                                    width: '60%',
+                                    height: '60%',
                                     objectFit: 'contain',
                                   }}
                                 />
@@ -436,8 +494,8 @@ const HomePageProduct = () => {
                                   src={item.image}
                                   alt="icon"
                                   style={{
-                                    width: '80%',
-                                    height: '80%',
+                                    width: '60%',
+                                    height: '60%',
                                     objectFit: 'contain',
                                   }}
                                 />
@@ -1305,8 +1363,8 @@ const HomePageProduct = () => {
                                   src={item.image}
                                   alt="icon"
                                   style={{
-                                    width: '100%',
-                                    height: '100%',
+                                    width: '70%',
+                                    height: '70%',
                                     objectFit: 'contain',
                                   }}
                                 />
@@ -1361,8 +1419,8 @@ const HomePageProduct = () => {
                                   src={item.image}
                                   alt="icon"
                                   style={{
-                                    width: '100%',
-                                    height: '100%',
+                                    width: '70%',
+                                    height: '70%',
                                     objectFit: 'contain',
                                   }}
                                 />

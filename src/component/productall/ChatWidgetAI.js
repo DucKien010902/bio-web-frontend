@@ -17,7 +17,7 @@ const ChatWidgetAI = () => {
           size="large"
           style={{
             position: 'fixed',
-            bottom: 72,
+            bottom: 120,
             right: 12,
             zIndex: 1000,
             backgroundColor: '#e0f7fa',
@@ -40,7 +40,7 @@ const ChatWidgetAI = () => {
           size="large"
           style={{
             position: 'fixed',
-            bottom: 24,
+            bottom: 72,
             right: 12,
             zIndex: 1000,
             backgroundColor: '#ffe0f0',

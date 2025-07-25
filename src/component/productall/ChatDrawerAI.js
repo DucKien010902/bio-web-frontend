@@ -1,6 +1,7 @@
 // src/components/ChatDrawerAI.jsx
 import React, { useState, useEffect, useRef } from 'react';
-import { Drawer, Input, Button } from 'antd';
+import { Drawer, Input, Button, Avatar } from 'antd';
+import { RobotOutlined } from '@ant-design/icons';
 import './ChatDrawerAI.css'; // 👈 Thêm file CSS riêng nếu có
 
 const ChatDrawerAI = ({ open, onClose }) => {
@@ -140,8 +141,12 @@ const ChatDrawerAI = ({ open, onClose }) => {
               display: 'flex',
               justifyContent: m.fromUser ? 'flex-end' : 'flex-start',
               marginBottom: 8,
+              alignItems: 'flex-start',
             }}
           >
+            {!m.fromUser && (
+              <Avatar src="https://png.pngtree.com/png-vector/20230225/ourmid/pngtree-smart-chatbot-cartoon-clipart-png-image_6620453.png" />
+            )}
             <div
               style={{
                 background: m.fromUser ? '#1677ff' : '#f0f0f0',
@@ -150,6 +155,7 @@ const ChatDrawerAI = ({ open, onClose }) => {
                 borderRadius: 16,
                 maxWidth: '70%',
                 whiteSpace: 'pre-wrap',
+                marginLeft: 5,
               }}
             >
               {m.content.split('\n').map((line, index) => (

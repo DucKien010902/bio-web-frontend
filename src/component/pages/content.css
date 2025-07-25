@@ -7,7 +7,7 @@
 
 .banner {
   position: relative;
-  background-image: url('https://static.vecteezy.com/system/resources/thumbnails/004/449/845/small_2x/abstract-geometric-medical-cross-shape-medicine-and-science-concept-background-medicine-medical-health-cross-healthcare-decoration-for-flyers-poster-web-banner-and-card-illustration-vector.jpg');
+  background-image: url('https://png.pngtree.com/thumb_back/fh260/background/20210326/pngtree-light-blue-cute-striped-baby-blue-background-image_594858.jpg');
   background-size: cover;
   background-position: center;
   height: 550px;
@@ -60,7 +60,7 @@
   .search-input-custom .ant-input {
     font-size: 16px !important;
     height: 32px !important;
-    border-radius: 15px !important;
+    border-radius: 5px !important;
   }
 }
 

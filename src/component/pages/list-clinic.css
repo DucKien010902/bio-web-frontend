@@ -9,20 +9,41 @@
   border: 2px solid #00b5f1;
 }
 .search-input {
-  max-width: 50% !important;
-  margin: 30px auto !important;
-}
-.search-input .ant-input {
-  height: 56px !important;
-  font-size: 18px !important;
-  padding: 8px 16px !important;
+  width: 60%;
+  margin: 30px auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
+  padding-left: 8px; /* để prefix không bị sát */
 }
 
-.search-input .ant-btn {
-  height: 56px !important;
-  font-size: 18px !important;
-  padding: 0 20px !important;
+.search-input .ant-input {
+  height: 56px;
+  font-size: 16px;
+  border-radius: 12px;
+  background: transparent;
+  padding-left: 0;
+}
+
+.search-input .ant-input-prefix {
+  margin-right: 8px;
+  color: #ccc;
+  font-size: 18px;
   display: flex;
   align-items: center;
-  justify-content: center;
+}
+
+.search-input .ant-input:focus {
+  box-shadow: none !important;
+}
+@media screen and (max-width: 768px) {
+  .search-input {
+    width: 95% !important;
+    margin: 20px auto !important;
+  }
+
+  .search-input .ant-input {
+    height: 35px !important;
+    font-size: 14px !important;
+  }
 }

@@ -35,6 +35,12 @@ import { useSelector } from 'react-redux';
 import LiveStreamLayOut from './component/productall/LiveStream';
 import NotificationLayOut from './component/productall/NotificationLayOut';
 import AllProductContentSearch from './component/productall/AllproductContentForSearch';
+import MobileMenu from './component/pages/MobileMenu';
+import ClinicListMobilePage from './component/pages/list-clinicMobile';
+import ServicePageMobile from './component/pages/list-serciceMobile';
+import BookingPageMobile from './component/pages/book-calenderMobile';
+import DetailClinicMobile from './component/pages/detail-clinicMobile';
+import PostList from './component/pages/PostList';
 const ScrollToTop = () => {
   const { pathname } = useLocation();
 
@@ -88,18 +94,36 @@ const Product = ({ chatOpen, setChatOpen }) => {
   );
 };
 function MainApp() {
+  const isMobile = useMediaQuery({ maxWidth: 797 });
+
   return (
     <>
       <Header />
       <Routes>
         <Route path="" element={<ContentComponent />} />
         <Route path="gioi-thieu" element={<IntroPage />} />
-        <Route path="danh-sach-phong-kham" element={<ClinicListPage />} />
-        <Route path="chi-tiet-phong-kham" element={<DetailClinic />} />
-        <Route path="danh-sach-dich-vu" element={<ServicePage />} />
-        <Route path="dat-lich-xet-nghiem" element={<BookingPage />} />
+
+        {/* Render component phù hợp với thiết bị */}
+        <Route
+          path="danh-sach-phong-kham"
+          element={isMobile ? <ClinicListMobilePage /> : <ClinicListPage />}
+        />
+        <Route
+          path="danh-sach-dich-vu"
+          element={isMobile ? <ServicePageMobile /> : <ServicePage />}
+        />
+        <Route
+          path="dat-lich-xet-nghiem"
+          element={isMobile ? <BookingPageMobile /> : <BookingPage />}
+        />
+        <Route
+          path="chi-tiet-phong-kham"
+          element={isMobile ? <DetailClinicMobile /> : <DetailClinic />}
+        />
         <Route path="tai-khoan" element={<UserProfile />} />
         <Route path="booking-success" element={<BookingSuccess />} />
+        <Route path="menu" element={<MobileMenu />} />
+        <Route path="tin-tuc" element={<PostList />} />
       </Routes>
       <FooterComponent />
     </>
@@ -117,7 +141,7 @@ function App() {
     (pathname === '/' && isDesktop) ||
     (pathname.startsWith('/product') && isDesktop) ||
     (pathname === '/shopInfo' && isDesktop);
-  const shouldShowChatAI = pathname === '/mainbio' && isDesktop;
+  const shouldShowChatAI = pathname === '/mainbio';
   return (
     <div className="app-wrapper">
       <ScrollToTop />

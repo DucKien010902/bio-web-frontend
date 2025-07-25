@@ -5,6 +5,7 @@ import {
   FacebookFilled,
   YoutubeFilled,
   CaretDownOutlined,
+  CloseOutlined,
 } from '@ant-design/icons';
 import { Badge } from 'antd';
 import { FaUser } from 'react-icons/fa';
@@ -23,6 +24,8 @@ import {
 import { Dropdown, Menu, Modal } from 'antd';
 import './header.css';
 import { useMediaQuery } from 'react-responsive';
+import { useSelector, useDispatch } from 'react-redux';
+import { openMenuBio, closeMenuBio } from '../../redux/slices/openMenuSlice';
 const { Header } = Layout;
 
 // Tạo Menu dropdown
@@ -114,7 +117,7 @@ const HeaderComponent = () => {
     ],
     4: [{ label: 'Sản phẩm y tế', path: '/mainbio/product' }],
     5: [
-      { label: 'Hướng dẫn đặt khám', path: '/mainbio/' },
+      { label: 'Tin tức y tế', path: '/mainbio/tin-tuc' },
       // { label: 'Hướng dẫn thanh toán', path: '/mainbio' },
     ],
     6: [
@@ -470,6 +473,8 @@ const HeaderComponent = () => {
     );
   };
   const MobileLayout = () => {
+    const isOpenMenu = useSelector((state) => state.openMenu.IsOpenMenu);
+    const dispatch = useDispatch();
     return (
       <div>
         <Header
@@ -491,16 +496,16 @@ const HeaderComponent = () => {
               alignItems: 'center',
               cursor: 'pointer',
             }}
-            onClick={() => {
-              navigate('/');
-            }}
           >
             <div
+              onClick={() => {
+                navigate('/');
+              }}
               style={{
                 margin: 0,
                 fontFamily: 'cursive',
                 fontSize: 30,
-                fontWeight: 600,
+                fontWeight: 700,
                 background: 'linear-gradient(to right, #1890ff, #cf1952)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
@@ -515,7 +520,7 @@ const HeaderComponent = () => {
               display: 'flex',
               alignItems: 'center',
               gap: 12,
-              paddingTop: 5,
+              // paddingTop: 5,
               width: 70,
               justifyContent: 'space-between',
             }}
@@ -525,8 +530,23 @@ const HeaderComponent = () => {
               <BellOutlined style={{ fontSize: 22, color: '#1890ff' }} />
             </Badge>
 
-            {/* Icon danh sách */}
-            <UnorderedListOutlined style={{ fontSize: 22 }} />
+            {isOpenMenu ? (
+              <CloseOutlined
+                style={{ fontSize: 22 }}
+                onClick={() => {
+                  dispatch(closeMenuBio());
+                  navigate('/mainbio');
+                }}
+              />
+            ) : (
+              <UnorderedListOutlined
+                style={{ fontSize: 22 }}
+                onClick={() => {
+                  dispatch(openMenuBio());
+                  navigate('/mainbio/menu');
+                }}
+              />
+            )}
           </div>
         </Header>
 

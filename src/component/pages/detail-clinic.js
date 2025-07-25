@@ -19,42 +19,6 @@ import {
 } from '@ant-design/icons';
 const { Title, Text, Paragraph } = Typography;
 
-// const data = {
-//   name: 'Trung tâm xét nghiệm GoLAB Ba Đình',
-//   address: '🌏 8/24 Nguyễn Đình Khơi, Phường 4, Tân Bình, TP.HCM',
-//   workingHours: '🧭 Thứ 2 - Chủ nhật (08:00 - 18:00)',
-//   phone: '19002115',
-//   rating: 4.5,
-//   mainImage:
-//     'https://res.cloudinary.com/da6f4dmql/image/upload/v1746699745/tjigguitv8ujbec9avil.jpg',
-//   introTitle: 'Giới thiệu chung về Trung tâm xét nghiệm Gentis',
-//   introBulletPoints: [
-//     'Gentis là đơn vị uy tín trong xét nghiệm gen tại Việt Nam.',
-//     'Thành lập ngày 26/10/2010, là thành viên của Eurofins toàn cầu.',
-//     'Hơn 200.000 khách hàng đã sử dụng dịch vụ.',
-//     'Sở hữu Lab tại TP.HCM và Hà Nội, đạt chứng chỉ ISO 9001:2015.',
-//     'Gentis là đơn vị uy tín trong xét nghiệm gen tại Việt Nam.',
-//     'Thành lập ngày 26/10/2010, là thành viên của Eurofins toàn cầu.',
-//     'Hơn 200.000 khách hàng đã sử dụng dịch vụ.',
-//     'Sở hữu Lab tại TP.HCM và Hà Nội, đạt chứng chỉ ISO 9001:2015.',
-//     'Gentis là đơn vị uy tín trong xét nghiệm gen tại Việt Nam.',
-//     'Thành lập ngày 26/10/2010, là thành viên của Eurofins toàn cầu.',
-//     'Hơn 200.000 khách hàng đã sử dụng dịch vụ.',
-//     'Sở hữu Lab tại TP.HCM và Hà Nội, đạt chứng chỉ ISO 9001:2015.',
-//   ],
-//   descriptions:
-//     'Là đơn vị uy tín trong xét nghiệm gen tại Việt Nam có công nghệ hàng đầu trong lĩnh vực ứng dụng phân tích gen, xét nghiệm ADN.Với 2 phòng Lab lớn tại TP.HCM và Hà Nội được thực hiện bởi TS,ThS, KTV giàu kinh nghiệm.',
-//   branches: [
-//     {
-//       city: 'Hà Nội',
-//       address: '🌏 Tầng 3, TTTM V+, 505 Minh Khai, Hai Bà Trưng',
-//     },
-//     { city: 'TP.HCM', address: '🌏 8/24 Nguyễn Đình Khơi, Tân Bình, TP.HCM' },
-//   ],
-//   mapEmbedUrl:
-//     'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.089557632273!2d105.79287207476929!3d21.029102287767756!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ab45e68f9873%3A0x7a276fdeb40e18dd!2zMjggUC4gVGjDoG5oIFRow6FpLCBE4buLY2ggVuG7jW5nLCBD4bqndSBHaeG6pXksIEjDoCBO4buZaSAxMDAwMDAsIFZp4buHdCBOYW0!5e0!3m2!1svi!2s!4v1747816136063!5m2!1svi!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade',
-// };
-
 const DetailClinic = () => {
   const location = useLocation();
 

@@ -2,7 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Input, Typography, Row, Col, Card, Button, Rate, Divider } from 'antd';
 import genbio1 from '../../assets/images/genbio1.jpg';
 import './list-clinic.css';
-import { EnvironmentOutlined, CheckCircleTwoTone } from '@ant-design/icons';
+import {
+  EnvironmentOutlined,
+  CheckCircleTwoTone,
+  SearchOutlined,
+} from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 
 const { Title, Text, Paragraph } = Typography;
@@ -83,13 +87,14 @@ const ClinicListPage = () => {
         khoa
       </Text>
 
-      <Input.Search
-        placeholder="Tìm kiếm cơ sở y"
-        enterButton
-        size="large"
+      <Input
+        placeholder="Tìm kiếm cơ sở y tế..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
+        prefix={<SearchOutlined style={{ color: '#ccc', marginLeft: 8 }} />}
+        size="large"
         className="search-input"
+        bordered={false}
       />
 
       <Row gutter={24} style={{ marginLeft: '5%' }}>
