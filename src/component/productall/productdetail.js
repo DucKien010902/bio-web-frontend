@@ -67,7 +67,7 @@ const ProductDetailPage = () => {
 
   const handleAddtoCart = async () => {
     if (phoneNumber) {
-      if (!selectedType) {
+      if (!selectedType && product.pdClassify) {
         message.warning('Vui lòng chọn loại sản phẩm');
       } else {
         console.log(selectedType);
@@ -105,7 +105,7 @@ const ProductDetailPage = () => {
     if (!phoneNumber) {
       navigate('/login');
     } else {
-      if (!selectedType) {
+      if (!selectedType && product.pdClassify) {
         message.warning('Vui lòng chọn loại sản phẩm');
       } else {
         navigate('/product/invoice', {

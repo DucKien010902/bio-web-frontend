@@ -105,6 +105,16 @@ const HomePageProduct = () => {
         'https://rando.com.vn/upload/products/khau-trang-khang-khuan-eco-fresh-rando-1-1-500x500-A1D1732257697.webp',
     },
     {
+      title: 'Máy xông chăm sóc tai mũi họng',
+      image:
+        'https://bwell-swiss.ch/wp-content/uploads/2017/12/WF-1000_galereya.png',
+    },
+    {
+      title: 'Sản phẩm chăm sóc người cao tuổi',
+      image:
+        'https://png.pngtree.com/png-vector/20250430/ourmid/pngtree-nurse-supporting-an-elderly-patient-caring-for-the-aging-population-png-image_16149510.png',
+    },
+    {
       title: 'Bơm kim tiêm',
       image: 'https://cdnus.globalso.com/kindly-group/IMG_8968_11.png',
     },
@@ -117,16 +127,6 @@ const HomePageProduct = () => {
       title: 'Máy đo huyết áp, đường huyết',
       image:
         'https://bizweb.dktcdn.net/100/099/321/products/may-do-huyet-ap-mj710.png?v=1487409965640',
-    },
-    {
-      title: 'Nhiệt kế, máy xông mũi họng',
-      image:
-        'https://bwell-swiss.ch/wp-content/uploads/2017/12/WF-1000_galereya.png',
-    },
-    {
-      title: 'Sản phẩm chăm sóc người cao tuổi',
-      image:
-        'https://png.pngtree.com/png-vector/20250430/ourmid/pngtree-nurse-supporting-an-elderly-patient-caring-for-the-aging-population-png-image_16149510.png',
     },
     {
       title: 'Ghế massage, đai lưng y tế',
@@ -144,6 +144,16 @@ const HomePageProduct = () => {
         'https://rando.com.vn/upload/products/khau-trang-khang-khuan-eco-fresh-rando-1-1-500x500-A1D1732257697.webp',
     },
     {
+      title: 'Máy xông chăm sóc tai mũi họng',
+      image:
+        'https://bwell-swiss.ch/wp-content/uploads/2017/12/WF-1000_galereya.png',
+    },
+    {
+      title: 'Sản phẩm chăm sóc người cao tuổi',
+      image:
+        'https://png.pngtree.com/png-vector/20250430/ourmid/pngtree-nurse-supporting-an-elderly-patient-caring-for-the-aging-population-png-image_16149510.png',
+    },
+    {
       title: 'Bơm kim tiêm',
       image: 'https://cdnus.globalso.com/kindly-group/IMG_8968_11.png',
     },
@@ -156,16 +166,6 @@ const HomePageProduct = () => {
       title: 'Máy đo huyết áp, đường huyết',
       image:
         'https://bizweb.dktcdn.net/100/099/321/products/may-do-huyet-ap-mj710.png?v=1487409965640',
-    },
-    {
-      title: 'Nhiệt kế, máy xông mũi họng',
-      image:
-        'https://bwell-swiss.ch/wp-content/uploads/2017/12/WF-1000_galereya.png',
-    },
-    {
-      title: 'Sản phẩm chăm sóc người cao tuổi',
-      image:
-        'https://png.pngtree.com/png-vector/20250430/ourmid/pngtree-nurse-supporting-an-elderly-patient-caring-for-the-aging-population-png-image_16149510.png',
     },
     {
       title: 'Ghế massage, đai lưng y tế',

@@ -211,7 +211,7 @@ const MobileMenu = () => {
             },
             {
               icon: <MailOutlined style={{ color: '#d93025' }} />,
-              title: 'Email: cskh@medpro.vn',
+              title: 'Email: cskh@gentech.vn',
             },
           ]}
           renderItem={(item) => (
