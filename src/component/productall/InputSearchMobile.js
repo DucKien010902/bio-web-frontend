@@ -38,7 +38,7 @@ const AnimatedSearchMobile = () => {
 
   const handleSearch = (value) => {
     if (value.trim()) {
-      navigate(`/product/search?key=${encodeURIComponent(value.trim())}`);
+      navigate(`/san-pham/search?key=${encodeURIComponent(value.trim())}`);
     }
   };
 

@@ -10,6 +10,14 @@ import { List, Avatar, Input, Button, Typography } from 'antd';
 import dayjs from 'dayjs';
 import { io } from 'socket.io-client';
 import axiosClient from '../../api/apiConfig';
+import EmojiPicker from 'emoji-picker-react';
+import {
+  PictureOutlined,
+  PaperClipOutlined,
+  SmileOutlined,
+  SendOutlined,
+} from '@ant-design/icons';
+import { Upload } from 'antd';
 import { useMediaQuery } from 'react-responsive';
 
 const { Text } = Typography;
@@ -28,6 +36,29 @@ const ChatPanel = ({ open, onClose, shopInfo }) => {
   const [currentShopId, setCurrentShopId] = useState(null);
 
   const sender = useMemo(() => JSON.parse(localStorage.getItem('user')), []);
+  const [showEmoji, setShowEmoji] = useState(false);
+
+  const uploadImageToCloudinary = async (file) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', 'your_upload_preset'); // thay bằng preset thực tế
+    const res = await fetch(
+      'https://api.cloudinary.com/v1_1/your_cloud_name/image/upload',
+      {
+        method: 'POST',
+        body: formData,
+      }
+    );
+    const data = await res.json();
+    if (data.secure_url) {
+      sendNewMessage('', data.secure_url); // hoặc messageType: 'image'
+    }
+  };
+
+  const uploadFile = async (file) => {
+    console.log('Tạm thời chưa upload file:', file.name);
+    // Bạn có thể xử lý sau hoặc dùng Cloudinary upload file khác ảnh
+  };
 
   const sortedChats = useMemo(() => {
     const getLastTs = (chat) =>
@@ -223,8 +254,27 @@ const ChatPanel = ({ open, onClose, shopInfo }) => {
       setCurrentShopId(chats[0].shopId);
     }
   }, [chats, currentShopId]);
+  // ✅ Đặt ở đầu component
+  const emojiRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (emojiRef.current && !emojiRef.current.contains(e.target)) {
+        setShowEmoji(false);
+      }
+    };
+
+    if (showEmoji) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showEmoji]);
+
   if (!open) return null;
-  // const DesktopLayOut = () => {
+
   return (
     <div
       ref={panelRef}
@@ -352,47 +402,119 @@ const ChatPanel = ({ open, onClose, shopInfo }) => {
           ))}
         </div>
 
-        {/* Input */}
         <div
           style={{
+            position: 'relative',
             padding: 16,
             borderTop: '1px solid #f0f0f0',
             display: 'flex',
+            alignItems: 'flex-end',
             gap: 8,
           }}
         >
-          <input
-            type="text"
-            value={newMsg}
-            onChange={(e) => setNewMsg(e.target.value)}
-            placeholder="Nhập tin nhắn…"
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                if (!newMsg.trim()) return;
-                sendNewMessage(newMsg.trim());
-                setNewMsg('');
-              }
-            }}
+          {/* Vùng nhập + icon bên phải */}
+          <div
             style={{
+              position: 'relative',
               flex: 1,
-              padding: '8px 12px',
-              borderRadius: 20,
+              display: 'flex',
               border: '1px solid #d9d9d9',
-              outline: 'none',
+              borderRadius: 20,
+              padding: '4px 8px',
+              background: '#fff',
             }}
-          />
+          >
+            {/* Ô nhập */}
+            <textarea
+              value={newMsg}
+              onChange={(e) => setNewMsg(e.target.value)}
+              placeholder="Nhập tin nhắn…"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                  e.preventDefault();
+                  if (!newMsg.trim()) return;
+                  sendNewMessage(newMsg.trim());
+                  setNewMsg('');
+                }
+              }}
+              style={{
+                flex: 1,
+                border: 'none',
+                outline: 'none',
+                resize: 'none',
+                minHeight: 40,
+                fontSize: 14,
+                lineHeight: '1.5',
+              }}
+            />
 
+            {/* Cột icon bên phải trong input */}
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                gap: 0,
+                paddingLeft: 4,
+              }}
+            >
+              {/* Icon ảnh */}
+              <Upload
+                showUploadList={false}
+                accept="image/*"
+                beforeUpload={(file) => {
+                  uploadImageToCloudinary(file);
+                  return false;
+                }}
+              >
+                <Button
+                  icon={<PaperClipOutlined />}
+                  type="text"
+                  style={{ padding: 0 }}
+                />
+              </Upload>
+
+              {/* Icon emoji */}
+              <Button
+                icon={<SmileOutlined />}
+                type="text"
+                onClick={() => setShowEmoji(!showEmoji)}
+                style={{ padding: 0 }}
+              />
+            </div>
+          </div>
+
+          {/* Nút gửi */}
           <Button
             type="primary"
+            icon={<SendOutlined />}
             onClick={() => {
               if (!newMsg.trim()) return;
               sendNewMessage(newMsg.trim());
               setNewMsg('');
             }}
-          >
-            Gửi
-          </Button>
+          />
+
+          {/* Emoji picker */}
+          {showEmoji && (
+            <div
+              style={{
+                position: 'absolute',
+                bottom: 80,
+                right: 70,
+                zIndex: 9999,
+                boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+              }}
+            >
+              <EmojiPicker
+                onEmojiClick={(emojiData) => {
+                  setNewMsg((prev) => prev + emojiData.emoji);
+                  setShowEmoji(false);
+                }}
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>

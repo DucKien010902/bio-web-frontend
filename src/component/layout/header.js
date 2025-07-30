@@ -26,6 +26,7 @@ import './header.css';
 import { useMediaQuery } from 'react-responsive';
 import { useSelector, useDispatch } from 'react-redux';
 import { openMenuBio, closeMenuBio } from '../../redux/slices/openMenuSlice';
+import gennovaXLogo from '../../assets/images/GennovaX-logo-tách-nền.png';
 const { Header } = Layout;
 
 // Tạo Menu dropdown
@@ -50,7 +51,7 @@ const HeaderComponent = () => {
         icon={<ProfileOutlined style={{ fontSize: 23 }} />}
         style={{ padding: '12px 16px', fontSize: 16 }}
         onClick={() =>
-          navigate('/mainbio/tai-khoan', { state: { key: 'history' } })
+          navigate('/y-te/tai-khoan', { state: { key: 'history' } })
         }
       >
         Hồ sơ kết quả
@@ -60,7 +61,7 @@ const HeaderComponent = () => {
         icon={<FileTextOutlined style={{ fontSize: 23 }} />}
         style={{ padding: '12px 16px', fontSize: 16 }}
         onClick={() =>
-          navigate('/mainbio/tai-khoan', { state: { key: 'tickets' } })
+          navigate('/y-te/tai-khoan', { state: { key: 'tickets' } })
         }
       >
         Phiếu khám bệnh
@@ -70,7 +71,7 @@ const HeaderComponent = () => {
         icon={<BellOutlined style={{ fontSize: 23 }} />}
         style={{ padding: '12px 16px', fontSize: 16 }}
         onClick={() =>
-          navigate('/mainbio/tai-khoan', { state: { key: 'notifications' } })
+          navigate('/y-te/tai-khoan', { state: { key: 'notifications' } })
         }
       >
         Thông báo
@@ -83,7 +84,7 @@ const HeaderComponent = () => {
         style={{ padding: '12px 16px', fontSize: 16 }}
         onClick={() => {
           localStorage.removeItem('user');
-          navigate('/mainbio/login');
+          navigate('/y-te/login');
         }}
       >
         Đăng xuất
@@ -91,7 +92,7 @@ const HeaderComponent = () => {
     </Menu>
   );
   const menuItems = [
-    { label: 'Giới thiệu', key: '1' },
+    { label: 'Trang chủ', key: '1' },
     { label: 'Dịch vụ y tế', key: '2' },
     { label: 'Vật tư y tế', key: '4' },
     { label: 'Tin tức', key: '5' },
@@ -102,32 +103,32 @@ const HeaderComponent = () => {
   // console.log(user?.phone);
   const subMenus = {
     1: [
-      // { label: 'Bệnh viện', path: '/mainbio' },
-      // { label: 'Trạm y tế', path: '/mainbio' },
+      // { label: 'Bệnh viện', path: '/y-te' },
+      // { label: 'Trạm y tế', path: '/y-te' },
     ],
     2: [
-      { label: 'Các dịch vụ', path: '/mainbio/danh-sach-dich-vu' },
-      { label: 'Phòng khám', path: '/mainbio/danh-sach-phong-kham' },
-      // { label: 'Xét nghiệm', path: '/mainbio' },
-      // { label: 'Chẩn đoán hình ảnh', path: '/mainbio' },
+      { label: 'Các dịch vụ', path: '/y-te/danh-sach-dich-vu' },
+      { label: 'Phòng khám', path: '/y-te/danh-sach-phong-kham' },
+      // { label: 'Xét nghiệm', path: '/y-te' },
+      // { label: 'Chẩn đoán hình ảnh', path: '/y-te' },
     ],
     3: [
-      // { label: 'Gói khám cho doanh nghiệp', path: '/mainbio' },
-      // { label: 'Khám định kỳ', path: '/mainbio' },
+      // { label: 'Gói khám cho doanh nghiệp', path: '/y-te' },
+      // { label: 'Khám định kỳ', path: '/y-te' },
     ],
-    4: [{ label: 'Sản phẩm y tế', path: '/mainbio/product' }],
+    4: [{ label: 'Sản phẩm y tế', path: '/y-te/product' }],
     5: [
-      { label: 'Tin tức y tế', path: '/mainbio/tin-tuc' },
-      // { label: 'Hướng dẫn thanh toán', path: '/mainbio' },
+      { label: 'Tin tức y tế', path: '/y-te/tin-tuc' },
+      // { label: 'Hướng dẫn thanh toán', path: '/y-te' },
     ],
     6: [
-      // { label: 'Cơ sở y tế', path: '/mainbio' },
-      { label: 'Về GennovaX', path: '/mainbio/gioi-thieu' },
+      // { label: 'Cơ sở y tế', path: '/y-te' },
+      { label: 'Về GennovaX', path: '/y-te/gioi-thieu' },
     ],
     7: [
-      // { label: 'Cơ sở y tế', path: '/mainbio' },
-      { label: 'Về GenBio', path: '/mainbio/gioi-thieu' },
-      { label: 'Sản phẩm y tế', path: '/mainbio/product' },
+      // { label: 'Cơ sở y tế', path: '/y-te' },
+      { label: 'Về GenBio', path: '/y-te/gioi-thieu' },
+      { label: 'Sản phẩm y tế', path: '/y-te/product' },
     ],
   };
 
@@ -171,26 +172,21 @@ const HeaderComponent = () => {
               flex: 3,
               display: 'flex',
               alignItems: 'center',
+              justifyContent: 'center',
               cursor: 'pointer',
             }}
             onClick={() => {
-              navigate('/');
+              navigate('/y-te');
             }}
           >
-            <div
+            <img
+              src={gennovaXLogo}
+              alt="GennovaX Logo"
               style={{
-                margin: 0,
-                fontFamily: 'cursive',
-                fontSize: 42,
-                fontWeight: 700,
-                background: 'linear-gradient(to right, #1890ff, #cf1952)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                display: 'inline-block',
+                height: 180, // bạn có thể thay đổi kích thước nếu muốn
+                objectFit: 'contain',
               }}
-            >
-              GennovaX
-            </div>
+            />
           </div>
 
           {/* Nội dung bên phải */}
@@ -334,7 +330,7 @@ const HeaderComponent = () => {
                         'redirectAfterLogin',
                         window.location.pathname + window.location.search
                       );
-                      navigate('/mainbio/login');
+                      navigate('/y-te/login');
                     }}
                   >
                     Tài khoản
@@ -378,9 +374,7 @@ const HeaderComponent = () => {
                       <div
                         key={item.key}
                         className="menu-item"
-                        onClick={() =>
-                          window.open('https://www.gennovax.vn/', 'blank')
-                        }
+                        onClick={() => navigate('/')}
                       >
                         {item.label}
                       </div>
@@ -499,7 +493,7 @@ const HeaderComponent = () => {
           >
             <div
               onClick={() => {
-                navigate('/');
+                navigate('/y-te');
               }}
               style={{
                 margin: 0,
@@ -535,7 +529,7 @@ const HeaderComponent = () => {
                 style={{ fontSize: 22 }}
                 onClick={() => {
                   dispatch(closeMenuBio());
-                  navigate('/mainbio');
+                  navigate('/y-te');
                 }}
               />
             ) : (
@@ -543,7 +537,7 @@ const HeaderComponent = () => {
                 style={{ fontSize: 22 }}
                 onClick={() => {
                   dispatch(openMenuBio());
-                  navigate('/mainbio/menu');
+                  navigate('/y-te/menu');
                 }}
               />
             )}

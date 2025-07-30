@@ -57,7 +57,7 @@ const LoginPage = () => {
       });
 
       const user = response.data.user;
-
+      const token = response.data.token;
       if (user.role === 'customer') {
         const formattedPhone = '+84' + phoneNumber.slice(1);
         await setupRecaptcha();
@@ -68,6 +68,7 @@ const LoginPage = () => {
         setConfirmResult(confirmation);
         setStep('otp');
         sessionStorage.setItem('tempUser', JSON.stringify(user));
+        sessionStorage.setItem('token', token);
         message.success('Đã gửi mã OTP');
       } else {
         // 👉 Lưu thông tin user vào localStorage

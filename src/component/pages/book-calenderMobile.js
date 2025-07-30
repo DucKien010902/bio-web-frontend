@@ -99,7 +99,7 @@ const BookingPageMobile = () => {
       try {
         await axiosClient.post('/booking/addfirst', state);
         message.success('Đặt lịch thành công');
-        navigate('/mainbio/booking-success', { state });
+        navigate('/y-te/booking-success', { state });
       } catch (error) {
         message.error('Không thể đặt lịch');
       }

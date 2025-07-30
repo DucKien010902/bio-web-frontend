@@ -72,7 +72,7 @@ const ProductDetailPage = () => {
       } else {
         console.log(selectedType);
         try {
-          const res = await axiosClient.post('/product/addtocart', {
+          const res = await axiosClient.post('/san-pham/addtocart', {
             phoneNumber: phoneNumber,
             Id: product.Id,
             pdImage: product.pdImage,
@@ -101,14 +101,16 @@ const ProductDetailPage = () => {
       navigate('/login');
     }
   };
+
   const handleOrder = async () => {
     if (!phoneNumber) {
       navigate('/login');
     } else {
-      if (!selectedType && product.pdClassify) {
+      console.log(product.pdTypes.length);
+      if (!selectedType && product.pdTypes.length != 0) {
         message.warning('Vui lòng chọn loại sản phẩm');
       } else {
-        navigate('/product/invoice', {
+        navigate('/san-pham/dat-hang', {
           state: [
             {
               Id: product.Id,

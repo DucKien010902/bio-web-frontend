@@ -81,7 +81,7 @@ const BookingSuccess = () => {
               fontWeight: 500,
               background: 'linear-gradient(36deg, #00b5f1, #00e0ff)',
             }}
-            onClick={() => navigate('/mainbio')}
+            onClick={() => navigate('/y-te')}
           >
             Quay lại trang chủ
           </Button>
@@ -160,7 +160,7 @@ const BookingSuccess = () => {
               fontWeight: 500,
               background: 'linear-gradient(36deg, #00b5f1, #00e0ff)',
             }}
-            onClick={() => navigate('/mainbio')}
+            onClick={() => navigate('/y-te')}
           >
             Quay lại trang chủ
           </Button>

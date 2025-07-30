@@ -12,10 +12,10 @@ const tabItems = [
   {
     label: 'Xét nghiệm',
     icon: <MedicineBoxOutlined />,
-    path: '/mainbio',
+    path: '/y-te',
   },
   { label: 'Tin tức', icon: <AppleOutlined />, path: '/notification' },
-  { label: 'Tài khoản', icon: <UserOutlined />, path: '/product/profile' },
+  { label: 'Tài khoản', icon: <UserOutlined />, path: '/san-pham/tai-khoan' },
 ];
 
 const BottomTabBar = () => {
@@ -55,7 +55,7 @@ const BottomTabBar = () => {
             key={item.path}
             onClick={() => {
               const user = JSON.parse(localStorage.getItem('user'));
-              if (item.path === '/product/profile' && !user) {
+              if (item.path === '/san-pham/tai-khoan' && !user) {
                 navigate('/login');
               } else {
                 navigate(item.path);

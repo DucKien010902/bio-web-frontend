@@ -152,7 +152,7 @@ const ServicePageMobile = () => {
               <Button
                 type="primary"
                 onClick={() =>
-                  navigate(`/mainbio/dat-lich-xet-nghiem?code=${service.code}`)
+                  navigate(`/y-te/dat-lich-xet-nghiem?code=${service.code}`)
                 }
                 style={{ fontWeight: 500, borderRadius: 20 }}
               >

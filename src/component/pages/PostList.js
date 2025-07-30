@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Row, Col, Card, Typography, Modal, Spin, Button } from 'antd';
 import Papa from 'papaparse';
 
@@ -12,6 +12,7 @@ const PostList = () => {
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedPost, setSelectedPost] = useState(null);
+  const audioRefs = useRef({});
 
   useEffect(() => {
     const sheetUrl =
@@ -24,7 +25,7 @@ const PostList = () => {
           header: true,
           skipEmptyLines: true,
           complete: (results) => {
-            const reversed = results.data.reverse(); // Bài mới nhất nằm cuối => đảo lại
+            const reversed = results.data.reverse();
             setAllPosts(reversed);
             setVisiblePosts(reversed.slice(0, POSTS_PER_PAGE));
             setLoading(false);
@@ -54,6 +55,8 @@ const PostList = () => {
           <Row gutter={[24, 24]}>
             {visiblePosts.map((post, index) => {
               const imageUrl = extractImageUrl(post.File);
+              const voiceUrl = post.Voice || '';
+
               return (
                 <Col xs={24} sm={12} md={8} key={index}>
                   <Card
@@ -72,6 +75,18 @@ const PostList = () => {
                       {post.Title}
                     </Title>
                     <Paragraph ellipsis={{ rows: 3 }}>{post.Content}</Paragraph>
+
+                    {
+                      <div style={{ marginTop: 12 }}>
+                        <audio
+                          ref={(el) => (audioRefs.current[index] = el)}
+                          src={voiceUrl}
+                          controls
+                          style={{ width: '100%' }}
+                        />
+                      </div>
+                    }
+
                     <div style={{ color: '#1677ff', fontWeight: 500 }}>
                       Xem chi tiết →
                     </div>
@@ -89,7 +104,6 @@ const PostList = () => {
         </>
       )}
 
-      {/* Modal hiển thị bài viết chi tiết */}
       <Modal
         open={!!selectedPost}
         onCancel={closeModal}
@@ -115,6 +129,13 @@ const PostList = () => {
             <Paragraph style={{ whiteSpace: 'pre-line' }}>
               {selectedPost.Content}
             </Paragraph>
+            {selectedPost.Voice && (
+              <audio
+                src={selectedPost.Voice}
+                controls
+                style={{ width: '100%', marginTop: 16 }}
+              />
+            )}
           </>
         )}
       </Modal>
@@ -122,7 +143,6 @@ const PostList = () => {
   );
 };
 
-// Hàm xử lý link ảnh từ Google Drive hoặc ảnh trực tiếp
 function extractImageUrl(file) {
   if (!file) return '';
   if (file.includes('vnexpress')) return file;

@@ -113,7 +113,7 @@ const ClinicListMobilePage = () => {
               }}
               bodyStyle={{ padding: 12 }}
               onClick={() =>
-                navigate(`/mainbio/chi-tiet-phong-kham?ID=${clinic.ID}`)
+                navigate(`/y-te/chi-tiet-phong-kham?ID=${clinic.ID}`)
               }
             >
               <Row gutter={12}>
@@ -167,7 +167,7 @@ const ClinicListMobilePage = () => {
                   }}
                   onClick={(e) => {
                     e.stopPropagation();
-                    navigate(`/mainbio/chi-tiet-phong-kham?ID=${clinic.ID}`);
+                    navigate(`/y-te/chi-tiet-phong-kham?ID=${clinic.ID}`);
                   }}
                 >
                   Xem chi tiết
@@ -184,7 +184,7 @@ const ClinicListMobilePage = () => {
                   }}
                   onClick={(e) => {
                     e.stopPropagation();
-                    navigate(`/mainbio/dat-lich-xet-nghiem?ID=${clinic.ID}`);
+                    navigate(`/y-te/dat-lich-xet-nghiem?ID=${clinic.ID}`);
                   }}
                 >
                   Đặt khám ngay

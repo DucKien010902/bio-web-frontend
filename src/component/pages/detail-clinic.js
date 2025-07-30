@@ -113,7 +113,7 @@ const DetailClinic = () => {
                 backgroundColor: '#00e0ff',
               }}
               onClick={() => {
-                navigate(`/mainbio/dat-lich-xet-nghiem?ID=${ID}`);
+                navigate(`/y-te/dat-lich-xet-nghiem?ID=${ID}`);
               }}
             >
               Đặt khám ngay

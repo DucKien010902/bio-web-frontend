@@ -172,7 +172,7 @@ const BookingPage = () => {
       try {
         const res = await axiosClient.post('/booking/addfirst', state);
         message.success('Dat lich thanh cong');
-        navigate('/mainbio/booking-success', {
+        navigate('/y-te/booking-success', {
           state,
         });
       } catch (error) {

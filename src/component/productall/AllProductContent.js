@@ -217,7 +217,7 @@ const AllProductContent = () => {
                     key={index}
                     product={product}
                     onClick={() =>
-                      navigate(`/product/detail?Id=${product.Id}`, {
+                      navigate(`/san-pham/chi-tiet?Id=${product.Id}`, {
                         state: product,
                       })
                     }
@@ -357,7 +357,7 @@ const AllProductContent = () => {
                                   const encodedCategory =
                                     encodeURIComponent(category);
                                   navigate(
-                                    `/product?danhmuc=${encodedCategory}`
+                                    `/san-pham?danhmuc=${encodedCategory}`
                                   );
                                 }}
                               >

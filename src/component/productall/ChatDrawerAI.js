@@ -1,20 +1,46 @@
 // src/components/ChatDrawerAI.jsx
 import React, { useState, useEffect, useRef } from 'react';
-import { Drawer, Input, Button, Avatar } from 'antd';
-import { RobotOutlined } from '@ant-design/icons';
-import './ChatDrawerAI.css'; // 👈 Thêm file CSS riêng nếu có
+import { Drawer, Input, Button, Avatar, Modal, List, Typography } from 'antd';
+import { RobotOutlined, QuestionCircleOutlined } from '@ant-design/icons';
+import './ChatDrawerAI.css';
+
+const SESSION_KEY = 'chat_ai_messages';
 
 const ChatDrawerAI = ({ open, onClose }) => {
   const [newMsg, setNewMsg] = useState('');
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   const scrollRef = useRef(null);
 
+  const suggestedQuestions = [
+    'Làm sao để đặt lịch xét nghiệm?',
+    'Cơ sở xét nghiệm nào gần tôi nhất?',
+    'Tổng quan về công ty của bạn?',
+    'Các gói xét nghiệm NIPT?',
+    'Các gói xét nghiệm ADN?',
+    'Bạn có thể cung cấp những dịch vụ nào?',
+    'Chi phí xét nghiệm tổng quát là bao nhiêu?',
+    'Tôi có thể lấy mẫu tại nhà không?',
+    'Có thể thanh toán bằng bảo hiểm y tế không?',
+    'Xét nghiệm cần bao lâu để có kết quả?',
+    'Trẻ em có thể làm xét nghiệm máu được không?',
+    'Tôi có thể đặt lịch cho người thân không?',
+    'Xét nghiệm có ảnh hưởng gì đến sức khỏe không?',
+    'Làm sao để nhận kết quả xét nghiệm online?',
+    'Có cần nhịn tiểu khi làm xét nghiệm nước tiểu không?',
+    'Phòng xét nghiệm hoạt động vào cuối tuần không?',
+    'Xét nghiệm định kỳ có phát hiện bệnh tiềm ẩn không?',
+    'Tôi có thể chọn bác sĩ khi đặt lịch không?',
+    'Lấy mẫu máu có đau không?',
+    'Sau khi xét nghiệm có cần nghỉ ngơi không?',
+  ];
+
+  // Fetch từ API
   const askQuestion1 = async (question) => {
     try {
       const response = await fetch(
         'https://rationally-pleased-antelope.ngrok-free.app/webhook/ai-train-GPT',
-        // 'https://rationally-pleased-antelope.ngrok-free.app/webhook/ai-blog',
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -32,6 +58,7 @@ const ChatDrawerAI = ({ open, onClose }) => {
     }
   };
 
+  // Gửi tin nhắn
   const sendMessage = async () => {
     if (!newMsg.trim()) return;
 
@@ -42,9 +69,11 @@ const ChatDrawerAI = ({ open, onClose }) => {
       timestamp: new Date().toISOString(),
     };
 
-    setMessages((prev) => [...prev, userMessage]);
+    const updatedMessages = [...messages, userMessage];
+    setMessages(updatedMessages);
     setNewMsg('');
     setLoading(true);
+    sessionStorage.setItem(SESSION_KEY, JSON.stringify(updatedMessages));
 
     const reply = await askQuestion1(userMessage.content);
 
@@ -55,20 +84,43 @@ const ChatDrawerAI = ({ open, onClose }) => {
       timestamp: new Date().toISOString(),
     };
 
-    setMessages((prev) => [...prev, aiMessage]);
+    const finalMessages = [...updatedMessages, aiMessage];
+    setMessages(finalMessages);
     setLoading(false);
+    sessionStorage.setItem(SESSION_KEY, JSON.stringify(finalMessages));
   };
 
+  // Load dữ liệu khi mở Drawer
+  useEffect(() => {
+    if (open) {
+      const saved = sessionStorage.getItem(SESSION_KEY);
+      if (saved) {
+        setMessages(JSON.parse(saved));
+      } else {
+        const greeting = {
+          id: Date.now(),
+          fromUser: false,
+          content:
+            '👋 Xin chào, tôi là trợ lý AI của GenNovaX. Tôi có thể giúp bạn đặt lịch, tư vấn xét nghiệm và giải đáp các câu hỏi sức khỏe. Bạn cần hỗ trợ gì hôm nay?',
+          timestamp: new Date().toISOString(),
+        };
+        setMessages([greeting]);
+        sessionStorage.setItem(SESSION_KEY, JSON.stringify([greeting]));
+      }
+    }
+  }, [open]);
+
+  // Auto scroll
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [messages, loading]);
 
+  // Regex link render
   const renderLine = (line, index) => {
-    // Regex cho markdown link dạng: [text](url)
     const markdownLinkRegex =
-      /\[([^\]]+)\]\((https:\/\/genapp\.vn\/mainbio\/dat-lich-xet-nghiem)\)/g;
+      /\[([^\]]+)\]\((https:\/\/genapp\.vn\/y-te\/dat-lich-xet-nghiem)\)/g;
 
     const parts = [];
     let lastIndex = 0;
@@ -78,7 +130,6 @@ const ChatDrawerAI = ({ open, onClose }) => {
       const [fullMatch, text, url] = match;
       const start = match.index;
 
-      // Thêm đoạn trước link
       if (start > lastIndex) {
         parts.push(
           <span key={`${index}-text-${start}`}>
@@ -87,7 +138,6 @@ const ChatDrawerAI = ({ open, onClose }) => {
         );
       }
 
-      // Thêm thẻ <a>
       parts.push(
         <a
           key={`${index}-link-${start}`}
@@ -106,14 +156,12 @@ const ChatDrawerAI = ({ open, onClose }) => {
 
       lastIndex = start + fullMatch.length;
     }
+
     if (lastIndex < line.length) {
       parts.push(<span key={`${index}-rest`}>{line.slice(lastIndex)}</span>);
     }
-    if (parts.length === 0) {
-      return <span key={index}>{line}</span>;
-    }
 
-    return <>{parts}</>;
+    return parts.length ? <>{parts}</> : <span key={index}>{line}</span>;
   };
 
   return (
@@ -121,10 +169,43 @@ const ChatDrawerAI = ({ open, onClose }) => {
       open={open}
       onClose={onClose}
       width={700}
-      destroyOnClose
-      title="Chat với AI"
+      destroyOnClose={false}
+      title="Trò chuyện với AI"
       bodyStyle={{ display: 'flex', flexDirection: 'column', padding: 0 }}
     >
+      {/* Modal gợi ý */}
+      <Modal
+        title="🧠 Chọn câu hỏi gợi ý"
+        open={modalOpen}
+        onCancel={() => setModalOpen(false)}
+        footer={null}
+      >
+        <div style={{ maxHeight: 400, overflowY: 'auto', paddingRight: 8 }}>
+          <List
+            dataSource={suggestedQuestions}
+            renderItem={(item) => (
+              <div
+                style={{
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  padding: '8px 0',
+                  gap: 8,
+                }}
+                onClick={() => {
+                  setNewMsg(item);
+                  setModalOpen(false);
+                }}
+              >
+                <QuestionCircleOutlined style={{ color: '#1677ff' }} />
+                <Typography.Text>{item}</Typography.Text>
+              </div>
+            )}
+          />
+        </div>
+      </Modal>
+
+      {/* Vùng tin nhắn */}
       <div
         ref={scrollRef}
         style={{
@@ -164,7 +245,6 @@ const ChatDrawerAI = ({ open, onClose }) => {
             </div>
           </div>
         ))}
-
         {loading && (
           <div
             style={{
@@ -182,29 +262,50 @@ const ChatDrawerAI = ({ open, onClose }) => {
         )}
       </div>
 
+      {/* Nhập và gửi */}
       <div
         style={{
           padding: 16,
           borderTop: '1px solid #f0f0f0',
           display: 'flex',
+          flexDirection: 'column',
           gap: 8,
         }}
       >
-        <Input.TextArea
-          autoSize={{ minRows: 1, maxRows: 4 }}
-          value={newMsg}
-          onChange={(e) => setNewMsg(e.target.value)}
-          placeholder="Nhập tin nhắn…"
-          onPressEnter={(e) => {
-            if (!e.shiftKey) {
-              e.preventDefault();
-              sendMessage();
-            }
-          }}
-        />
-        <Button type="primary" onClick={sendMessage} disabled={loading}>
-          Gửi
-        </Button>
+        <div>
+          <Button
+            icon={<QuestionCircleOutlined />}
+            onClick={() => setModalOpen(true)}
+            style={{
+              backgroundColor: '#1677ff',
+              color: 'white',
+              padding: '0 12px',
+              height: 32,
+              fontSize: 14,
+              borderRadius: 6,
+              border: 'none',
+            }}
+          >
+            Câu hỏi gợi ý
+          </Button>
+        </div>
+        <div style={{ display: 'flex', gap: 8 }}>
+          <Input.TextArea
+            autoSize={{ minRows: 1, maxRows: 4 }}
+            value={newMsg}
+            onChange={(e) => setNewMsg(e.target.value)}
+            placeholder="Nhập tin nhắn…"
+            onPressEnter={(e) => {
+              if (!e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+              }
+            }}
+          />
+          <Button type="primary" onClick={sendMessage} disabled={loading}>
+            Gửi
+          </Button>
+        </div>
       </div>
     </Drawer>
   );

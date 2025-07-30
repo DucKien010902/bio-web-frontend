@@ -23,6 +23,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { openChatPanel, closeChatPanel } from '../../redux/slices/chatSlice';
 import AnimatedSearch from './InputSearch';
 import AnimatedSearchMobile from './InputSearchMobile';
+import genAppLogo from '../../assets/images/GenApp logo.png';
 
 const AllProductHeader = ({
   handleSearch,
@@ -147,7 +148,7 @@ const AllProductHeader = ({
                 cursor: 'pointer',
               }}
               onClick={() => {
-                navigate('/mainbio');
+                navigate('/y-te');
               }}
             >
               <FaBriefcaseMedical style={{ marginRight: '6px' }} />
@@ -184,7 +185,7 @@ const AllProductHeader = ({
               }}
               onClick={() => {
                 if (phoneNumber) {
-                  navigate('/product/profile');
+                  navigate('/san-pham/tai-khoan');
                 } else {
                   localStorage.setItem(
                     'redirectAfterLogin',
@@ -217,24 +218,25 @@ const AllProductHeader = ({
             paddingTop: 10,
           }}
         >
-          {/* Logo GEN-Shop */}
-          <div style={{ flex: 3, display: 'flex', alignItems: 'center' }}>
-            <TbBrandShopee size={60} color="white" />
-            <div
+          <div
+            style={{
+              flex: 3,
+              display: 'flex',
+              alignItems: 'center',
+              cursor: 'pointer',
+            }}
+            onClick={() => {
+              navigate('/');
+            }}
+          >
+            <img
+              src={genAppLogo}
+              alt="GenApp Logo"
               style={{
-                color: 'white',
-                fontSize: 35,
-                marginLeft: 10,
-                cursor: 'pointer',
-                fontFamily: 'cursive',
+                height: 90,
+                objectFit: 'contain',
               }}
-              onClick={() => {
-                // setSelectedProduct(null);
-                navigate('/');
-              }}
-            >
-              GenApp
-            </div>
+            />
           </div>
 
           {/* Thanh tìm kiếm */}
@@ -261,7 +263,7 @@ const AllProductHeader = ({
                     );
                     navigate('/login');
                   } else {
-                    navigate('/product/cart');
+                    navigate('/san-pham/gio-hang');
                   }
                 }}
                 style={{ cursor: 'pointer' }}
@@ -431,7 +433,7 @@ const AllProductHeader = ({
                   );
                   navigate('/login');
                 } else {
-                  navigate('/product/cart');
+                  navigate('/san-pham/gio-hang');
                 }
               }}
             />
@@ -469,7 +471,7 @@ const AllProductHeader = ({
             }}
             // onClick={() => {
             //   if (phoneNumber) {
-            //     navigate('/product/profile');
+            //     navigate('/san-pham/tai-khoan');
             //   } else {
             //     localStorage.setItem(
             //       'redirectAfterLogin',

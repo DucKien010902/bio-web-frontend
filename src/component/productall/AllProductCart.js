@@ -137,7 +137,7 @@ const CartPage = ({ allproducts, setCurrentPage, setProductsInvoice }) => {
                       <div
                         style={{ marginLeft: 12, cursor: 'pointer' }}
                         onClick={() => {
-                          navigate(`/product/detail?Id=${record.Id}`);
+                          navigate(`/san-pham/chi-tiet?Id=${record.Id}`);
                         }}
                       >
                         <Text strong>{text}</Text>
@@ -233,7 +233,7 @@ const CartPage = ({ allproducts, setCurrentPage, setProductsInvoice }) => {
                   style={{ background: '#ee4d2d', borderColor: '#ee4d2d' }}
                   disabled={selectedItems.length === 0}
                   onClick={() => {
-                    navigate('/product/invoice', { state: selectedItems });
+                    navigate('/san-pham/dat-hang', { state: selectedItems });
                     // setProductsInvoice(selectedItems);
                   }}
                 >
@@ -279,7 +279,9 @@ const CartPage = ({ allproducts, setCurrentPage, setProductsInvoice }) => {
                       alt={item.productName}
                       width="100%"
                       preview={false}
-                      onClick={() => navigate(`/product/detail?Id=${item.Id}`)}
+                      onClick={() =>
+                        navigate(`/san-pham/chi-tiet?Id=${item.Id}`)
+                      }
                       style={{ borderRadius: 4 }}
                     />
                     <div style={{ textAlign: 'center' }}>
@@ -305,7 +307,9 @@ const CartPage = ({ allproducts, setCurrentPage, setProductsInvoice }) => {
                         fontSize: 14,
                         cursor: 'pointer',
                       }}
-                      onClick={() => navigate(`/product/detail?Id=${item.Id}`)}
+                      onClick={() =>
+                        navigate(`/san-pham/chi-tiet?Id=${item.Id}`)
+                      }
                     >
                       {item.productName}
                     </div>
@@ -407,7 +411,7 @@ const CartPage = ({ allproducts, setCurrentPage, setProductsInvoice }) => {
                   style={{ background: '#ee4d2d', borderColor: '#ee4d2d' }}
                   disabled={selectedItems.length === 0}
                   onClick={() => {
-                    navigate('/product/invoice', { state: selectedItems });
+                    navigate('/san-pham/dat-hang', { state: selectedItems });
                   }}
                 >
                   Mua Hàng

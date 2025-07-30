@@ -77,13 +77,13 @@ const Product = ({ chatOpen, setChatOpen }) => {
       {/* <AllProductHeader/> */}
       <Routes>
         <Route path="" element={<AllProductContent />} />
-        <Route path="search" element={<AllProductContentSearch />} />
+        <Route path="tim-kiem" element={<AllProductContentSearch />} />
         <Route path="result" element={<VNPaySuccess />} />
-        <Route path="cart" element={<CartPage />} />
-        <Route path="profile" element={<ShopeeProfile />} />
-        <Route path="invoice" element={<CheckoutPage />} />
+        <Route path="gio-hang" element={<CartPage />} />
+        <Route path="tai-khoan" element={<ShopeeProfile />} />
+        <Route path="dat-hang" element={<CheckoutPage />} />
         <Route
-          path="detail"
+          path="chi-tiet"
           element={
             <ProductDetailPage chatOpen={chatOpen} setChatOpen={setChatOpen} />
           }
@@ -141,7 +141,7 @@ function App() {
     (pathname === '/' && isDesktop) ||
     (pathname.startsWith('/product') && isDesktop) ||
     (pathname === '/shopInfo' && isDesktop);
-  const shouldShowChatAI = pathname === '/mainbio';
+  const shouldShowChatAI = pathname === '/y-te';
   return (
     <div className="app-wrapper">
       <ScrollToTop />
@@ -154,14 +154,14 @@ function App() {
         <Route path="/quan-tri-vien/*" element={<Admin />} />
         <Route path="/dieu-phoi-vien/*" element={<ClinicLayout />} />
         <Route path="/tu-van-vien/*" element={<ServiceStaff />} />
-        <Route path="/product/*" element={<Product />} />
+        <Route path="/san-pham/*" element={<Product />} />
         <Route path="/shopInfo" element={<ShopProfile />} />
         <Route path="/shop/*" element={<ShopLayout />} />
         <Route path="/error" element={<Error />} />
         <Route path="/*" element={<HomePageProduct />} />
         <Route path="/livestream*" element={<LiveStreamLayOut />} />
         <Route path="/notification*" element={<NotificationLayOut />} />
-        <Route path="/mainbio*" element={<MainApp />} />
+        <Route path="/y-te*" element={<MainApp />} />
       </Routes>
       {!chatOpen && isMobile && <BottomTabBar />}
     </div>

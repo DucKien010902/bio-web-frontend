@@ -176,7 +176,7 @@ const ClinicListPage = () => {
                           onClick={(e) => {
                             e.stopPropagation();
                             navigate(
-                              `/mainbio/chi-tiet-phong-kham?ID=${clinic.ID}`
+                              `/y-te/chi-tiet-phong-kham?ID=${clinic.ID}`
                             );
                           }}
                           style={{
@@ -196,7 +196,7 @@ const ClinicListPage = () => {
                           onClick={(e) => {
                             e.stopPropagation();
                             navigate(
-                              `/mainbio/dat-lich-xet-nghiem?ID=${clinic.ID}`
+                              `/y-te/dat-lich-xet-nghiem?ID=${clinic.ID}`
                             );
                           }}
                           style={{

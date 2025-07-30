@@ -55,7 +55,7 @@ const ProductList = () => {
   const fetchGroupedProducts = async () => {
     try {
       const res = await axiosClient.get(
-        `/product/fetchGroupedByShop?shopID=${shopInfo.shopID}`
+        `/san-pham/fetchGroupedByShop?shopID=${shopInfo.shopID}`
       );
       setProductsByCategory(res.data);
       setCategories(Object.keys(res.data)); // <-- trích danh mục từ keys
@@ -75,7 +75,7 @@ const ProductList = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axiosClient.delete(`/product/delete/${id}`);
+      await axiosClient.delete(`/san-pham/delete/${id}`);
       message.success('Xoá thành công');
       fetchGroupedProducts();
     } catch (err) {
@@ -103,10 +103,10 @@ const ProductList = () => {
           .filter((item) => item !== '');
       }
       if (editingProduct) {
-        await axiosClient.put(`/product/update/${editingProduct.Id}`, values);
+        await axiosClient.put(`/san-pham/update/${editingProduct.Id}`, values);
         message.success('Cập nhật sản phẩm thành công');
       } else {
-        await axiosClient.post('/product/create', values);
+        await axiosClient.post('/san-pham/create', values);
         message.success('Thêm sản phẩm thành công');
       }
       setIsModalOpen(false);

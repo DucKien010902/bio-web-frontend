@@ -313,9 +313,22 @@ const CheckoutPage = () => {
             >
               ₫{grandTotal.toLocaleString()}
             </Title>
-            <Button type="primary" size="large" block onClick={handlePayment}>
-              Đặt hàng tất cả
-            </Button>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                marginTop: 16,
+              }}
+            >
+              <Button
+                type="primary"
+                size="large"
+                onClick={handlePayment}
+                style={{ width: 200 }}
+              >
+                Đặt hàng tất cả
+              </Button>
+            </div>
           </Card>
         </div>
         <AllProductFooter />

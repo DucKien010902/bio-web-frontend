@@ -14,6 +14,7 @@ import dichvu3 from '../../assets/images/dichvu3.webp';
 import dichvu4 from '../../assets/images/dichvu4.webp';
 import dichvu5 from '../../assets/images/dichvu5.webp';
 import dichvu6 from '../../assets/images/dichvu6.webp';
+import articalPost from '../../assets/images/artical.png';
 import {
   LeftOutlined,
   RightOutlined,
@@ -200,8 +201,7 @@ const HomePageProduct = () => {
     {
       title:
         'Nội soi dạ dày, đại tràng không đau tại Doctor Check có tốt không?',
-      image:
-        'https://phuongchau.com/Data/Sites/2/Product/8719/goi-noi-soi-da-day-va-dai-trang-gay-me-tai-benh-vien-phuong-nam.jpg',
+      image: articalPost,
       highlight: true,
       summary:
         'Bạn đang tìm kiếm địa chỉ nội soi dạ dày, đại tràng không đau? Tham khảo ngay Trung Tâm Nội Soi Tiêu Hóa Doctor Check trên GennovaX!',
@@ -211,24 +211,21 @@ const HomePageProduct = () => {
     {
       title:
         'Nội soi dạ dày, đại tràng không đau tại Doctor Check có tốt không?',
-      image:
-        'https://phuongchau.com/Data/Sites/2/Product/8719/goi-noi-soi-da-day-va-dai-trang-gay-me-tai-benh-vien-phuong-nam.jpg',
+      image: articalPost,
       summary:
         'Bạn đang tìm kiếm địa chỉ nội soi dạ dày, đại tràng không đau? Tham khảo ngay Trung Tâm Nội Soi Tiêu Hóa Doctor Check trên GennovaX!',
     },
     {
       title:
         'Nội soi dạ dày, đại tràng không đau tại Doctor Check có tốt không?',
-      image:
-        'https://phuongchau.com/Data/Sites/2/Product/8719/goi-noi-soi-da-day-va-dai-trang-gay-me-tai-benh-vien-phuong-nam.jpg',
+      image: articalPost,
       summary:
         'Bạn đang tìm kiếm địa chỉ nội soi dạ dày, đại tràng không đau? Tham khảo ngay Trung Tâm Nội Soi Tiêu Hóa Doctor Check trên GennovaX!',
     },
     {
       title:
         'Nội soi dạ dày, đại tràng không đau tại Doctor Check có tốt không?',
-      image:
-        'https://phuongchau.com/Data/Sites/2/Product/8719/goi-noi-soi-da-day-va-dai-trang-gay-me-tai-benh-vien-phuong-nam.jpg',
+      image: articalPost,
       summary:
         'Bạn đang tìm kiếm địa chỉ nội soi dạ dày, đại tràng không đau? Tham khảo ngay Trung Tâm Nội Soi Tiêu Hóa Doctor Check trên GennovaX!',
     },
@@ -430,7 +427,7 @@ const HomePageProduct = () => {
                                   const encodedCategory =
                                     encodeURIComponent(category);
                                   navigate(
-                                    `/product?danhmuc=${encodedCategory}`
+                                    `/san-pham?danhmuc=${encodedCategory}`
                                   );
                                 }}
                               >
@@ -488,7 +485,14 @@ const HomePageProduct = () => {
                                   fontSize: 32,
                                   cursor: 'pointer',
                                 }}
-                                onClick={() => navigate('/product')}
+                                onClick={() => {
+                                  const category = item.title;
+                                  const encodedCategory =
+                                    encodeURIComponent(category);
+                                  navigate(
+                                    `/san-pham?danhmuc=${encodedCategory}`
+                                  );
+                                }}
                               >
                                 <img
                                   src={item.image}
@@ -1355,7 +1359,7 @@ const HomePageProduct = () => {
                                   const encodedCategory =
                                     encodeURIComponent(category);
                                   navigate(
-                                    `/product?danhmuc=${encodedCategory}`
+                                    `/san-pham?danhmuc=${encodedCategory}`
                                   );
                                 }}
                               >

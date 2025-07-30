@@ -152,10 +152,10 @@ const VNPaySuccess = () => {
           onClick={() => {
             if (isSuccess) {
               sessionStorage.removeItem('order_submitted');
-              navigate('/product/profile?case=2');
+              navigate('/san-pham/tai-khoan?case=2');
             } else {
               sessionStorage.removeItem('order_submitted');
-              navigate('/product/cart');
+              navigate('/san-pham/gio-hang');
             }
           }}
         >
@@ -227,10 +227,10 @@ const VNPaySuccess = () => {
           onClick={() => {
             if (isSuccess) {
               sessionStorage.removeItem('order_submitted');
-              navigate('/product/profile?case=2');
+              navigate('/san-pham/tai-khoan?case=2');
             } else {
               sessionStorage.removeItem('order_submitted');
-              navigate('/product/cart');
+              navigate('/san-pham/gio-hang');
             }
           }}
         >

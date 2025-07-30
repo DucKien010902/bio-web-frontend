@@ -67,7 +67,7 @@ const AllProductContentMobile2 = ({ productsCate }) => {
                   key={index}
                   product={product}
                   onClick={() =>
-                    navigate(`/product/detail?Id=${product.Id}`, {
+                    navigate(`/san-pham/chi-tiet?Id=${product.Id}`, {
                       state: product,
                     })
                   }

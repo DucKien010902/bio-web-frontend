@@ -96,7 +96,7 @@ const DetailClinicMobile = () => {
             background: '#00e0ff',
             height: 40,
           }}
-          onClick={() => navigate(`/mainbio/dat-lich-xet-nghiem?ID=${ID}`)}
+          onClick={() => navigate(`/y-te/dat-lich-xet-nghiem?ID=${ID}`)}
         >
           Đặt khám ngay
         </Button>

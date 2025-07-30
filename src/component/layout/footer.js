@@ -74,7 +74,7 @@ const FooterComponent = () => {
                 <Space direction="vertical">
                   <Link
                     style={{ color: '#6ab0e6' }}
-                    onClick={() => navigate('/mainbio/dat-lich-xet-nghiem')}
+                    onClick={() => navigate('/y-te/dat-lich-xet-nghiem')}
                   >
                     Đặt khám tại cơ sở
                   </Link>
@@ -195,7 +195,7 @@ const FooterComponent = () => {
             <Space direction="vertical">
               <Link
                 style={{ color: '#6ab0e6' }}
-                onClick={() => navigate('/mainbio/dat-lich-xet-nghiem')}
+                onClick={() => navigate('/y-te/dat-lich-xet-nghiem')}
               >
                 Đặt khám tại cơ sở
               </Link>

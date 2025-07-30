@@ -46,7 +46,9 @@ const AllProductContentSearch = () => {
 
     const fetchAllProducts = async () => {
       try {
-        const res = await axiosClient.get(`/product/searchproducts?key=${key}`);
+        const res = await axiosClient.get(
+          `/san-pham/searchproducts?key=${key}`
+        );
         const data = res.data;
 
         setAllProducts(data);
@@ -191,7 +193,7 @@ const AllProductContentSearch = () => {
                     key={index}
                     product={product}
                     onClick={() =>
-                      navigate(`/product/detail?Id=${product.Id}`, {
+                      navigate(`/san-pham/detail?Id=${product.Id}`, {
                         state: product,
                       })
                     }
@@ -331,7 +333,7 @@ const AllProductContentSearch = () => {
                                   const encodedCategory =
                                     encodeURIComponent(category);
                                   navigate(
-                                    `/product?danhmuc=${encodedCategory}`
+                                    `/san-pham?danhmuc=${encodedCategory}`
                                   );
                                 }}
                               >

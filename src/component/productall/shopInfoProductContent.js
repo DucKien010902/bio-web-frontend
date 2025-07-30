@@ -22,7 +22,7 @@ const ShopProductContent = ({ shopInfo }) => {
   const fetchAllProducts = async () => {
     try {
       const res = await axiosClient.get(
-        `/product/fetchbyShop?shopID=${shopInfo.shopID}`
+        `/san-pham/fetchbyShop?shopID=${shopInfo.shopID}`
       );
       setAllProducts(res.data);
       setProducts(res.data);
@@ -51,7 +51,7 @@ const ShopProductContent = ({ shopInfo }) => {
                   key={index}
                   product={product}
                   onClick={() =>
-                    navigate(`/product/detail?Id=${product.Id}`, {
+                    navigate(`/san-pham/chi-tiet?Id=${product.Id}`, {
                       state: product,
                     })
                   }

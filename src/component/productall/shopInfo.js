@@ -198,7 +198,7 @@ const ShopProfile = () => {
                             textAlign: 'center',
                             fontWeight: 500,
                           }}
-                          // onClick={() => navigate('/product/shopInfo')}
+                          // onClick={() => navigate('/san-pham/shopInfo')}
                           onClick={() => {
                             if (user) {
                               dispatch(openChatPanel());

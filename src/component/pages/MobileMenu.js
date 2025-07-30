@@ -104,7 +104,7 @@ const MobileMenu = () => {
                   {
                     icon: <FileTextOutlined />,
                     title: 'Phiếu xét nghiệm',
-                    link: '/mainbio/tai-khoan?key=tickets',
+                    link: '/y-te/tai-khoan?key=tickets',
                   },
                   {
                     icon: (
@@ -120,36 +120,36 @@ const MobileMenu = () => {
             {
               icon: <HomeOutlined />,
               title: 'Cơ sở y tế',
-              link: '/mainbio/danh-sach-phong-kham',
+              link: '/y-te/danh-sach-phong-kham',
               action: true,
             },
             {
               icon: <AppstoreOutlined />,
               title: 'Dịch vụ y tế',
-              link: '/mainbio/danh-sach-dich-vu',
+              link: '/y-te/danh-sach-dich-vu',
               action: true,
             },
             // {
             //   icon: <TeamOutlined />,
             //   title: 'Khám sức khỏe doanh nghiệp',
-            //   // link: '/mainbio/doanh-nghiep',
+            //   // link: '/y-te/doanh-nghiep',
             //   action: true,
             // },
             {
               icon: <ReadOutlined />,
               title: 'Tin tức',
-              // link: '/mainbio/tin-tuc',
+              // link: '/y-te/tin-tuc',
               action: true,
             },
             {
               icon: <QuestionCircleOutlined />,
               title: 'Hướng dẫn',
-              // link: '/mainbio/huong-dan',
+              // link: '/y-te/huong-dan',
             },
             {
               icon: <PlusSquareOutlined />,
               title: 'Liên hệ hợp tác',
-              // link: '/mainbio/lien-he',
+              // link: '/y-te/lien-he',
             },
           ]}
           renderItem={(item) => (
