@@ -23,7 +23,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { openChatPanel, closeChatPanel } from '../../redux/slices/chatSlice';
 import AnimatedSearch from './InputSearch';
 import AnimatedSearchMobile from './InputSearchMobile';
-import genAppLogo from '../../assets/images/GenApp logo.png';
+import genAppLogo from '../../assets/images/logo.webp';
 
 const AllProductHeader = ({
   handleSearch,
@@ -233,7 +233,7 @@ const AllProductHeader = ({
               src={genAppLogo}
               alt="GenApp Logo"
               style={{
-                height: 90,
+                height: 50,
                 objectFit: 'contain',
               }}
             />

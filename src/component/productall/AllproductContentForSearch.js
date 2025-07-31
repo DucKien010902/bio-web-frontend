@@ -193,7 +193,7 @@ const AllProductContentSearch = () => {
                     key={index}
                     product={product}
                     onClick={() =>
-                      navigate(`/san-pham/detail?Id=${product.Id}`, {
+                      navigate(`/san-pham/chi-tiet?Id=${product.Id}`, {
                         state: product,
                       })
                     }
