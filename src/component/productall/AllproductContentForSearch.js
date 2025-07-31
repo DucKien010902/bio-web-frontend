@@ -46,9 +46,7 @@ const AllProductContentSearch = () => {
 
     const fetchAllProducts = async () => {
       try {
-        const res = await axiosClient.get(
-          `/san-pham/searchproducts?key=${key}`
-        );
+        const res = await axiosClient.get(`/product/searchproducts?key=${key}`);
         const data = res.data;
 
         setAllProducts(data);

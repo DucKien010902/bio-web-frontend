@@ -97,7 +97,7 @@ const HeaderComponent = () => {
     { label: 'Vật tư y tế', key: '4' },
     { label: 'Tin tức', key: '5' },
     { label: 'Đối tác', key: '6' },
-    { label: 'Liên hệ', key: '6' },
+    { label: 'Liên hệ', key: '7' },
   ];
   const user = JSON.parse(localStorage.getItem('user'));
   // console.log(user?.phone);
@@ -116,19 +116,19 @@ const HeaderComponent = () => {
       // { label: 'Gói khám cho doanh nghiệp', path: '/y-te' },
       // { label: 'Khám định kỳ', path: '/y-te' },
     ],
-    4: [{ label: 'Sản phẩm y tế', path: '/y-te/product' }],
+    4: [{ label: 'Sản phẩm y tế', path: '/y-te' }],
     5: [
       { label: 'Tin tức y tế', path: '/y-te/tin-tuc' },
       // { label: 'Hướng dẫn thanh toán', path: '/y-te' },
     ],
     6: [
       // { label: 'Cơ sở y tế', path: '/y-te' },
-      { label: 'Về GennovaX', path: '/y-te/gioi-thieu' },
     ],
     7: [
+      { label: 'Về GennovaX', path: 'https://www.gennovax.vn/' },
       // { label: 'Cơ sở y tế', path: '/y-te' },
-      { label: 'Về GenBio', path: '/y-te/gioi-thieu' },
-      { label: 'Sản phẩm y tế', path: '/y-te/product' },
+      // { label: 'Về GenBio', path: '/y-te/gioi-thieu' },
+      // { label: 'Sản phẩm y tế', path: '/y-te/product' },
     ],
   };
 
@@ -144,7 +144,11 @@ const HeaderComponent = () => {
         <Menu.Item
           key={`${key}-${index}`}
           onClick={() => {
-            navigate(subItem.path);
+            if (subItem.path.startsWith('http')) {
+              window.open(subItem.path, '_blank');
+            } else {
+              navigate(subItem.path);
+            }
           }}
         >
           {subItem.label}
@@ -330,7 +334,7 @@ const HeaderComponent = () => {
                         'redirectAfterLogin',
                         window.location.pathname + window.location.search
                       );
-                      navigate('/y-te/login');
+                      navigate('/login');
                     }}
                   >
                     Tài khoản
@@ -506,7 +510,14 @@ const HeaderComponent = () => {
                 display: 'inline-block',
               }}
             >
-              GennovaX
+              <img
+                src={gennovaXLogo}
+                alt="GennovaX Logo"
+                style={{
+                  height: 80, // bạn có thể thay đổi kích thước nếu muốn
+                  objectFit: 'contain',
+                }}
+              />
             </div>
           </div>
           <div

@@ -304,7 +304,7 @@ const HomePageProduct = () => {
                     </Col>
                   </Row>
                 </div>
-                <div style={{ height: 30, backgroundColor: 'white' }}></div>
+                {/* <div style={{ height: 30, backgroundColor: 'white' }}></div> */}
               </div>
               {/* <div
               style={{
@@ -327,7 +327,7 @@ const HomePageProduct = () => {
                   padding: '30px 70px',
                   display: 'flex',
                   flexDirection: 'column',
-                  boxShadow: '0px 8px 16px rgba(0, 0, 0, 0.1)',
+                  boxShadow: '0px 0px 8px 8px rgba(0, 0, 0, 0.1)',
                 }}
               >
                 <div style={{ flex: 1 }}>

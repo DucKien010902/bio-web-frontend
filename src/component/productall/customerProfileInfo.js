@@ -75,6 +75,7 @@ const ProfileContent = () => {
               type="primary"
               danger
               onClick={() => {
+                localStorage.clear();
                 navigate('/login');
               }}
             >

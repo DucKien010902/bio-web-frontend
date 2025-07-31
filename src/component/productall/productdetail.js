@@ -97,13 +97,20 @@ const ProductDetailPage = () => {
         }
       }
     } else {
-      localStorage.setItem('redirectAfterLogin', window.location.pathname);
+      localStorage.setItem(
+        'redirectAfterLogin',
+        window.location.pathname + '?Id=' + product.Id
+      );
       navigate('/login');
     }
   };
 
   const handleOrder = async () => {
     if (!phoneNumber) {
+      localStorage.setItem(
+        'redirectAfterLogin',
+        window.location.pathname + '?Id=' + product.Id
+      );
       navigate('/login');
     } else {
       console.log(product.pdTypes.length);

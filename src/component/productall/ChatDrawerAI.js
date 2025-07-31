@@ -275,7 +275,6 @@ const ChatDrawerAI = ({ open, onClose }) => {
         <div>
           <Button
             icon={<QuestionCircleOutlined />}
-            onClick={() => setModalOpen(true)}
             style={{
               backgroundColor: '#1677ff',
               color: 'white',
@@ -285,10 +284,13 @@ const ChatDrawerAI = ({ open, onClose }) => {
               borderRadius: 6,
               border: 'none',
             }}
+            onMouseEnter={() => setModalOpen(true)}
+            // onMouseLeave={() => setModalOpen(false)}
           >
             Câu hỏi gợi ý
           </Button>
         </div>
+
         <div style={{ display: 'flex', gap: 8 }}>
           <Input.TextArea
             autoSize={{ minRows: 1, maxRows: 4 }}

@@ -1,5 +1,5 @@
 {
-  "short_name": "React App",
+  "short_name": "GenApp",
   "name": "Create React App Sample",
   "icons": [
     {
@@ -8,13 +8,13 @@
       "type": "image/x-icon"
     },
     {
-      "src": "genbio.jpg",
-      "type": "image/jpg",
+      "src": "genbio1.png",
+      "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "genbio.jpg",
-      "type": "image/jpg",
+      "src": "genbio1.png",
+      "type": "image/png",
       "sizes": "512x512"
     }
   ],

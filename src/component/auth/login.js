@@ -69,6 +69,7 @@ const LoginPage = () => {
         setStep('otp');
         sessionStorage.setItem('tempUser', JSON.stringify(user));
         sessionStorage.setItem('token', token);
+        console.log(token);
         message.success('Đã gửi mã OTP');
       } else {
         // 👉 Lưu thông tin user vào localStorage
@@ -279,8 +280,8 @@ const LoginPage = () => {
         style={{
           position: 'relative',
           backgroundImage:
-            'url("https://res.cloudinary.com/da6f4dmql/image/upload/v1746512082/samples/balloons.jpg")',
-          backgroundSize: 'cover',
+            'url("https://watermark.lovepik.com/photo/20211122/large/lovepik-images-of-doctors-and-nurses-picture_500737527.jpg")',
+          backgroundSize: 'contain',
           backgroundPosition: 'center',
           clipPath: 'polygon(10% 0%, 100% 0%, 100% 100%, 0% 100%)',
         }}

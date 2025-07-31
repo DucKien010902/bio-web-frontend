@@ -61,7 +61,7 @@ const AllProductHeader = ({
     return (
       <div
         style={{
-          background: 'linear-gradient(to bottom, #1a4da1, #477cd1)',
+          background: 'linear-gradient(to bottom, #306bcaff, #92b4eaff)',
           // position: 'fixed',
           // top: 0,
           // left: 0,
@@ -296,7 +296,7 @@ const AllProductHeader = ({
         <div
           style={{
             width: '100%',
-            height: '30px',
+            height: '20px',
             color: 'white',
             display: 'flex',
             alignItems: 'center',
@@ -304,7 +304,7 @@ const AllProductHeader = ({
             fontSize: '13px',
           }}
         >
-          <div style={{ flex: 6 }}></div>
+          {/* <div style={{ flex: 6 }}></div>
           <div
             style={{
               flex: 24,
@@ -377,7 +377,7 @@ const AllProductHeader = ({
             >
               Kẹo Socola
             </div>
-          </div>
+          </div> */}
         </div>
         <div
           style={{

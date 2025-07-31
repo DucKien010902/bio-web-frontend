@@ -806,7 +806,7 @@ const ContentComponent = () => {
                 fontWeight: 600,
                 fontSize: 22,
                 color: '#065c8c',
-                marginTop: 20,
+                marginTop: 10,
                 marginBottom: 0,
                 textShadow: '2px 2px 4px rgba(0, 0, 0, 0.2)', // đổ bóng nhẹ sang phải dưới
               }}

@@ -38,7 +38,7 @@ const AnimatedSearch = () => {
 
   const handleSearch = (value) => {
     if (value.trim()) {
-      navigate(`/san-pham/search?key=${encodeURIComponent(value.trim())}`);
+      navigate(`/san-pham/tim-kiem?key=${encodeURIComponent(value.trim())}`);
     }
   };
 
