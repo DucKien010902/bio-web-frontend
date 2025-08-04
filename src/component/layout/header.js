@@ -84,7 +84,7 @@ const HeaderComponent = () => {
         style={{ padding: '12px 16px', fontSize: 16 }}
         onClick={() => {
           localStorage.removeItem('user');
-          navigate('/y-te/login');
+          navigate('/login');
         }}
       >
         Đăng xuất
@@ -378,7 +378,7 @@ const HeaderComponent = () => {
                       <div
                         key={item.key}
                         className="menu-item"
-                        onClick={() => navigate('/')}
+                        onClick={() => navigate('/san-pham/trang-chu')}
                       >
                         {item.label}
                       </div>

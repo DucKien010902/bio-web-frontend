@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Input } from 'antd';
+import { Input, Button } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import { useNavigate, useLocation } from 'react-router-dom';
+import './InputSearch.css'; // 👈 Thêm file CSS riêng
 
 const AnimatedSearch = () => {
   const [placeholder, setPlaceholder] = useState('');
@@ -12,7 +13,6 @@ const AnimatedSearch = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Lấy từ khóa từ URL khi component mount hoặc URL thay đổi
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const key = params.get('key') || '';
@@ -36,22 +36,32 @@ const AnimatedSearch = () => {
     return () => clearTimeout(timer);
   }, [index, isDeleting]);
 
-  const handleSearch = (value) => {
-    if (value.trim()) {
-      navigate(`/san-pham/tim-kiem?key=${encodeURIComponent(value.trim())}`);
+  const handleSearch = () => {
+    if (textSearch.trim()) {
+      navigate(
+        `/san-pham/tim-kiem?key=${encodeURIComponent(textSearch.trim())}`
+      );
     }
   };
 
   return (
-    <Input.Search
-      placeholder={placeholder || ' '}
-      enterButton={<SearchOutlined />}
-      style={{ flex: 10, border: 'none' }}
-      size="large"
-      value={textSearch}
-      onChange={(e) => setTextSearch(e.target.value)}
-      onSearch={handleSearch}
-    />
+    <div className="shopee-search-bar">
+      <Input
+        placeholder={placeholder || ' '}
+        size="large"
+        value={textSearch}
+        onChange={(e) => setTextSearch(e.target.value)}
+        onPressEnter={handleSearch}
+        className="shopee-search-input"
+      />
+      <Button
+        type="primary"
+        icon={<SearchOutlined />}
+        size="large"
+        className="shopee-search-btn"
+        onClick={handleSearch}
+      />
+    </div>
   );
 };
 

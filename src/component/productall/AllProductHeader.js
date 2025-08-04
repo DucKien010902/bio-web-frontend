@@ -61,7 +61,7 @@ const AllProductHeader = ({
     return (
       <div
         style={{
-          background: 'linear-gradient(to bottom, #306bcaff, #92b4eaff)',
+          background: 'linear-gradient(to bottom, #306bcaff, #00b5f1)',
           // position: 'fixed',
           // top: 0,
           // left: 0,
@@ -79,6 +79,7 @@ const AllProductHeader = ({
             alignItems: 'center',
             padding: '8px 30px',
             fontSize: '14px',
+            fontWeight: 500,
           }}
         >
           <div style={{ flex: 6 }}></div>
@@ -215,18 +216,18 @@ const AllProductHeader = ({
             display: 'flex',
             alignItems: 'center',
             height: 60,
-            paddingTop: 10,
+            // paddingTop: 10,
           }}
         >
           <div
             style={{
-              flex: 3,
+              flex: 6,
               display: 'flex',
               alignItems: 'center',
               cursor: 'pointer',
             }}
             onClick={() => {
-              navigate('/');
+              navigate('/san-pham/trang-chu');
             }}
           >
             <img
@@ -240,12 +241,14 @@ const AllProductHeader = ({
           </div>
 
           {/* Thanh tìm kiếm */}
-          <AnimatedSearch />
+          <div style={{ flex: 20 }}>
+            <AnimatedSearch />
+          </div>
 
           {/* Icon giỏ hàng + badge */}
           <div
             style={{
-              flex: 2,
+              flex: 4,
               display: 'flex',
               alignItems: 'center',
               marginLeft: 60,
@@ -404,7 +407,7 @@ const AllProductHeader = ({
     return (
       <div
         style={{
-          background: 'linear-gradient(to bottom, #1a4da1, #477cd1)',
+          background: 'linear-gradient(to bottom, #306bcaff, #00b5f1)',
           padding: '20px 10px',
         }}
       >

@@ -77,6 +77,7 @@ const Product = ({ chatOpen, setChatOpen }) => {
       {/* <AllProductHeader/> */}
       <Routes>
         <Route path="" element={<AllProductContent />} />
+        <Route path="trang-chu" element={<HomePageProduct />} />
         <Route path="tim-kiem" element={<AllProductContentSearch />} />
         <Route path="result" element={<VNPaySuccess />} />
         <Route path="gio-hang" element={<CartPage />} />
@@ -138,10 +139,9 @@ function App() {
   const isDesktop = useMediaQuery({ minWidth: 992 });
   const isMobile = useMediaQuery({ maxWidth: 797 });
   const shouldShowChat =
-    (pathname === '/' && isDesktop) ||
-    (pathname.startsWith('/product') && isDesktop) ||
+    (pathname === '/san-pham' && isDesktop) ||
     (pathname === '/shopInfo' && isDesktop);
-  const shouldShowChatAI = pathname === '/y-te';
+  const shouldShowChatAI = pathname === '/y-te' || pathname === '/';
   return (
     <div className="app-wrapper">
       <ScrollToTop />
@@ -158,7 +158,7 @@ function App() {
         <Route path="/shopInfo" element={<ShopProfile />} />
         <Route path="/shop/*" element={<ShopLayout />} />
         <Route path="/error" element={<Error />} />
-        <Route path="/*" element={<HomePageProduct />} />
+        <Route path="/*" element={<MainApp />} />
         <Route path="/livestream*" element={<LiveStreamLayOut />} />
         <Route path="/notification*" element={<NotificationLayOut />} />
         <Route path="/y-te*" element={<MainApp />} />

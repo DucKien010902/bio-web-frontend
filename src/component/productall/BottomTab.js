@@ -8,7 +8,7 @@ import {
   UserOutlined,
 } from '@ant-design/icons';
 const tabItems = [
-  { label: 'Trang chủ', icon: <HomeOutlined />, path: '/' },
+  { label: 'Trang chủ', icon: <HomeOutlined />, path: '/san-pham/trang-chu' },
   {
     label: 'Xét nghiệm',
     icon: <MedicineBoxOutlined />,

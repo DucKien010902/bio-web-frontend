@@ -11,7 +11,7 @@ const ChatWidget = () => {
   const [chatOpen, setChatOpen] = useState(false);
   const user = JSON.parse(localStorage.getItem('user'));
   const location = useLocation();
-  const isHomepage = location.pathname === '/';
+  const isHomepage = location.pathname === '/san-pham/trang-chu';
 
   return (
     <>
