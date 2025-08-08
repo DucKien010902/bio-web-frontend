@@ -115,8 +115,12 @@ const LoginPage = () => {
       localStorage.setItem('user', JSON.stringify(tempUser));
       localStorage.setItem('phoneNumber', tempUser.phoneNumber);
       sessionStorage.removeItem('tempUser');
-
-      navigate(redirectPath);
+      if (redirectPath == '/y-te/tai-khoan') {
+        navigate(redirectPath, { state: { key: 'tickets' } });
+      } else {
+        navigate(redirectPath);
+      }
+      localStorage.removeItem('redirectAfterLogin');
     } catch (error) {
       console.error('OTP error:', error);
       message.error('Mã OTP không chính xác');
@@ -147,7 +151,7 @@ const LoginPage = () => {
         <div style={{ position: 'absolute', top: 24, left: 24 }}>
           <ArrowLeftOutlined
             style={{ fontSize: 24, color: '#1890ff', cursor: 'pointer' }}
-            onClick={() => navigate(redirectPath)}
+            onClick={() => navigate(-1)}
             tabIndex={0}
             onKeyDown={(e) => {
               if (e.key === 'Enter') navigate(redirectPath);

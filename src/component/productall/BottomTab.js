@@ -6,15 +6,23 @@ import {
   MedicineBoxOutlined,
   AppleOutlined,
   UserOutlined,
+  ProductOutlined,
+  DiffOutlined,
+  CalendarOutlined,
 } from '@ant-design/icons';
 const tabItems = [
-  { label: 'Trang chủ', icon: <HomeOutlined />, path: '/san-pham/trang-chu' },
   {
-    label: 'Xét nghiệm',
+    label: 'Trang chủ',
     icon: <MedicineBoxOutlined />,
     path: '/y-te',
   },
-  { label: 'Tin tức', icon: <AppleOutlined />, path: '/notification' },
+  {
+    label: 'Đặt lịch',
+    icon: <CalendarOutlined />,
+    path: '/y-te/dat-lich-xet-nghiem',
+  },
+  { label: 'Kết quả', icon: <DiffOutlined />, path: '/y-te/tai-khoan' },
+  { label: 'Sản phẩm', icon: <ProductOutlined />, path: '/san-pham/trang-chu' },
   { label: 'Tài khoản', icon: <UserOutlined />, path: '/san-pham/tai-khoan' },
 ];
 
@@ -24,11 +32,7 @@ const BottomTabBar = () => {
 
   /** Hàm xác định tab active chính xác  */
   const isActiveTab = (path) => {
-    // Trang chủ: phải khớp tuyệt đối
-    if (path === '/') return location.pathname === '/';
-
-    // Các tab khác: so khớp tiền tố
-    return matchPath({ path, end: false }, location.pathname) !== null;
+    return location.pathname === path;
   };
 
   return (
@@ -55,10 +59,18 @@ const BottomTabBar = () => {
             key={item.path}
             onClick={() => {
               const user = JSON.parse(localStorage.getItem('user'));
-              if (item.path === '/san-pham/tai-khoan' && !user) {
+              if (
+                (item.path === '/san-pham/tai-khoan' ||
+                  item.path === '/y-te/tai-khoan') &&
+                !user
+              ) {
                 navigate('/login');
               } else {
-                navigate(item.path);
+                if (item.path === '/y-te/tai-khoan') {
+                  navigate(item.path, { state: { key: 'tickets' } });
+                } else {
+                  navigate(item.path);
+                }
               }
             }}
             style={{

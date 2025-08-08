@@ -41,6 +41,7 @@ import ServicePageMobile from './component/pages/list-serciceMobile';
 import BookingPageMobile from './component/pages/book-calenderMobile';
 import DetailClinicMobile from './component/pages/detail-clinicMobile';
 import PostList from './component/pages/PostList';
+import FirstPage from './component/pages/firstPage';
 const ScrollToTop = () => {
   const { pathname } = useLocation();
 
@@ -158,7 +159,8 @@ function App() {
         <Route path="/shopInfo" element={<ShopProfile />} />
         <Route path="/shop/*" element={<ShopLayout />} />
         <Route path="/error" element={<Error />} />
-        <Route path="/*" element={<MainApp />} />
+        <Route path="/*" element={isMobile ? <MainApp /> : <FirstPage />} />
+
         <Route path="/livestream*" element={<LiveStreamLayOut />} />
         <Route path="/notification*" element={<NotificationLayOut />} />
         <Route path="/y-te*" element={<MainApp />} />

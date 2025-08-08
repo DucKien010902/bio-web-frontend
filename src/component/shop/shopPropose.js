@@ -55,7 +55,7 @@ const ShopPropose = () => {
   const fetchGroupedProducts = async () => {
     try {
       const res = await axiosClient.get(
-        `/san-pham/fetchGroupedByShop?shopID=${shopInfo.shopID}`
+        `/product/fetchGroupedByShop?shopID=${shopInfo.shopID}`
       );
       setProductsByCategory(res.data);
       setCategories(Object.keys(res.data)); // <-- trích danh mục từ keys
@@ -73,48 +73,6 @@ const ShopPropose = () => {
     }
   };
 
-  const handleDelete = async (id) => {
-    try {
-      await axiosClient.delete(`/san-pham/delete/${id}`);
-      message.success('Xoá thành công');
-      fetchGroupedProducts();
-    } catch (err) {
-      message.error('Xoá thất bại');
-    }
-  };
-
-  const handleAdd = () => {
-    setEditingProduct(null);
-    form.resetFields();
-    form.setFieldsValue({
-      pdShopID: shopInfo?.shopID,
-      pdShopName: shopInfo?.shopName,
-    });
-    setIsModalOpen(true);
-  };
-
-  const handleSave = async () => {
-    try {
-      const values = await form.validateFields();
-      if (typeof values.pdTypes === 'string') {
-        values.pdTypes = values.pdTypes
-          .split(',')
-          .map((item) => item.trim())
-          .filter((item) => item !== '');
-      }
-      if (editingProduct) {
-        await axiosClient.put(`/san-pham/update/${editingProduct.Id}`, values);
-        message.success('Cập nhật sản phẩm thành công');
-      } else {
-        await axiosClient.post('/san-pham/create', values);
-        message.success('Thêm sản phẩm thành công');
-      }
-      setIsModalOpen(false);
-      fetchGroupedProducts();
-    } catch (err) {
-      message.error('Lưu thất bại');
-    }
-  };
   useEffect(() => {
     const found = categoryOptions.find((cat) => cat.name === selectedCategory);
     setAvailableClassifies(found?.classifies || []);

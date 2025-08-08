@@ -92,7 +92,7 @@ const HeaderComponent = () => {
     </Menu>
   );
   const menuItems = [
-    { label: 'Trang chủ', key: '1' },
+    { label: 'Sản phẩm', key: '1' },
     { label: 'Dịch vụ y tế', key: '2' },
     { label: 'Vật tư y tế', key: '4' },
     { label: 'Tin tức', key: '5' },
