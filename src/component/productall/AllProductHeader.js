@@ -61,7 +61,13 @@ const AllProductHeader = ({
     return (
       <div
         style={{
-          background: 'linear-gradient(to bottom, #306bcaff, #00b5f1)',
+          // background: 'linear-gradient(to bottom, #306bcaff, #00b5f1)',
+          backgroundImage:
+            "url('https://banghieuviet.org/wp-content/uploads/2023/08/nen-xanh-duong-pastel.jpg')",
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          backgroundAttachment: 'fixed',
           // position: 'fixed',
           // top: 0,
           // left: 0,
@@ -74,7 +80,7 @@ const AllProductHeader = ({
           style={{
             width: '100%',
             height: '40px',
-            color: 'white',
+            color: '#1932b0',
             display: 'flex',
             alignItems: 'center',
             padding: '8px 30px',
@@ -241,7 +247,7 @@ const AllProductHeader = ({
           </div>
 
           {/* Thanh tìm kiếm */}
-          <div style={{ flex: 20 }}>
+          <div style={{ flex: 20, borderWidth: 1, borderColor: '#0ba1b8' }}>
             <AnimatedSearch />
           </div>
 
@@ -257,7 +263,7 @@ const AllProductHeader = ({
             <div style={{ position: 'relative' }}>
               <MdOutlineShoppingCart
                 size={30}
-                color="white"
+                color="#0ba1b8"
                 onClick={() => {
                   if (!phoneNumber) {
                     localStorage.setItem(
@@ -279,7 +285,7 @@ const AllProductHeader = ({
                     top: -8,
                     right: -8,
                     background: 'red',
-                    color: 'white',
+                    color: '#0ba1b8',
                     borderRadius: '50%',
                     width: 18,
                     height: 18,

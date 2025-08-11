@@ -16,9 +16,10 @@ import {
   Row,
   Col,
   Modal,
+  ConfigProvider,
 } from 'antd';
 import { CaretDownOutlined, EnvironmentOutlined } from '@ant-design/icons';
-import dayjs from 'dayjs';
+import viVN from 'antd/locale/vi_VN';
 import {
   GoogleMap,
   Marker,
@@ -26,6 +27,10 @@ import {
   Autocomplete,
 } from '@react-google-maps/api';
 import axiosClient from '../../api/apiConfig';
+import dayjs from 'dayjs';
+import 'dayjs/locale/vi';
+dayjs.locale('vi');
+
 const { Title, Text } = Typography;
 const { Option, OptGroup } = Select;
 
@@ -86,6 +91,7 @@ const BookingPage = () => {
   const [phoneNumber, setPhoneNumber] = useState(user?.phoneNumber || '');
   const [address, setAddress] = useState(user?.address || '');
   const [dob, setDob] = useState(null);
+  const [email, setEmail] = useState(null);
 
   const [allclinics, setAllclinics] = useState([]);
   const [services, setServices] = useState([]);
@@ -105,7 +111,18 @@ const BookingPage = () => {
   const onLoadAutocomplete = (autoC) => {
     setAutocomplete(autoC);
   };
+  const handleDobChange = (e) => {
+    let value = e.target.value.replace(/\D/g, '');
+    if (value.length > 8) value = value.slice(0, 8);
 
+    if (value.length >= 5) {
+      value = value.replace(/(\d{2})(\d{2})(\d{0,4})/, '$1/$2/$3');
+    } else if (value.length >= 3) {
+      value = value.replace(/(\d{2})(\d{0,2})/, '$1/$2');
+    }
+
+    setDob(value);
+  };
   const onPlaceChanged = () => {
     console.log(autocomplete);
     if (autocomplete !== null) {
@@ -166,6 +183,7 @@ const BookingPage = () => {
       phone: phoneNumber,
       dob: dob.format('DD/MM/YYYY'),
       location: address,
+      email: email,
       confirmed: false,
     };
     const addFirst = async () => {
@@ -415,16 +433,18 @@ const BookingPage = () => {
         <Divider />
         <Space direction="vertical" style={{ width: '100%' }}>
           <strong>Chọn ngày:</strong>
-          <Calendar
-            fullscreen={false}
-            value={selectedDate}
-            onSelect={(date) => setSelectedDate(date)}
-            disabledDate={(current) =>
-              current && current < dayjs().startOf('day')
-            }
-            style={{ border: '1px solid #e6f7ff', borderRadius: 8 }}
-            suffixIcon={<CaretDownOutlined />}
-          />
+          <ConfigProvider locale={viVN}>
+            <Calendar
+              fullscreen={false}
+              value={selectedDate}
+              onSelect={(date) => setSelectedDate(date)}
+              disabledDate={(current) =>
+                current && current < dayjs().startOf('day')
+              }
+              style={{ border: '1px solid #e6f7ff', borderRadius: 8 }}
+              suffixIcon={<CaretDownOutlined />}
+            />
+          </ConfigProvider>
           <Text type="success">
             <strong>Đã chọn: {selectedDate.format('DD/MM/YYYY')}</strong>
           </Text>
@@ -493,15 +513,25 @@ const BookingPage = () => {
               />
             </Col>
             <Col span={12}>
-              <DatePicker
-                placeholder="Ngày sinh"
+              <Input
+                placeholder="Ngày sinh (Ngày/Tháng/Năm)"
                 value={dob}
-                onChange={(date) => setDob(date)}
-                style={{ width: '100%', height: 40 }}
-                disabledDate={(current) =>
-                  current && current > dayjs().endOf('day')
-                }
+                onChange={handleDobChange}
+                maxLength={10}
+                style={{ marginBottom: 10, height: 40 }}
               />
+            </Col>
+          </Row>
+          <Row gutter={16}>
+            <Col span={12}>
+              <Input
+                placeholder="Email liên hệ"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </Col>
+            <Col span={12}>
+              {/* Bạn có thể để trống hoặc thêm 1 input khác */}
             </Col>
           </Row>
         </Space>
@@ -527,7 +557,6 @@ const BookingPage = () => {
             Đặt lịch ngay
           </Button>
         </div>
-        {/* ... Giữ nguyên phần còn lại ... */}
       </Card>
     </div>
   );

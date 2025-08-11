@@ -132,7 +132,12 @@ const LoginPage = () => {
       style={{
         minHeight: '100vh',
         overflow: 'hidden',
-        backgroundColor: '#f0f2f5',
+        backgroundImage:
+          "url('https://p16-hera-sg.larksuitecdn.com/tos-alisg-i-hn4qzgxq2n-sg/b2432d9ed2dc49b68258bf9f7bfae6fa.avif~tplv-hn4qzgxq2n-image-v1:0:0.image')",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundAttachment: 'fixed',
       }}
     >
       <Col

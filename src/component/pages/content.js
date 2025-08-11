@@ -1,5 +1,14 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Input, Row, Col, Card, Typography, Carousel } from 'antd';
+import {
+  Input,
+  Row,
+  Col,
+  Card,
+  Typography,
+  Carousel,
+  Button,
+  Modal,
+} from 'antd';
 import './content.css';
 import axiosClient from '../../api/apiConfig';
 import { RxCaretLeft, RxCaretRight } from 'react-icons/rx';
@@ -20,11 +29,14 @@ import {
   StarFilled,
   BankOutlined,
   DollarOutlined,
+  CloseOutlined,
+  CloseSquareOutlined,
 } from '@ant-design/icons';
 import { useMediaQuery } from 'react-responsive';
 import TypingInput from './contentSearchInput';
 import { Avatar, Divider } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
 
 const { Text } = Typography;
 
@@ -43,32 +55,37 @@ const bannerImagesMobile = [
 
 const clinicList = [
   {
-    name: 'Trung Tâm Nội Soi Tiêu Hoá Doctor Check',
-    address: 'Quận 10, Thành phố Hồ Chí Minh',
+    name: 'Trung tâm xét nghiệm GoLAB Hà Đông',
+    address: ' Số 12 Trần Phú, Quận Hà Đông, Hà Nội',
     rating: 5,
     logo: imagehoptac1,
     verified: true,
+    id: 'golab-hadong',
   },
   {
-    name: 'Trung Tâm Nội Soi Tiêu Hoá Doctor Check',
-    address: 'Quận 10, Thành phố Hồ Chí Minh',
+    name: 'Phòng xét nghiệm GoLAB Ba Đình',
+    address: 'Số 10 Nguyễn Thái Học, Ba Đình, Hà Nội',
     rating: 5,
     logo: imagehoptac1,
     verified: true,
+    id: 'golab-badinh',
   },
   {
-    name: 'Trung Tâm Nội Soi Tiêu Hoá Doctor Check',
-    address: 'Quận 10, Thành phố Hồ Chí Minh',
+    name: 'Phòng xét nghiệm GoLab Vĩnh Yên',
+    address: 'Đinh Tiên Hoàng, Khai Quang, Vĩnh Yên, Vĩnh Phúc, Việt Nam',
     rating: 5,
     logo: imagehoptac1,
     verified: true,
+    id: 'golab-vinhyen',
   },
   {
-    name: 'Trung Tâm Nội Soi Tiêu Hoá Doctor Check',
-    address: 'Quận 10, Thành phố Hồ Chí Minh',
+    name: 'Trung tâm xét nghiệm GoLAB Hòa Bình',
+    address:
+      'Số 83 Cù Chính Lan, phường Đồng Tiến, TP Hòa Bỉnh,  Tỉnh Hòa Bình, Hòa Bình',
     rating: 5,
     logo: imagehoptac1,
     verified: true,
+    id: 'golab-hoabinh',
   },
   {
     name: 'Trung Tâm Nội Soi Tiêu Hoá Doctor Check',
@@ -80,28 +97,31 @@ const clinicList = [
 ];
 const serviceList = [
   {
-    name: 'Tiêm ngừa viêm gan B',
+    name: 'Xét nghiệm huyết thống cha - con',
     image:
       'https://medpro.vn/_next/image?url=https%3A%2F%2Fcdn.medpro.vn%2Fprod-partner%2Fcce223da-f510-40d2-9d96-21fcac5d4bd8-tiaaam_ngaaaa_-_banner_section_-_277x150_px_.png&w=640&q=75',
     clinic: 'Trung tâm nội soi tiêu hóa Doctor Check',
     verified: true,
-    price: 300,
+    price: 3000,
+    id: 'ADN01',
   },
   {
-    name: 'Tiêm ngừa viêm gan B',
+    name: 'Kiểm tra chức năng gan',
     image:
       'https://medpro.vn/_next/image?url=https%3A%2F%2Fcdn.medpro.vn%2Fprod-partner%2Fcce223da-f510-40d2-9d96-21fcac5d4bd8-tiaaam_ngaaaa_-_banner_section_-_277x150_px_.png&w=640&q=75',
     clinic: 'Trung tâm nội soi tiêu hóa Doctor Check',
     verified: true,
-    price: 300,
+    price: 3000,
+    id: 'SBH01',
   },
   {
-    name: 'Tiêm ngừa viêm gan B',
+    name: 'Sàng lọc trước sinh không xâm lấn',
     image:
       'https://medpro.vn/_next/image?url=https%3A%2F%2Fcdn.medpro.vn%2Fprod-partner%2Fcce223da-f510-40d2-9d96-21fcac5d4bd8-tiaaam_ngaaaa_-_banner_section_-_277x150_px_.png&w=640&q=75',
     clinic: 'Trung tâm nội soi tiêu hóa Doctor Check',
     verified: true,
-    price: 300,
+    price: 3000,
+    id: 'NIP01',
   },
   {
     name: 'Tiêm ngừa viêm gan B',
@@ -158,6 +178,7 @@ const ContentComponent = () => {
       console.log('Không thể tải dữ liệu dịch vụ');
     }
   };
+  const navigate = useNavigate();
   const fullText = 'Tìm kiếm dịch vụ y tế';
   const [placeholder, setPlaceholder] = useState('');
   const [index, setIndex] = useState(0);
@@ -189,8 +210,294 @@ const ContentComponent = () => {
     fetchAllClinic();
   }, []);
   const DesktopLayOut = () => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    useEffect(() => {
+      const hasShown = sessionStorage.getItem('gennovaxModalShown');
+      if (!hasShown) {
+        setIsModalOpen(true);
+        sessionStorage.setItem('gennovaxModalShown', 'true');
+      }
+    }, []);
+
+    const handleClose = () => {
+      setIsModalOpen(false);
+    };
     return (
       <>
+        {isModalOpen && (
+          <div
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              background: 'rgba(0,0,0,0.4)',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              zIndex: 9999,
+            }}
+          >
+            <div
+              style={{
+                position: 'relative',
+                background: '#fff',
+                borderRadius: '30px',
+                maxWidth: '1000px',
+                width: '95%',
+                boxShadow: '0 6px 20px rgba(0,0,0,0.2)',
+              }}
+            >
+              {/* Nút X */}
+              <button
+                onClick={handleClose}
+                style={{
+                  position: 'absolute',
+                  top: '-15px',
+                  right: '-15px',
+                  width: '40px',
+                  height: '40px',
+                  borderRadius: '50%',
+                  border: '2px solid #ccc', // outline
+                  background: '#fff',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  color: '#666',
+                  fontSize: '18px',
+                  transition: 'all 0.2s ease',
+                }}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.borderColor = '#0071bc';
+                  e.currentTarget.style.color = '#0071bc';
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.borderColor = '#ccc';
+                  e.currentTarget.style.color = '#666';
+                }}
+              >
+                <CloseOutlined />
+              </button>
+              <div style={{ borderRadius: '20px', overflow: 'hidden' }}>
+                {/* Phần đầu */}
+                <div
+                  style={{
+                    background: 'linear-gradient(180deg, #ffffff, #e7f7ff)',
+                    padding: '20px',
+                    textAlign: 'center',
+                  }}
+                >
+                  <h3
+                    style={{
+                      color: '#0071bc',
+                      fontWeight: 'bold',
+                      fontSize: '18px',
+                      marginBottom: '8px',
+                    }}
+                  >
+                    → ĐẶT LỊCH XÉT NGHIỆM TẠI NHÀ ←
+                  </h3>
+                  <h1
+                    style={{
+                      color: '#0071bc',
+                      fontWeight: 900,
+                      fontSize: '24px',
+                      marginBottom: '8px',
+                    }}
+                  >
+                    DỊCH VỤ XÉT NGHIỆM TỔNG QUÁT GenNovaX
+                  </h1>
+                  <h2
+                    style={{
+                      color: '#00a859',
+                      fontWeight: 'bold',
+                      fontSize: '18px',
+                      margin: 0,
+                    }}
+                  >
+                    NHANH CHÓNG - CHÍNH XÁC - AN TOÀN
+                  </h2>
+                </div>
+
+                {/* Phần giữa */}
+                <div
+                  style={{
+                    display: 'flex',
+                    padding: '20px',
+                    gap: '20px',
+                    background: '#f9fcff',
+                  }}
+                >
+                  {/* Cột trái */}
+                  <div style={{ flex: 1 }}>
+                    <div
+                      style={{
+                        display: 'flex',
+                        gap: '10px',
+                        marginBottom: '15px',
+                      }}
+                    >
+                      <button
+                        style={{
+                          background: '#0071bc',
+                          border: 'none',
+                          color: '#fff',
+                          borderRadius: '20px',
+                          padding: '8px 16px',
+                          fontWeight: 'bold',
+                          cursor: 'pointer',
+                        }}
+                      >
+                        Xem Gói Xét Nghiệm
+                      </button>
+                      <button
+                        style={{
+                          background: '#00a859',
+                          border: 'none',
+                          color: '#fff',
+                          borderRadius: '20px',
+                          padding: '8px 16px',
+                          fontWeight: 'bold',
+                          cursor: 'pointer',
+                        }}
+                      >
+                        Đặt Ngay
+                      </button>
+                    </div>
+
+                    <h3
+                      style={{
+                        fontSize: '18px',
+                        fontWeight: 'bold',
+                        color: '#0071bc',
+                        marginBottom: '10px',
+                      }}
+                    >
+                      Dịch vụ xét nghiệm GenNovaX
+                    </h3>
+
+                    <p
+                      style={{
+                        fontSize: '15px',
+                        lineHeight: '1.5',
+                        color: '#534c4cff',
+                        marginBottom: '16px',
+                        fontWeight: 600,
+                      }}
+                    >
+                      Đội ngũ kỹ thuật viên y tế chuyên nghiệp, lấy mẫu tại nhà,
+                      trả kết quả nhanh chóng qua ứng dụng.
+                    </p>
+
+                    <div
+                      style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}
+                    >
+                      {[
+                        'Xét nghiệm máu tổng quát',
+                        'Xét nghiệm đường huyết',
+                        'Xét nghiệm mỡ máu',
+                        'Xét nghiệm chức năng gan, thận',
+                        'Xét nghiệm tầm soát bệnh lý',
+                      ].map((item, index) => (
+                        <div
+                          key={index}
+                          style={{
+                            background: '#e6f4f9',
+                            padding: '8px 14px',
+                            borderRadius: '20px',
+                            fontSize: '14px',
+                            color: '#0071bc',
+                            fontWeight: 500,
+                            whiteSpace: 'nowrap',
+                          }}
+                        >
+                          {item}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Cột phải */}
+                  <div style={{ flex: 1 }}>
+                    <img
+                      src="https://bvphusanct.com.vn/Portals/0/67d0390c86dc42821bcd.jpg"
+                      alt="Xét nghiệm GenNovaX"
+                      style={{
+                        width: '100%',
+                        height: '280px',
+                        borderRadius: '10px',
+                        objectFit: 'cover',
+                      }}
+                    />
+                  </div>
+                </div>
+
+                {/* Phần dưới */}
+                <div style={{ background: '#fff9e6', padding: '15px 20px' }}>
+                  <h4
+                    style={{
+                      marginBottom: '10px',
+                      fontWeight: 'bold',
+                      fontSize: '15px',
+                    }}
+                  >
+                    Phù hợp cho khách hàng:
+                  </h4>
+                  <div
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '8px',
+                    }}
+                  >
+                    {[
+                      'Cần kiểm tra sức khỏe định kỳ',
+                      'Có triệu chứng bất thường cần xét nghiệm gấp',
+                      'Gia đình muốn kiểm tra sức khỏe tổng quát',
+                    ].map((text, index) => (
+                      <div
+                        key={index}
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          background: index % 2 === 0 ? '#e8f5e9' : '#fff9e6', // thay đổi màu xen kẽ
+                          borderRadius: '20px',
+                          padding: '6px 12px',
+                          fontSize: '13px',
+                          color: '#333',
+                          fontWeight: 500,
+                        }}
+                      >
+                        <span
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            width: '18px',
+                            height: '18px',
+                            borderRadius: '50%',
+                            background: '#4caf50',
+                            color: '#fff',
+                            fontSize: '12px',
+                            marginRight: '8px',
+                            flexShrink: 0,
+                          }}
+                        >
+                          ✓
+                        </span>
+                        {text}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         <div
           style={{
             width: '100%',
@@ -522,12 +829,18 @@ const ContentComponent = () => {
                         style={{
                           color: '#003553',
                           marginBottom: 8,
-                          fontSize: 16,
+                          fontSize: 12,
                           fontWeight: 500,
+                          display: '-webkit-box',
+                          WebkitLineClamp: 2,
+                          WebkitBoxOrient: 'vertical',
+                          overflow: 'hidden',
+                          minHeight: '32px', // 2 dòng * ~16px line-height
+                          lineHeight: '16px',
                         }}
                       >
                         <EnvironmentOutlined
-                          style={{ marginRight: 6, fontSize: 18 }}
+                          style={{ marginRight: 6, fontSize: 16 }}
                         />
                         {clinic.address}
                       </p>
@@ -564,8 +877,11 @@ const ContentComponent = () => {
                           cursor: 'pointer',
                           fontWeight: 'bold',
                         }}
+                        onClick={() => {
+                          navigate(`/y-te/chi-tiet-phong-kham?ID=${clinic.id}`);
+                        }}
                       >
-                        Đặt khám ngay
+                        Xem chi tiết
                       </button>
                     </Card>
                   </Col>
@@ -573,6 +889,152 @@ const ContentComponent = () => {
               </Row>
             </div>
           </div>
+          <div
+            style={{
+              background: `linear-gradient(
+      to bottom,
+      white 0px,
+      #e8f8fd 50px,
+      #e8f8fd calc(100% - 50px),
+      white 100%
+    )`,
+            }}
+          >
+            <Title
+              level={2}
+              style={{
+                margin: '60px 0 10px',
+                color: '#065c8c',
+                textAlign: 'center',
+                fontWeight: 700,
+              }}
+            >
+              Các dịch vụ xét nghiệm
+            </Title>
+
+            <div
+              style={{
+                width: '80%',
+                margin: '0 auto',
+                overflowX: 'auto',
+                padding: '40px 0',
+              }}
+            >
+              <Row
+                gutter={[32, 32]}
+                wrap={false}
+                style={{ minWidth: 'max-content' }}
+              >
+                {serviceList.map((service, i) => (
+                  <Col key={i} style={{ width: 310 }}>
+                    <Card
+                      hoverable
+                      bodyStyle={{ padding: 0 }}
+                      style={{
+                        borderRadius: 16,
+                        // padding: '16px 16px',
+                        boxShadow: '0 4px 12px rgba(0, 191, 255, 0.3)',
+                        textAlign: 'start',
+                      }}
+                    >
+                      <div
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                          marginBottom: 16,
+                        }}
+                      >
+                        <img
+                          src={service.image}
+                          alt={service.name}
+                          style={{
+                            width: '100%',
+                            objectFit: 'contain',
+                            borderTopLeftRadius: 16,
+                            borderTopRightRadius: 16,
+                          }}
+                        />
+                      </div>
+
+                      <div style={{ padding: '16px 16px', paddingTop: 0 }}>
+                        {/* Title giữ nguyên kích thước 2 dòng */}
+                        <Title
+                          level={4}
+                          style={{
+                            marginBottom: 8,
+                            fontSize: 17,
+                            lineHeight: '20px',
+                            height: '40px', // cố định 2 dòng
+                            overflow: 'hidden',
+                            display: '-webkit-box',
+                            WebkitLineClamp: 2,
+                            WebkitBoxOrient: 'vertical',
+                            whiteSpace: 'normal',
+                          }}
+                        >
+                          {service.name}{' '}
+                          {service.verified && (
+                            <CheckCircleFilled
+                              style={{ color: '#1890ff', fontSize: 16 }}
+                            />
+                          )}
+                        </Title>
+
+                        <p
+                          style={{
+                            color: '#003553',
+                            marginBottom: 8,
+                            fontSize: 15,
+                            fontWeight: 500,
+                          }}
+                        >
+                          <BankOutlined
+                            style={{ marginRight: 6, fontSize: 15 }}
+                          />
+                          {service.clinic}
+                        </p>
+
+                        <div
+                          style={{
+                            marginBottom: 12,
+                            color: '#003553',
+                            fontSize: 15,
+                          }}
+                        >
+                          <span style={{ marginRight: 6 }}>
+                            <DollarOutlined />
+                          </span>
+                          {service.price.toString()}.000đ
+                        </div>
+
+                        <button
+                          style={{
+                            backgroundColor: '#00bfff',
+                            color: 'white',
+                            border: 'none',
+                            padding: '4px 8px',
+                            borderRadius: 8,
+                            width: '100%',
+                            height: 30,
+                            cursor: 'pointer',
+                            fontWeight: 'bold',
+                          }}
+                          onClick={() => {
+                            navigate(
+                              `/y-te/dat-lich-xet-nghiem?code=${service.id}`
+                            );
+                          }}
+                        >
+                          Đặt khám ngay
+                        </button>
+                      </div>
+                    </Card>
+                  </Col>
+                ))}
+              </Row>
+            </div>
+          </div>
+
           <div
             style={{
               background: `linear-gradient(
@@ -623,7 +1085,7 @@ const ContentComponent = () => {
               ))}
             </Row>
           </div>
-          (
+
           <div style={{ padding: '40px 20px' }}>
             <Title
               level={2}
@@ -1102,8 +1564,11 @@ const ContentComponent = () => {
                           cursor: 'pointer',
                           fontWeight: 'bold',
                         }}
+                        onClick={() => {
+                          navigate(`/y-te/chi-tiet-phong-kham?ID=${clinic.id}`);
+                        }}
                       >
-                        Đặt khám ngay
+                        Xem chi tiết
                       </button>
                     </Card>
                   </Col>
@@ -1183,7 +1648,17 @@ const ContentComponent = () => {
                       <div style={{ padding: '16px 8px', paddingTop: 0 }}>
                         <Title
                           level={5}
-                          style={{ marginBottom: 8, fontSize: 14 }}
+                          style={{
+                            marginBottom: 8,
+                            fontSize: 14,
+                            lineHeight: '20px', // chiều cao mỗi dòng
+                            height: '40px', // 2 dòng => 20px * 2
+                            overflow: 'hidden',
+                            display: '-webkit-box',
+                            WebkitLineClamp: 2,
+                            WebkitBoxOrient: 'vertical',
+                            whiteSpace: 'normal',
+                          }}
                         >
                           {service.name}{' '}
                           {service.verified && (
@@ -1192,6 +1667,7 @@ const ContentComponent = () => {
                             />
                           )}
                         </Title>
+
                         <p
                           style={{
                             color: '#003553',
@@ -1230,6 +1706,11 @@ const ContentComponent = () => {
                             height: 30,
                             cursor: 'pointer',
                             fontWeight: 'bold',
+                          }}
+                          onClick={() => {
+                            navigate(
+                              `/y-te/dat-lich-xet-nghiem?code=${service.id}`
+                            );
                           }}
                         >
                           Đặt khám ngay

@@ -69,6 +69,12 @@ const RegisterPage = () => {
         maxWidth: 600,
         width: '100%',
         padding: isMobile ? '20px' : '0 32px',
+        backgroundImage:
+          "url('https://p16-hera-sg.larksuitecdn.com/tos-alisg-i-hn4qzgxq2n-sg/b2432d9ed2dc49b68258bf9f7bfae6fa.avif~tplv-hn4qzgxq2n-image-v1:0:0.image')",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundAttachment: 'fixed',
       }}
     >
       <div style={{ position: 'absolute', top: 24, left: 24 }}>

@@ -72,7 +72,11 @@ const FirstPage = () => {
     <Layout className="layout">
       <Header className="header">
         <div className="logo">
-          <img src={GenAppLogo} alt="GenApp Logo" className="logo-img" />
+          <img
+            src="https://genapp.com.vn/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flogo.83c67ad2.png&w=384&q=75"
+            alt="GenApp Logo"
+            className="logo-img"
+          />
         </div>
         <div className="header-right">
           <div className="contact-info">
