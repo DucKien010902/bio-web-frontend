@@ -1,17 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { Layout, Menu } from 'antd';
 import {
+  CalendarOutlined,
   DashboardOutlined,
   LogoutOutlined,
-  CalendarOutlined,
+  ShopOutlined,
 } from '@ant-design/icons';
+import { Avatar, Button, Divider, Layout, Menu } from 'antd';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ShopDetail from './shopInfo';
-import ProductList from './shopProducts';
 import axiosClient from '../../api/apiConfig';
-import VoucherTable from './shopVoucher';
+import ShopDetail from './shopInfo';
 import ShopMessages from './shopMessages';
+import ProductList from './shopProducts';
 import ShopPropose from './shopPropose';
+import VoucherTable from './shopVoucher';
 
 const { Header, Sider, Content } = Layout;
 
@@ -99,22 +100,44 @@ const ShopLayout = () => {
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <Sider collapsible>
+      {/* Sidebar cố định */}
+      <Sider
+        theme="dark"
+        style={{
+          position: 'fixed',
+          height: '100vh',
+          left: 0,
+          top: 0,
+          bottom: 0,
+        }}
+      >
+        {/* Logo Shop */}
         <div
           style={{
             color: 'white',
             padding: 16,
             fontSize: 18,
             fontFamily: 'cursive',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 10,
           }}
         >
-          Shop
+          <Avatar icon={<ShopOutlined />} />
+          <span>Shop</span>
         </div>
+
+        <Divider
+          style={{ margin: '8px 0', backgroundColor: 'rgba(255,255,255,0.2)' }}
+        />
+
+        {/* Menu chức năng */}
         <Menu
           theme="dark"
           mode="inline"
           selectedKeys={[selectedKey]}
           onClick={(e) => setSelectedKey(e.key)}
+          style={{ flex: 1 }}
         >
           <Menu.Item key="dashboard" icon={<DashboardOutlined />}>
             Dashboard
@@ -135,10 +158,33 @@ const ShopLayout = () => {
             Hội thoại
           </Menu.Item>
         </Menu>
+
+        <Divider
+          style={{ margin: '8px 0', backgroundColor: 'rgba(255,255,255,0.2)' }}
+        />
+
+        {/* Nút Đăng xuất dưới cùng */}
+        <div style={{ padding: 5 }}>
+          <Button
+            type="primary"
+            danger
+            icon={<LogoutOutlined />}
+            block
+            onClick={handleLogout}
+          >
+            Đăng xuất
+          </Button>
+        </div>
       </Sider>
-      <Layout>
+
+      {/* Phần còn lại, dịch sang phải bằng width của sider */}
+      <Layout style={{ marginLeft: 200 }}>
         <Header
-          style={{ background: '#fff', padding: 0, position: 'relative' }}
+          style={{
+            background: '#fff',
+            padding: 0,
+            position: 'relative',
+          }}
         >
           <div
             style={{
@@ -160,20 +206,6 @@ const ShopLayout = () => {
             >
               {shopInfo.shopName}
             </h1>
-
-            <LogoutOutlined
-              style={{
-                fontSize: 28,
-                fontWeight: 700,
-                color: '#ff4d4f',
-                position: 'absolute',
-                right: 30,
-                top: '50%',
-                transform: 'translateY(-50%)',
-                cursor: 'pointer',
-              }}
-              onClick={handleLogout}
-            />
           </div>
         </Header>
 

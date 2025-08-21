@@ -1,10 +1,13 @@
-import React, { useState, useRef } from 'react';
-import { Input, Button, Typography, Row, Col, message } from 'antd';
 import {
+  ArrowLeftOutlined,
   EyeInvisibleOutlined,
   EyeTwoTone,
-  ArrowLeftOutlined,
 } from '@ant-design/icons';
+import { Button, Col, Form, Input, message, Row, Typography } from 'antd';
+import { useRef, useState } from 'react';
+import { LuPhone } from 'react-icons/lu';
+import { MdOutlineLock } from 'react-icons/md';
+import { useMediaQuery } from 'react-responsive';
 import { useNavigate } from 'react-router-dom';
 import axiosClient from '../../api/apiConfig';
 import firebase from '../../config/firebase-config';
@@ -12,6 +15,7 @@ import firebase from '../../config/firebase-config';
 const { Title, Text } = Typography;
 
 const LoginPage = () => {
+  const isMobile = useMediaQuery({ maxWidth: 797 });
   const navigate = useNavigate();
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
@@ -156,22 +160,23 @@ const LoginPage = () => {
         <div style={{ position: 'absolute', top: 24, left: 24 }}>
           <ArrowLeftOutlined
             style={{ fontSize: 24, color: '#1890ff', cursor: 'pointer' }}
-            onClick={() => navigate(-1)}
-            tabIndex={0}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') navigate(redirectPath);
+            onClick={() => {
+              console.log(redirectPath);
+              navigate(redirectPath);
             }}
+            tabIndex={0}
           />
         </div>
 
-        <div style={{ maxWidth: 400, width: '100%', paddingBottom: 250 }}>
+        <div style={{ maxWidth: 400, width: '100%' }}>
           <Title
             level={2}
             style={{
               color: '#1890ff',
               fontFamily: 'cursive',
-              fontSize: 60,
+              fontSize: isMobile ? 50 : 60,
               display: 'flex',
+              marginBottom: isMobile ? 0 : 30,
               justifyContent: 'center',
             }}
           >
@@ -190,25 +195,53 @@ const LoginPage = () => {
           </Text>
 
           {step === 'login' ? (
-            <>
-              <Input
-                size="large"
-                placeholder="Nhập số điện thoại"
-                value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
-                style={{ marginBottom: 16, borderRadius: 8, height: 50 }}
-              />
-              <Input.Password
-                size="large"
-                placeholder="Nhập mật khẩu"
-                iconRender={(visible) =>
-                  visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-                }
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                style={{ marginBottom: 24, borderRadius: 8, height: 50 }}
-                onPressEnter={handleLogin} // ENTER ở ô mật khẩu => đăng nhập luôn
-              />
+            <Form layout="vertical">
+              <Form.Item
+                label={<span style={{ fontWeight: 500 }}>Số điện thoại:</span>}
+              >
+                <Input
+                  size="large"
+                  placeholder="Nhập số điện thoại"
+                  prefix={
+                    <LuPhone
+                      style={{
+                        color: '#bf17a9ff',
+                        fontSize: 18,
+                        marginRight: 5,
+                      }}
+                    />
+                  }
+                  value={phoneNumber}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  style={{ borderRadius: 8, height: 50 }}
+                />
+              </Form.Item>
+
+              <Form.Item
+                label={<span style={{ fontWeight: 500 }}>Nhập mật khẩu:</span>}
+              >
+                <Input.Password
+                  size="large"
+                  placeholder="Nhập mật khẩu:"
+                  prefix={
+                    <MdOutlineLock
+                      style={{
+                        color: '#bf17a9ff',
+                        fontSize: 20,
+                        marginRight: 5,
+                      }}
+                    />
+                  }
+                  iconRender={(visible) =>
+                    visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+                  }
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  style={{ borderRadius: 8, height: 50 }}
+                  onPressEnter={handleLogin}
+                />
+              </Form.Item>
+
               <Button
                 type="primary"
                 size="large"
@@ -224,7 +257,7 @@ const LoginPage = () => {
               >
                 Đăng nhập
               </Button>
-            </>
+            </Form>
           ) : (
             <>
               <Input
@@ -271,7 +304,7 @@ const LoginPage = () => {
             </a>
             <a
               tabIndex={0}
-              onClick={() => console.log('Quên mật khẩu')}
+              onClick={() => navigate('/quen-mat-khau')}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') console.log('Quên mật khẩu');
               }}

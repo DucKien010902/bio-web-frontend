@@ -1,13 +1,7 @@
-import React, { useState } from 'react';
+import { DashboardOutlined, LogoutOutlined } from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
-import {
-  DashboardOutlined,
-  UserOutlined,
-  LogoutOutlined,
-} from '@ant-design/icons';
+import { useState } from 'react';
 import { BiClinic } from 'react-icons/bi';
-import { GrDocumentTest } from 'react-icons/gr';
-import { IoIosPeople } from 'react-icons/io';
 import { MdStorefront } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import ClinicBookingPage from './bookingCalender';
@@ -80,6 +74,7 @@ const ClinicLayout = () => {
                   cursor: 'pointer',
                 }}
                 onClick={() => {
+                  localStorage.removeItem('user');
                   navigate('/login');
                 }}
               />

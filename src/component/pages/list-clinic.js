@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { Input, Typography, Row, Col, Card, Button, Rate, Divider } from 'antd';
-import genbio1 from '../../assets/images/genbio1.jpg';
-import './list-clinic.css';
 import {
-  EnvironmentOutlined,
   CheckCircleTwoTone,
+  EnvironmentOutlined,
   SearchOutlined,
 } from '@ant-design/icons';
+import { Button, Card, Col, Input, Rate, Row, Typography } from 'antd';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import genbio1 from '../../assets/images/genbio1.jpg';
+import './list-clinic.css';
 
 const { Title, Text, Paragraph } = Typography;
 

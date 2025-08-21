@@ -1,29 +1,24 @@
-import React, { use, useEffect, useState } from 'react';
-import { Input, Avatar } from 'antd';
-import { MessageOutlined, SearchOutlined } from '@ant-design/icons';
-import { useNavigate } from 'react-router-dom';
-import { TbBrandShopee } from 'react-icons/tb';
-import { MdOutlineShoppingCart } from 'react-icons/md';
-import { FaFacebook, FaInstagram, FaQuestionCircle } from 'react-icons/fa';
+import { MessageOutlined } from '@ant-design/icons';
+import { Avatar } from 'antd';
+import { useEffect, useState } from 'react';
 import {
-  HomeOutlined,
-  BellOutlined,
-  QuestionCircleOutlined,
-  DownloadOutlined,
-} from '@ant-design/icons';
-import { RxDividerVertical } from 'react-icons/rx';
-import { FaBriefcaseMedical } from 'react-icons/fa';
-import { CiMedicalCase } from 'react-icons/ci';
+  FaBriefcaseMedical,
+  FaFacebook,
+  FaInstagram,
+  FaQuestionCircle,
+} from 'react-icons/fa';
 import { IoHome } from 'react-icons/io5';
-import axiosClient from '../../api/apiConfig';
+import { MdOutlineShoppingCart } from 'react-icons/md';
+import { RxDividerVertical } from 'react-icons/rx';
+import { useDispatch, useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
-import ChatPanel from './ChatDrawer';
+import { useNavigate } from 'react-router-dom';
+import axiosClient from '../../api/apiConfig';
+import genAppLogo from '../../assets/images/GenApp logo.png';
+import { closeChatPanel, openChatPanel } from '../../redux/slices/chatSlice';
 import ChatPanelMobile from './ChatDrawerMobile';
-import { useSelector, useDispatch } from 'react-redux';
-import { openChatPanel, closeChatPanel } from '../../redux/slices/chatSlice';
 import AnimatedSearch from './InputSearch';
 import AnimatedSearchMobile from './InputSearchMobile';
-import genAppLogo from '../../assets/images/logo.webp';
 
 const AllProductHeader = ({
   handleSearch,
@@ -63,7 +58,7 @@ const AllProductHeader = ({
         style={{
           // background: 'linear-gradient(to bottom, #306bcaff, #00b5f1)',
           backgroundImage:
-            "url('https://banghieuviet.org/wp-content/uploads/2023/08/nen-xanh-duong-pastel.jpg')",
+            "url('https://media.istockphoto.com/id/1450240429/vi/vec-to/hi%E1%BB%87n-%C4%91%E1%BA%A1i-m%C3%A0u-xanh-y-t%E1%BA%BF-vector-wallpaper-futuristic-y-t%E1%BA%BF-icons-geometric-h%C3%ACnh-l%E1%BB%A5c-gi%C3%A1c-h%C3%ACnh.jpg?s=612x612&w=0&k=20&c=NVr-BTtBm5ex-_A4SbTQQcQo5SZ21qqbOBTEeIt2Q0Y=')",
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
@@ -83,7 +78,7 @@ const AllProductHeader = ({
             color: '#1932b0',
             display: 'flex',
             alignItems: 'center',
-            padding: '8px 30px',
+            padding: '8px 0px',
             fontSize: '14px',
             fontWeight: 500,
           }}
@@ -218,9 +213,10 @@ const AllProductHeader = ({
         {/* Thanh logo và tìm kiếm */}
         <div
           style={{
-            padding: '0 50px',
+            padding: '0 00px',
             display: 'flex',
             alignItems: 'center',
+            // justifyContent: 'center',
             height: 60,
             // paddingTop: 10,
           }}
@@ -230,20 +226,35 @@ const AllProductHeader = ({
               flex: 6,
               display: 'flex',
               alignItems: 'center',
+              justifyContent: 'center',
               cursor: 'pointer',
             }}
             onClick={() => {
               navigate('/san-pham/trang-chu');
             }}
           >
-            <img
-              src={genAppLogo}
-              alt="GenApp Logo"
+            <div
               style={{
-                height: 50,
-                objectFit: 'contain',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: 120, // chiều ngang elip
+                height: 72, // chiều dọc elip
+                backgroundColor: '#fff',
+                border: '3px solid gold',
+                borderRadius: '50%', // bo elip
+                boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
               }}
-            />
+            >
+              <img
+                src={genAppLogo}
+                alt="GenApp Logo"
+                style={{
+                  height: 36,
+                  objectFit: 'contain',
+                }}
+              />
+            </div>
           </div>
 
           {/* Thanh tìm kiếm */}
@@ -263,7 +274,7 @@ const AllProductHeader = ({
             <div style={{ position: 'relative' }}>
               <MdOutlineShoppingCart
                 size={30}
-                color="#0ba1b8"
+                color="#ffffffff"
                 onClick={() => {
                   if (!phoneNumber) {
                     localStorage.setItem(
@@ -284,8 +295,8 @@ const AllProductHeader = ({
                     position: 'absolute',
                     top: -8,
                     right: -8,
-                    background: 'red',
-                    color: '#0ba1b8',
+                    background: '#3b4bd5ff',
+                    color: 'yellow',
                     borderRadius: '50%',
                     width: 18,
                     height: 18,

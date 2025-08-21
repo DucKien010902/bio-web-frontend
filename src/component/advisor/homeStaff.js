@@ -1,13 +1,10 @@
-import React, { useState } from 'react';
-import { Layout, Menu } from 'antd';
 import {
-  DashboardOutlined,
-  UserOutlined,
-  LogoutOutlined,
   CalendarOutlined,
+  DashboardOutlined,
+  LogoutOutlined,
 } from '@ant-design/icons';
-import { BiClinic } from 'react-icons/bi';
-import { GrDocumentTest } from 'react-icons/gr';
+import { Layout, Menu } from 'antd';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import EmployeeBookingPage from './bookingCalendar';
 const { Header, Sider, Content } = Layout;
@@ -74,6 +71,7 @@ const StaffLayout = () => {
                   cursor: 'pointer',
                 }}
                 onClick={() => {
+                  localStorage.removeItem('user');
                   navigate('/login');
                 }}
               />

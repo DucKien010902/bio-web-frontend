@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { Input, Button, Typography, Row, Col, message } from 'antd';
 import {
   ArrowLeftOutlined,
   EyeInvisibleOutlined,
   EyeTwoTone,
 } from '@ant-design/icons';
-import { useNavigate } from 'react-router-dom';
+import { Button, Col, Input, message, Row, Typography } from 'antd';
+import { useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
+import { useNavigate } from 'react-router-dom';
 import axiosClient from '../../api/apiConfig';
 
 const { Title } = Typography;
@@ -69,8 +69,6 @@ const RegisterPage = () => {
         maxWidth: 600,
         width: '100%',
         padding: isMobile ? '20px' : '0 32px',
-        backgroundImage:
-          "url('https://p16-hera-sg.larksuitecdn.com/tos-alisg-i-hn4qzgxq2n-sg/b2432d9ed2dc49b68258bf9f7bfae6fa.avif~tplv-hn4qzgxq2n-image-v1:0:0.image')",
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
@@ -110,6 +108,7 @@ const RegisterPage = () => {
           style={{ borderRadius: 8, height: 40 }}
           value={name}
           onChange={(e) => setName(e.target.value)}
+          placeholder="Nhập họ và tên"
         />
       </LabelInput>
 
@@ -119,6 +118,7 @@ const RegisterPage = () => {
           style={{ borderRadius: 8, height: 40 }}
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
+          placeholder="Nhập số điện thoại"
         />
       </LabelInput>
 
@@ -131,6 +131,7 @@ const RegisterPage = () => {
           style={{ borderRadius: 8, height: 40 }}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          placeholder="Nhập mật khẩu"
         />
       </LabelInput>
 
@@ -143,6 +144,7 @@ const RegisterPage = () => {
           style={{ borderRadius: 8, height: 40 }}
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
+          placeholder="Nhập lại mật khẩu"
         />
       </LabelInput>
 
@@ -170,7 +172,8 @@ const RegisterPage = () => {
       style={{
         minHeight: '100vh',
         overflow: 'hidden',
-        backgroundColor: '#f0f2f5',
+        backgroundImage:
+          "url('https://p16-hera-sg.larksuitecdn.com/tos-alisg-i-hn4qzgxq2n-sg/b2432d9ed2dc49b68258bf9f7bfae6fa.avif~tplv-hn4qzgxq2n-image-v1:0:0.image')",
       }}
     >
       {isMobile ? (

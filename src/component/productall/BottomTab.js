@@ -1,15 +1,12 @@
 // src/components/BottomTabBar.jsx
-import React from 'react';
-import { useLocation, useNavigate, matchPath } from 'react-router-dom';
 import {
-  HomeOutlined,
-  MedicineBoxOutlined,
-  AppleOutlined,
-  UserOutlined,
-  ProductOutlined,
-  DiffOutlined,
   CalendarOutlined,
+  DiffOutlined,
+  MedicineBoxOutlined,
+  ProductOutlined,
+  UserOutlined,
 } from '@ant-design/icons';
+import { useLocation, useNavigate } from 'react-router-dom';
 const tabItems = [
   {
     label: 'Trang chủ',

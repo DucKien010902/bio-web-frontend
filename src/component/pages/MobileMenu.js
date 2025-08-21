@@ -1,27 +1,26 @@
-import React, { useEffect } from 'react';
-import { Layout, List, Avatar, Badge, Button, Divider, Row, Col } from 'antd';
 import {
-  UserOutlined,
-  FileTextOutlined,
-  BellOutlined,
-  HomeOutlined,
   AppstoreOutlined,
-  PlusSquareOutlined,
-  ReadOutlined,
-  QuestionCircleOutlined,
-  TeamOutlined,
+  BellOutlined,
+  CaretRightOutlined,
   FacebookFilled,
-  YoutubeFilled,
+  FileTextOutlined,
+  HomeOutlined,
+  LogoutOutlined,
   MailOutlined,
   PhoneOutlined,
-  LogoutOutlined,
+  PlusSquareOutlined,
+  QuestionCircleOutlined,
+  ReadOutlined,
   TikTokFilled,
-  CaretRightOutlined,
+  UserOutlined,
+  YoutubeFilled,
 } from '@ant-design/icons';
+import { Avatar, Badge, Button, Col, Divider, Layout, List, Row } from 'antd';
+import { useEffect } from 'react';
 import { SiZalo } from 'react-icons/si';
 import { useDispatch } from 'react-redux';
-import { closeMenuBio } from '../../redux/slices/openMenuSlice';
 import { useNavigate } from 'react-router-dom';
+import { closeMenuBio } from '../../redux/slices/openMenuSlice';
 
 const { Content } = Layout;
 
@@ -68,9 +67,12 @@ const MobileMenu = () => {
                 type="primary"
                 block
                 style={{ borderRadius: 8, height: 40 }}
-                onClick={() => navigate('/register')}
+                onClick={() => {
+                  localStorage.removeItem('user');
+                  navigate('/login');
+                }}
               >
-                Đăng ký
+                Đăng nhập
               </Button>
             </Col>
             <Col span={12}>
@@ -78,12 +80,9 @@ const MobileMenu = () => {
                 type="default"
                 block
                 style={{ borderRadius: 8, height: 40 }}
-                onClick={() => {
-                  localStorage.removeItem('user');
-                  navigate('/login');
-                }}
+                onClick={() => navigate('/register')}
               >
-                Đăng nhập
+                Đăng ký
               </Button>
             </Col>
           </Row>
@@ -138,7 +137,7 @@ const MobileMenu = () => {
             {
               icon: <ReadOutlined />,
               title: 'Tin tức',
-              // link: '/y-te/tin-tuc',
+              link: '/y-te/tin-tuc',
               action: true,
             },
             {

@@ -42,6 +42,7 @@ import BookingPageMobile from './component/pages/book-calenderMobile';
 import DetailClinicMobile from './component/pages/detail-clinicMobile';
 import PostList from './component/pages/PostList';
 import FirstPage from './component/pages/firstPage';
+import ForgotPasswordPage from './component/auth/forgotPass';
 const ScrollToTop = () => {
   const { pathname } = useLocation();
 
@@ -152,6 +153,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/quen-mat-khau" element={<ForgotPasswordPage />} />
         <Route path="/quan-tri-vien/*" element={<Admin />} />
         <Route path="/dieu-phoi-vien/*" element={<ClinicLayout />} />
         <Route path="/tu-van-vien/*" element={<ServiceStaff />} />

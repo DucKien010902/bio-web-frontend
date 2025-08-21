@@ -1,38 +1,26 @@
-import React from 'react';
-import AllProductHeader from '../productall/AllProductHeader';
-import { Col, Row, Divider, Carousel } from 'antd';
-import { AiOutlineBars } from 'react-icons/ai';
-import { AiFillFire } from 'react-icons/ai';
-import { SiTicktick } from 'react-icons/si';
-import { useRef, useEffect } from 'react';
-import { Button, Card, Typography, Rate, Avatar } from 'antd';
-import { useMediaQuery } from 'react-responsive';
-import dichvu from '../../assets/images/dichvu.webp';
-import dichvu1 from '../../assets/images/dichvu1.webp';
-import dichvu2 from '../../assets/images/dichvu2.webp';
-import dichvu3 from '../../assets/images/dichvu3.webp';
-import dichvu4 from '../../assets/images/dichvu4.webp';
-import dichvu5 from '../../assets/images/dichvu5.webp';
-import dichvu6 from '../../assets/images/dichvu6.webp';
-import articalPost from '../../assets/images/artical.png';
+import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import {
-  LeftOutlined,
-  RightOutlined,
-  EnvironmentOutlined,
-  CheckCircleTwoTone,
-  CheckSquareTwoTone,
-} from '@ant-design/icons';
+  Avatar,
+  Button,
+  Card,
+  Carousel,
+  Col,
+  Divider,
+  Row,
+  Typography,
+} from 'antd';
+import { useRef } from 'react';
+import { AiFillFire, AiOutlineBars } from 'react-icons/ai';
 import { LuMessageSquareMore } from 'react-icons/lu';
-import ShopProductContent from '../productall/shopInfoProductContent';
+import { SiTicktick } from 'react-icons/si';
+import { useMediaQuery } from 'react-responsive';
+import { useLocation, useNavigate } from 'react-router-dom';
+import articalPost from '../../assets/images/artical.png';
 import AllProductContent1 from '../productall/AllProductContent1';
-import AllProductContentMobile1 from './AllProductContentMobile1';
-import { useNavigate } from 'react-router-dom';
-import AllProductFooter from './AllProductFooter';
+import AllProductHeader from '../productall/AllProductHeader';
 import AllProductContent2 from './AllProductContent2';
-import VoucherGen from './voucherGen';
-import { useLocation } from 'react-router-dom';
-import HeaderComponent from '../layout/header';
 import AllProductContentMobile2 from './AllProductContentMobile2';
+import AllProductFooter from './AllProductFooter';
 
 const { Title, Paragraph, Text, Link } = Typography;
 
@@ -231,9 +219,9 @@ const HomePageProduct = () => {
     },
   ];
   const bannerImages = [
-    'https://cf.shopee.vn/file/sg-11134258-7rdvo-mcbsynano63k01_xxhdpi',
-    'https://cf.shopee.vn/file/sg-11134258-7rdxx-mcgboanz9cwjc8_xxhdpi',
-    'https://cf.shopee.vn/file/sg-11134258-7rdvj-mcg0m0mv44zb37_xxhdpi',
+    'https://royalmed.com.vn/wp-content/uploads/2025/03/banner-y-te-1-1.jpg',
+    'https://royalmed.com.vn/wp-content/uploads/2025/03/banner-y-te-2.1.jpg',
+    'https://royalmed.com.vn/wp-content/uploads/2025/03/banner-y-te-3.1.jpg',
   ];
 
   const DesktopLayout = () => {
@@ -281,7 +269,7 @@ const HomePageProduct = () => {
                     <Col span={8} style={{ height: '100%' }}>
                       <Row style={{ height: '50%', paddingBottom: 5 }}>
                         <img
-                          src="https://cf.shopee.vn/file/sg-11134258-7rdwk-mcg0sfmh622adc_xhdpi"
+                          src="https://nakawa.vn/public/storage/banner/org/banner-giuong-benh-nhan-dieu-khien-bang-dien.webp"
                           style={{
                             width: '100%',
                             height: '100%',
@@ -292,7 +280,7 @@ const HomePageProduct = () => {
                       </Row>
                       <Row style={{ height: '50%', paddingTop: 5 }}>
                         <img
-                          src="https://cf.shopee.vn/file/sg-11134258-7rdxa-mcg0shzxks785a_xhdpi"
+                          src="https://royalmed.com.vn/wp-content/uploads/2025/03/banner-y-te-1-1.jpg"
                           style={{
                             width: '100%',
                             height: '100%',
@@ -616,183 +604,16 @@ const HomePageProduct = () => {
                   <AllProductContent1 />
                 </div>
               </div>
-              <div
-                style={{
-                  height: 480,
-                  marginTop: 30,
-                  padding: '30px 70px',
-                  backgroundColor: 'white',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  //               boxShadow: `
-                  //   0 0 0 10px #f5fbfd,
-                  //   0 0 0 20px #eaf7fa,
-                  //   0 0 0 30px #e1f4f7
-                  // `,
-                  borderRadius: 16, // tuỳ chọn nếu muốn bo nhẹ góc
-                }}
-              >
-                <Title
-                  level={3}
-                  style={{
-                    textAlign: 'center',
-                    color: '#1c3380',
-                    marginBottom: 48,
-                    fontWeight: 700,
-                    fontSize: 24,
-                  }}
-                >
-                  CƠ SỞ Y TẾ NỔI BẬT
-                </Title>
-
-                <div style={{ position: 'relative' }}>
-                  {/* Nút trái */}
-                  <Button
-                    shape="circle"
-                    icon={<LeftOutlined />}
-                    onClick={() => scroll1('left')}
-                    style={{
-                      position: 'absolute',
-                      left: -20,
-                      top: '50%',
-                      transform: 'translateY(-50%)',
-                      zIndex: 1,
-                      backgroundColor: '#e3bdbd',
-                      boxShadow: '0 2px 6px rgba(0,0,0,0.2)',
-                    }}
-                  />
-
-                  {/* Danh sách cơ sở */}
-                  <div
-                    ref={scrollRef1}
-                    style={{
-                      display: 'flex',
-                      overflowX: 'auto',
-                      gap: 24,
-                      padding: '10px 30px',
-                      scrollBehavior: 'smooth',
-                      scrollbarWidth: 'none',
-                      msOverflowStyle: 'none',
-                    }}
-                  >
-                    {featuredHospitals.map((hospital, index) => (
-                      <Card
-                        key={index}
-                        style={{
-                          flex: '0 0 auto',
-                          width: 240,
-                          borderRadius: 24,
-                          boxShadow: '0 8px 20px rgba(0, 0, 0, 0.1)',
-                          padding: 16,
-                          display: 'flex',
-                          flexDirection: 'column',
-                          alignItems: 'center',
-                          marginLeft: 10,
-                          marginRight: 10,
-                        }}
-                        bodyStyle={{ padding: 0 }}
-                      >
-                        <img
-                          src={hospital.logo}
-                          alt="Logo"
-                          style={{
-                            height: 60,
-                            objectFit: 'contain',
-                            marginTop: 12,
-                            marginBottom: 12,
-                            display: 'block',
-                            marginLeft: 'auto',
-                            marginRight: 'auto',
-                          }}
-                        />
-
-                        <Divider
-                          style={{
-                            margin: '8px 0',
-                            borderWidth: 2,
-                            borderColor: '#d2d8d9',
-                          }}
-                        />
-                        <div style={{ padding: '4px 16px 0', width: '100%' }}>
-                          <div
-                            style={{
-                              fontWeight: 600,
-                              fontSize: 14,
-                              marginBottom: 4,
-                              height: 40, // đảm bảo đủ chỗ cho 2 dòng
-                              lineHeight: '20px',
-                              overflow: 'hidden',
-                              display: '-webkit-box',
-                              WebkitLineClamp: 2,
-                              WebkitBoxOrient: 'vertical',
-                            }}
-                          >
-                            {hospital.name}{' '}
-                            <CheckCircleTwoTone twoToneColor="#1890ff" />
-                          </div>
-
-                          <Text type="secondary" style={{ fontSize: 13 }}>
-                            <EnvironmentOutlined style={{ marginRight: 4 }} />
-                            {hospital.address}
-                          </Text>
-                          <div style={{ margin: '8px 0' }}>
-                            <Rate
-                              disabled
-                              defaultValue={hospital.rating}
-                              style={{ fontSize: 16 }}
-                            />
-                            <span style={{ marginLeft: 8, fontSize: 13 }}>
-                              (4)
-                            </span>
-                          </div>
-                        </div>
-                        <div style={{ padding: '0 16px 16px', width: '100%' }}>
-                          <Button
-                            type="primary"
-                            block
-                            style={{
-                              borderRadius: 8,
-                              backgroundColor: '#3a7fd5',
-                              fontWeight: 600,
-                            }}
-                            onClick={() => {
-                              window.open('https://genlabvn.com/', '_blank');
-                            }}
-                          >
-                            Xem cơ sở
-                          </Button>
-                        </div>
-                      </Card>
-                    ))}
-                  </div>
-
-                  {/* Nút phải */}
-                  <Button
-                    shape="circle"
-                    icon={<RightOutlined />}
-                    onClick={() => scroll1('right')}
-                    style={{
-                      position: 'absolute',
-                      right: -20,
-                      top: '50%',
-                      transform: 'translateY(-50%)',
-                      zIndex: 1,
-                      backgroundColor: '#e3bdbd',
-                      boxShadow: '0 2px 6px rgba(0,0,0,0.2)',
-                    }}
-                  />
-                </div>
-              </div>
 
               <div
                 style={{
                   height: 420,
-                  marginTop: 30,
                   padding: '30px 70px',
                   display: 'flex',
                   flexDirection: 'column',
                   maxWidth: 1000,
                   margin: '0 auto',
+                  marginTop: 30,
                 }}
               >
                 <Title
@@ -932,6 +753,7 @@ const HomePageProduct = () => {
                         flexDirection: 'column',
                         gap: 20,
                         height: '100%',
+                        justifyContent: 'space-around',
                       }}
                     >
                       {articles.slice(1).map((item, index) => (

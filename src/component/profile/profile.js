@@ -1,25 +1,15 @@
-import React, { useEffect, useState } from 'react';
 import {
-  Layout,
-  Menu,
-  Avatar,
-  Descriptions,
-  Card,
-  Row,
-  Col,
-  Empty,
-} from 'antd';
-import {
-  UserOutlined,
   FileTextOutlined,
   NotificationOutlined,
   ProfileOutlined,
 } from '@ant-design/icons';
-import { useLocation } from 'react-router-dom';
+import { Empty, Layout, Menu } from 'antd';
+import { useEffect, useState } from 'react';
+import { useMediaQuery } from 'react-responsive';
+import { useLocation, useNavigate } from 'react-router-dom';
 import PatientRecordForm from './history';
 import MedicalTickets from './medicalTicket';
 import Notifications from './notification';
-import { useMediaQuery } from 'react-responsive';
 const { Sider, Content } = Layout;
 
 const UserDashboard = () => {
@@ -31,6 +21,7 @@ const UserDashboard = () => {
   const firstKey = location.state?.key;
   const searchParams = new URLSearchParams(location.search);
   const key = searchParams.get('key');
+  const navigate = useNavigate();
   const renderContent = () => {
     switch (selectedKey) {
       case 'history':
@@ -44,6 +35,11 @@ const UserDashboard = () => {
     }
   };
   useEffect(() => {
+    if (!user) {
+      navigate('/');
+    }
+  }, []);
+  useEffect(() => {
     if (firstKey) {
       setSelectedKey(firstKey);
     }
@@ -53,6 +49,9 @@ const UserDashboard = () => {
       setSelectedKey(key);
     }
   }, [key]);
+  if (!user) {
+    return null;
+  }
   const DesktopLayout = () => {
     return (
       <Layout

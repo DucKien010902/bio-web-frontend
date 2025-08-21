@@ -1,31 +1,27 @@
-import React, { useState } from 'react';
-import { Layout, Menu } from 'antd';
-import {
-  DashboardOutlined,
-  UserOutlined,
-  LogoutOutlined,
-} from '@ant-design/icons';
+import { DashboardOutlined, LogoutOutlined } from '@ant-design/icons';
+import { Button, Divider, Layout, Menu } from 'antd';
+import { useState } from 'react';
 import { BiClinic } from 'react-icons/bi';
+import { GiShop } from 'react-icons/gi';
 import { GrDocumentTest } from 'react-icons/gr';
 import { IoIosPeople } from 'react-icons/io';
-import { MdStorefront } from 'react-icons/md';
-import { GiShop } from 'react-icons/gi';
+import { useNavigate } from 'react-router-dom';
+
+import ShopManagementPage from './admin-allshop';
+import AdminApproveSuggestions from './admin-approve';
+import CategoryManager from './admin-category';
 import AdminClinics from './admin-clinic';
 import AdminTestPackages from './admin-service';
-import { useNavigate } from 'react-router-dom';
 import CoordinatorsList from './coordinators';
-import ShopManagementPage from './admin-allshop';
-import CategoryManager from './admin-category';
-import AdminApproveSuggestions from './admin-approve';
+
 const { Header, Sider, Content } = Layout;
 
 const Dashboard = () => <h2>Trang chính</h2>;
-const Users = () => <h2>Quản lý người dùng</h2>;
-const Settings = () => <h2>Cài đặt</h2>;
 
 const AdminLayout = () => {
   const [selectedKey, setSelectedKey] = useState('dashboard');
   const navigate = useNavigate();
+
   const renderContent = () => {
     switch (selectedKey) {
       case 'dashboard':
@@ -49,15 +45,50 @@ const AdminLayout = () => {
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <Sider collapsible>
-        <div style={{ color: 'white', padding: 16, fontSize: 18 }}>
-          Quản trị viên
+      {/* Sidebar cố định */}
+      <Sider
+        collapsible
+        style={{
+          position: 'fixed',
+          left: 0,
+          top: 0,
+          bottom: 0,
+          height: '100vh',
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        {/* Logo + Admin */}
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 8,
+            padding: 16,
+            color: 'white',
+            fontSize: 18,
+            fontWeight: 600,
+          }}
+        >
+          <img
+            src="/logo192.png"
+            alt="logo"
+            style={{ width: 32, height: 32 }}
+          />
+          Admin
         </div>
+
+        <Divider
+          style={{ margin: '8px 0', backgroundColor: 'rgba(255,255,255,0.2)' }}
+        />
+
+        {/* Menu chiếm phần giữa */}
         <Menu
           theme="dark"
           mode="inline"
           selectedKeys={[selectedKey]}
           onClick={(e) => setSelectedKey(e.key)}
+          style={{ flex: 1 }}
         >
           <Menu.Item key="dashboard" icon={<DashboardOutlined />}>
             Dashboard
@@ -71,9 +102,6 @@ const AdminLayout = () => {
           <Menu.Item key="coordinator" icon={<IoIosPeople />}>
             Điều phối viên
           </Menu.Item>
-          {/* <Menu.Item key="biostore" icon={<MdStorefront />}>
-            Kho thuyết bị
-          </Menu.Item> */}
           <Menu.Item key="shops" icon={<GiShop />}>
             Tất cả Shop
           </Menu.Item>
@@ -84,12 +112,42 @@ const AdminLayout = () => {
             Phê duyệt
           </Menu.Item>
         </Menu>
+
+        <Divider
+          style={{ margin: '8px 0', backgroundColor: 'rgba(255,255,255,0.2)' }}
+        />
+
+        {/* Nút đăng xuất luôn ở đáy */}
+        <div style={{ padding: 10 }}>
+          <Button
+            type="primary"
+            danger
+            icon={<LogoutOutlined />}
+            block
+            onClick={() => {
+              localStorage.removeItem('user');
+              navigate('/login');
+            }}
+          >
+            Đăng xuất
+          </Button>
+        </div>
       </Sider>
-      <Layout>
-        <Header style={{ background: '#fff', padding: 0 }}>
+
+      {/* Nội dung có margin-left bằng width sidebar */}
+      <Layout style={{ marginLeft: 200 }}>
+        <Header
+          style={{
+            background: '#fff',
+            padding: '0 16px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
           <h1
             style={{
-              margin: '0 16px',
+              margin: 0,
               color: '#1890ff',
               fontFamily: 'cursive',
               fontSize: 40,
@@ -97,25 +155,17 @@ const AdminLayout = () => {
             }}
           >
             GennovaX
-            {
-              <LogoutOutlined
-                style={{
-                  fontSize: 30,
-                  fontWeight: 700,
-                  color: '#ff4d4f',
-                  position: 'fixed',
-                  right: 50,
-                  top: 20,
-                  cursor: 'pointer',
-                }}
-                onClick={() => {
-                  navigate('/login');
-                }}
-              />
-            }
           </h1>
         </Header>
-        <Content style={{ margin: '16px', padding: 24, background: '#fff' }}>
+
+        <Content
+          style={{
+            margin: '16px',
+            padding: 24,
+            background: '#fff',
+            minHeight: 'calc(100vh - 64px)',
+          }}
+        >
           {renderContent()}
         </Content>
       </Layout>

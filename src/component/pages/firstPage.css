@@ -1,7 +1,11 @@
-/* App.css */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
+
+* {
+  font-family: 'Roboto', sans-serif !important;
+}
+
 body {
   background-color: #f9faff;
-  font-family: 'Segoe UI', sans-serif;
 }
 
 .layout {
@@ -9,61 +13,72 @@ body {
   background: #f9faff;
 }
 
+/* Header */
 .header {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* Cụm trái - cụm phải */
   align-items: center;
-  background: white;
-  padding: 0 40px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  min-height: 80px;
+  padding: 0 30px;
+  background: #fff;
+  height: 80px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 30px; /* khoảng cách giữa logo và menu */
 }
 
 .logo-img {
-  height: 50px; /* Tuỳ chỉnh kích thước theo mong muốn */
+  height: 55px;
   object-fit: contain;
+}
+
+.nav {
+  display: flex;
+  gap: 20px;
+}
+
+.nav a {
+  color: #333;
+  font-weight: 500;
+  text-decoration: none;
 }
 
 .header-right {
   display: flex;
-  gap: 20px;
   align-items: center;
+  gap: 20px;
 }
 
-.phone {
-  font-size: 16px;
-}
 .contact-info {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-right: 20px;
-}
-
-.contact-label {
-  font-weight: 600;
-  font-size: 18px;
-  margin-right: 10px;
-}
-
-.phone-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 35px;
-  height: 35px;
-  border: 1px solid green;
-  border-radius: 50%;
-  color: green;
-  font-size: 16px;
+  font-weight: 700;
 }
 
 .phone-number {
-  font-weight: 700;
-  color: orange;
   font-size: 18px;
+  color: #d32f2f; /* đỏ đậm */
 }
 
+.auth-links {
+  display: flex;
+  gap: 15px;
+  font-weight: 600;
+}
+
+.login-link {
+  color: #1976d2; /* xanh dương */
+  cursor: pointer;
+}
+
+.register-link {
+  color: #f57c00; /* cam */
+  cursor: pointer;
+}
+
+/* Content */
 .content {
   width: 100%;
   padding: 60px 40px;
@@ -101,15 +116,6 @@ body {
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
 }
 
-.popular {
-  background: gold;
-  color: black;
-  padding: 2px 8px;
-  margin-left: 8px;
-  font-size: 12px;
-  border-radius: 10px;
-  font-weight: 500;
-}
 .pricing-card ul {
   list-style: none;
   padding-left: 0;
@@ -124,11 +130,30 @@ body {
 .pricing-card li::before {
   content: '';
   position: absolute;
-  top: 4px;
+  top: 0%;
   left: 0;
   width: 20px;
   height: 20px;
-  background-image: url('https://p16-hera-sg.larksuitecdn.com/tos-alisg-i-hn4qzgxq2n-sg/6704a5a3d33b40aea4672cdad941f1ab.png~tplv-hn4qzgxq2n-png:0:0.png');
+  background-image: url('https://png.pngtree.com/png-clipart/20240822/original/pngtree-green-tick-mark-green-tick-photo-png-image_15824194.png');
   background-size: contain;
   background-repeat: no-repeat;
+}
+
+.custom-btn {
+  background-color: #26b763;
+  border: none;
+  font-weight: 600;
+  height: 50px;
+  font-size: 18px;
+  width: 70%;
+  border-radius: 30px;
+  color: white;
+  box-shadow: 0 0 6px #26b763;
+  transition: box-shadow 0.3s ease, background-color 0.3s ease;
+  cursor: pointer;
+}
+
+.custom-btn:hover {
+  background-color: #1677ff;
+  box-shadow: 0 0 12px #1677ff;
 }

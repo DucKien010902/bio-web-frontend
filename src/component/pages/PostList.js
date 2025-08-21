@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { Row, Col, Card, Typography, Modal, Spin, Button } from 'antd';
+import { Button, Card, Col, Modal, Row, Spin, Typography } from 'antd';
 import Papa from 'papaparse';
+import { useEffect, useRef, useState } from 'react';
+import { useMediaQuery } from 'react-responsive';
 
 const { Title, Paragraph } = Typography;
 
@@ -43,22 +44,23 @@ const PostList = () => {
 
   const openModal = (post) => setSelectedPost(post);
   const closeModal = () => setSelectedPost(null);
+  const isMobile = useMediaQuery({ maxWidth: 797 });
 
   return (
-    <div style={{ padding: '20px 100px' }}>
+    <div style={{ padding: isMobile ? '20px 15px' : '20px 100px' }}>
       {loading ? (
         <div style={{ textAlign: 'center', padding: 40 }}>
           <Spin size="large" tip="Đang tải dữ liệu..." />
         </div>
       ) : (
         <>
-          <Row gutter={[24, 24]}>
-            {visiblePosts.map((post, index) => {
+          <Row gutter={[12, 12]}>
+            {visiblePosts.map((post) => {
               const imageUrl = extractImageUrl(post.File);
               const voiceUrl = post.Voice || '';
 
               return (
-                <Col xs={24} sm={12} md={8} key={index}>
+                <Col xs={24} sm={12} md={8} key={post.postid}>
                   <Card
                     hoverable
                     cover={
@@ -68,24 +70,41 @@ const PostList = () => {
                         style={{ height: 180, objectFit: 'cover' }}
                       />
                     }
-                    onClick={() => openModal(post)}
+                    onClick={() => {
+                      openModal(post);
+                      console.log('Voice URL:', voiceUrl);
+                    }}
+                    bodyStyle={{ padding: isMobile ? 12 : 24 }}
                   >
                     <small style={{ color: '#fbae17' }}>Tin y tế</small>
-                    <Title level={5} style={{ marginTop: 8 }}>
+                    <Title
+                      level={5}
+                      style={{
+                        marginTop: 8,
+                        display: '-webkit-box',
+                        WebkitLineClamp: 2,
+                        WebkitBoxOrient: 'vertical',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        lineHeight: '1.5em',
+                        height: '3em', // đúng 2 dòng
+                      }}
+                    >
                       {post.Title}
                     </Title>
+
                     <Paragraph ellipsis={{ rows: 3 }}>{post.Content}</Paragraph>
 
-                    {
+                    {voiceUrl && (
                       <div style={{ marginTop: 12 }}>
                         <audio
-                          ref={(el) => (audioRefs.current[index] = el)}
+                          ref={(el) => (audioRefs.current[post.postid] = el)}
                           src={voiceUrl}
                           controls
                           style={{ width: '100%' }}
                         />
                       </div>
-                    }
+                    )}
 
                     <div style={{ color: '#1677ff', fontWeight: 500 }}>
                       Xem chi tiết →
@@ -110,7 +129,11 @@ const PostList = () => {
         footer={null}
         width={800}
         style={{ top: 40 }}
-        bodyStyle={{ maxHeight: '80vh', overflowY: 'auto', padding: 24 }}
+        bodyStyle={{
+          maxHeight: '80vh',
+          overflowY: 'auto',
+          padding: isMobile ? '24px 16px' : '24px',
+        }}
       >
         {selectedPost && (
           <>

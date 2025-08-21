@@ -1,32 +1,26 @@
-import React from 'react';
-import { Layout, Button, Space, Typography, message } from 'antd';
 import {
-  MobileOutlined,
-  FacebookFilled,
-  YoutubeFilled,
+  BellOutlined,
   CaretDownOutlined,
   CloseOutlined,
-} from '@ant-design/icons';
-import { Badge } from 'antd';
-import { FaUser } from 'react-icons/fa';
-import { BiSupport } from 'react-icons/bi';
-import { SiZalo, SiTiktok } from 'react-icons/si';
-import { RxDividerVertical } from 'react-icons/rx';
-import { useNavigate } from 'react-router-dom';
-import {
-  UserOutlined,
+  FacebookFilled,
   FileTextOutlined,
-  BellOutlined,
   LogoutOutlined,
+  MobileOutlined,
   ProfileOutlined,
   UnorderedListOutlined,
+  YoutubeFilled,
 } from '@ant-design/icons';
-import { Dropdown, Menu, Modal } from 'antd';
-import './header.css';
+import { Badge, Button, Dropdown, Layout, Menu, Space } from 'antd';
+import { BiSupport } from 'react-icons/bi';
+import { FaUser } from 'react-icons/fa';
+import { RxDividerVertical } from 'react-icons/rx';
+import { SiTiktok, SiZalo } from 'react-icons/si';
+import { useDispatch, useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
-import { useSelector, useDispatch } from 'react-redux';
-import { openMenuBio, closeMenuBio } from '../../redux/slices/openMenuSlice';
-import gennovaXLogo from '../../assets/images/GennovaX-logo-tách-nền.png';
+import { useNavigate } from 'react-router-dom';
+import gennovaXLogo from '../../assets/images/GenApp logo.png';
+import { closeMenuBio, openMenuBio } from '../../redux/slices/openMenuSlice';
+import './header.css';
 const { Header } = Layout;
 
 // Tạo Menu dropdown
@@ -187,7 +181,7 @@ const HeaderComponent = () => {
               src={gennovaXLogo}
               alt="GennovaX Logo"
               style={{
-                height: 180, // bạn có thể thay đổi kích thước nếu muốn
+                height: 75, // bạn có thể thay đổi kích thước nếu muốn
                 objectFit: 'contain',
               }}
             />
@@ -514,7 +508,7 @@ const HeaderComponent = () => {
                 src={gennovaXLogo}
                 alt="GennovaX Logo"
                 style={{
-                  height: 80, // bạn có thể thay đổi kích thước nếu muốn
+                  height: 40, // bạn có thể thay đổi kích thước nếu muốn
                   objectFit: 'contain',
                 }}
               />

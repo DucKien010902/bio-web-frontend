@@ -1,34 +1,33 @@
 ///
-import React, { useState, useEffect } from 'react';
-import './book-calender.css';
-import { useLocation, useNavigate } from 'react-router-dom';
-import {
-  Card,
-  Typography,
-  Button,
-  Space,
-  Select,
-  Divider,
-  message,
-  Calendar,
-  Input,
-  DatePicker,
-  Row,
-  Col,
-  Modal,
-  ConfigProvider,
-} from 'antd';
 import { CaretDownOutlined, EnvironmentOutlined } from '@ant-design/icons';
-import viVN from 'antd/locale/vi_VN';
 import {
+  Autocomplete,
   GoogleMap,
   Marker,
   useLoadScript,
-  Autocomplete,
 } from '@react-google-maps/api';
-import axiosClient from '../../api/apiConfig';
+import {
+  Button,
+  Calendar,
+  Card,
+  Col,
+  ConfigProvider,
+  Divider,
+  Input,
+  message,
+  Modal,
+  Row,
+  Select,
+  Space,
+  Typography,
+} from 'antd';
+import viVN from 'antd/locale/vi_VN';
 import dayjs from 'dayjs';
 import 'dayjs/locale/vi';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import axiosClient from '../../api/apiConfig';
+import './book-calender.css';
 dayjs.locale('vi');
 
 const { Title, Text } = Typography;
@@ -518,7 +517,7 @@ const BookingPage = () => {
                 value={dob}
                 onChange={handleDobChange}
                 maxLength={10}
-                style={{ marginBottom: 10, height: 40 }}
+                style={{ height: 40 }}
               />
             </Col>
           </Row>
@@ -528,6 +527,7 @@ const BookingPage = () => {
                 placeholder="Email liên hệ"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                style={{ marginBottom: 10, height: 40 }}
               />
             </Col>
             <Col span={12}>

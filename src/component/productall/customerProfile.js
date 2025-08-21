@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Layout, Menu, Avatar, Button } from 'antd';
 import { UserOutlined, LogoutOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
@@ -50,6 +50,14 @@ const ShopeeProfile = () => {
     }
   };
   const DesktopLayout = () => {
+    useEffect(() => {
+      if (!user) {
+        navigate('/');
+      }
+    }, []);
+    if (!user) {
+      return;
+    }
     return (
       <>
         <AllProductHeader />

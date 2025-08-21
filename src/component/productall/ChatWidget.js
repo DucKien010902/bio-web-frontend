@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
-import { Drawer, Button, Tooltip } from 'antd';
-import { MessageOutlined, FacebookOutlined } from '@ant-design/icons';
-import { SiZalo } from 'react-icons/si';
-import { FaFacebookMessenger } from 'react-icons/fa';
-import ChatPanel from './ChatDrawer';
+import { MessageOutlined } from '@ant-design/icons';
+import { Button, Tooltip } from 'antd';
+import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import ChatPanel from './ChatDrawer';
 
 const ChatWidget = () => {
   const navigate = useNavigate();
@@ -127,6 +125,10 @@ const ChatWidget = () => {
           }}
           onClick={() => {
             if (!user) {
+              localStorage.setItem(
+                'redirectAfterLogin',
+                location.pathname + location.search
+              );
               navigate('/login');
             } else {
               setChatOpen(true);

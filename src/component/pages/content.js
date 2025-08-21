@@ -1,42 +1,31 @@
-import React, { useEffect, useState, useRef } from 'react';
 import {
-  Input,
-  Row,
-  Col,
-  Card,
-  Typography,
-  Carousel,
-  Button,
-  Modal,
-} from 'antd';
-import './content.css';
-import axiosClient from '../../api/apiConfig';
+  BankOutlined,
+  CheckCircleFilled,
+  CloseOutlined,
+  DollarOutlined,
+  EnvironmentOutlined,
+  StarFilled,
+  UserOutlined,
+} from '@ant-design/icons';
+import { Avatar, Card, Carousel, Col, Divider, Row, Typography } from 'antd';
+import { useEffect, useState } from 'react';
+import { FaQuoteLeft } from 'react-icons/fa';
 import { RxCaretLeft, RxCaretRight } from 'react-icons/rx';
+import { useMediaQuery } from 'react-responsive';
+import { useNavigate } from 'react-router-dom';
+import axiosClient from '../../api/apiConfig';
+import appstore from '../../assets/images/appleStore.png';
 import dichvu from '../../assets/images/dichvu.png';
 import dichvu1 from '../../assets/images/dichvu1.png';
 import dichvu2 from '../../assets/images/dichvu2.png';
+import googleplay from '../../assets/images/googleplay.png';
 import imagehoptac1 from '../../assets/images/hoptac1.webp';
 import imagehoptac2 from '../../assets/images/hoptac2.webp';
 import imagehoptac3 from '../../assets/images/hoptac3.webp';
-import appstore from '../../assets/images/appleStore.png';
-import googleplay from '../../assets/images/googleplay.png';
-import round from '../../assets/images/round.png';
 import phone from '../../assets/images/phone.png';
-import { FaQuoteLeft } from 'react-icons/fa';
-import {
-  CheckCircleFilled,
-  EnvironmentOutlined,
-  StarFilled,
-  BankOutlined,
-  DollarOutlined,
-  CloseOutlined,
-  CloseSquareOutlined,
-} from '@ant-design/icons';
-import { useMediaQuery } from 'react-responsive';
+import round from '../../assets/images/round.png';
+import './content.css';
 import TypingInput from './contentSearchInput';
-import { Avatar, Divider } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
-import { useNavigate } from 'react-router-dom';
 
 const { Text } = Typography;
 
@@ -143,17 +132,16 @@ const serviceList = [
 const newsList = [
   {
     title: '5 dấu hiệu cảnh báo bệnh tiểu đường',
-    image:
-      'https://cdn.tgdd.vn//News/1405384//nhung-dau-hieu-nhan-som-nhan-biet-bi-tieu-duong-(2)-800x450.jpg',
+    image: 'https://bhd.1cdn.vn/2025/03/17/tim-phong-soi(1).jpg',
   },
   {
     title: 'Cách phòng tránh đột quỵ mùa nắng nóng',
-    image: 'https://bvdklangson.com.vn/sites/default/files/3333_0.jpg',
+    image: 'https://ddk.1cdn.vn/thumbs/900x600/2025/05/22/dich-1.jpg',
   },
   {
     title: 'Chăm sóc sức khỏe người cao tuổi',
     image:
-      'https://cloudpro.vn/public/media/images/mo-hinh-cham-soc-suc-khoe-tai-nha1%402x-100.jpg',
+      'https://images2.thanhnien.vn/zoom/686_429/528068263637045248/2025/5/21/y-te-1-17477964568891106942355-5-0-805-1280-crop-17477965632561903370553.jpg',
   },
 ];
 
@@ -210,19 +198,33 @@ const ContentComponent = () => {
     fetchAllClinic();
   }, []);
   const DesktopLayOut = () => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(true); // ban đầu false
 
     useEffect(() => {
       const hasShown = sessionStorage.getItem('gennovaxModalShown');
       if (!hasShown) {
-        setIsModalOpen(true);
-        sessionStorage.setItem('gennovaxModalShown', 'true');
+        const timer = setTimeout(() => {
+          setIsModalOpen(true);
+          sessionStorage.setItem('gennovaxModalShown', 'true');
+        }, 1200); // 2000 ms = 2 giây
+
+        return () => clearTimeout(timer); // cleanup khi component unmount
       }
     }, []);
 
     const handleClose = () => {
       setIsModalOpen(false);
     };
+    const buttonStyle = {
+      border: 'none',
+      color: '#fff',
+      borderRadius: '20px',
+      padding: '8px 16px',
+      fontWeight: 'bold',
+      cursor: 'pointer',
+      transition: 'all 0.3s ease', // mượt khi hover
+    };
+
     return (
       <>
         {isModalOpen && (
@@ -239,16 +241,18 @@ const ContentComponent = () => {
               alignItems: 'center',
               zIndex: 9999,
             }}
+            onClick={handleClose}
           >
             <div
               style={{
                 position: 'relative',
                 background: '#fff',
                 borderRadius: '30px',
-                maxWidth: '1000px',
+                maxWidth: '900px',
                 width: '95%',
                 boxShadow: '0 6px 20px rgba(0,0,0,0.2)',
               }}
+              onClick={(e) => e.stopPropagation()}
             >
               {/* Nút X */}
               <button
@@ -260,7 +264,7 @@ const ContentComponent = () => {
                   width: '40px',
                   height: '40px',
                   borderRadius: '50%',
-                  border: '2px solid #ccc', // outline
+                  border: '2px solid #ccc',
                   background: '#fff',
                   cursor: 'pointer',
                   display: 'flex',
@@ -269,6 +273,7 @@ const ContentComponent = () => {
                   color: '#666',
                   fontSize: '18px',
                   transition: 'all 0.2s ease',
+                  zIndex: 2,
                 }}
                 onMouseOver={(e) => {
                   e.currentTarget.style.borderColor = '#0071bc';
@@ -281,216 +286,119 @@ const ContentComponent = () => {
               >
                 <CloseOutlined />
               </button>
-              <div style={{ borderRadius: '20px', overflow: 'hidden' }}>
-                {/* Phần đầu */}
-                <div
-                  style={{
-                    background: 'linear-gradient(180deg, #ffffff, #e7f7ff)',
-                    padding: '20px',
-                    textAlign: 'center',
-                  }}
-                >
-                  <h3
-                    style={{
-                      color: '#0071bc',
-                      fontWeight: 'bold',
-                      fontSize: '18px',
-                      marginBottom: '8px',
-                    }}
-                  >
-                    → ĐẶT LỊCH XÉT NGHIỆM TẠI NHÀ ←
-                  </h3>
-                  <h1
-                    style={{
-                      color: '#0071bc',
-                      fontWeight: 900,
-                      fontSize: '24px',
-                      marginBottom: '8px',
-                    }}
-                  >
-                    DỊCH VỤ XÉT NGHIỆM TỔNG QUÁT GenNovaX
-                  </h1>
-                  <h2
-                    style={{
-                      color: '#00a859',
-                      fontWeight: 'bold',
-                      fontSize: '18px',
-                      margin: 0,
-                    }}
-                  >
-                    NHANH CHÓNG - CHÍNH XÁC - AN TOÀN
-                  </h2>
-                </div>
 
-                {/* Phần giữa */}
+              {/* Ảnh nền + 2 button ở giữa */}
+              <div
+                style={{
+                  borderRadius: '20px',
+                  overflow: 'hidden',
+                  position: 'relative',
+                }}
+              >
+                {/* Nền */}
                 <div
                   style={{
+                    width: '100%',
+                    aspectRatio: '600 / 400', // hoặc tỉ lệ gốc của ảnh (width / height)
+                    backgroundImage:
+                      'url("https://choraymc.khamdichvu.vn/upload/hinhanh/ng%C3%A0y%20nh%C3%A0%20gi%C3%A1o%20vi%E1%BB%87t%20nam%20(10).jpg")',
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                  }}
+                />
+
+                {/* (Optional) overlay nhẹ để chữ/nút nổi hơn */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    background:
+                      'linear-gradient(0deg, rgba(0,0,0,0.15), rgba(0,0,0,0.05))',
+                  }}
+                />
+
+                {/* Button group ở giữa */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    fontSize: 25,
+                    inset: 0,
                     display: 'flex',
-                    padding: '20px',
-                    gap: '20px',
-                    background: '#f9fcff',
+                    // flexDirection: 'column',
+                    justifyContent: 'left',
+                    alignItems: 'end',
+                    pointerEvents: 'none', // để không chặn close overlay
+                    marginLeft: 45,
+                    marginBottom: 20,
                   }}
                 >
-                  {/* Cột trái */}
-                  <div style={{ flex: 1 }}>
-                    <div
-                      style={{
-                        display: 'flex',
-                        gap: '10px',
-                        marginBottom: '15px',
-                      }}
-                    >
-                      <button
-                        style={{
-                          background: '#0071bc',
-                          border: 'none',
-                          color: '#fff',
-                          borderRadius: '20px',
-                          padding: '8px 16px',
-                          fontWeight: 'bold',
-                          cursor: 'pointer',
-                        }}
-                      >
-                        Xem Gói Xét Nghiệm
-                      </button>
-                      <button
-                        style={{
-                          background: '#00a859',
-                          border: 'none',
-                          color: '#fff',
-                          borderRadius: '20px',
-                          padding: '8px 16px',
-                          fontWeight: 'bold',
-                          cursor: 'pointer',
-                        }}
-                      >
-                        Đặt Ngay
-                      </button>
-                    </div>
-
-                    <h3
-                      style={{
-                        fontSize: '18px',
-                        fontWeight: 'bold',
-                        color: '#0071bc',
-                        marginBottom: '10px',
-                      }}
-                    >
-                      Dịch vụ xét nghiệm GenNovaX
-                    </h3>
-
-                    <p
-                      style={{
-                        fontSize: '15px',
-                        lineHeight: '1.5',
-                        color: '#534c4cff',
-                        marginBottom: '16px',
-                        fontWeight: 600,
-                      }}
-                    >
-                      Đội ngũ kỹ thuật viên y tế chuyên nghiệp, lấy mẫu tại nhà,
-                      trả kết quả nhanh chóng qua ứng dụng.
-                    </p>
-
-                    <div
-                      style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}
-                    >
-                      {[
-                        'Xét nghiệm máu tổng quát',
-                        'Xét nghiệm đường huyết',
-                        'Xét nghiệm mỡ máu',
-                        'Xét nghiệm chức năng gan, thận',
-                        'Xét nghiệm tầm soát bệnh lý',
-                      ].map((item, index) => (
-                        <div
-                          key={index}
-                          style={{
-                            background: '#e6f4f9',
-                            padding: '8px 14px',
-                            borderRadius: '20px',
-                            fontSize: '14px',
-                            color: '#0071bc',
-                            fontWeight: 500,
-                            whiteSpace: 'nowrap',
-                          }}
-                        >
-                          {item}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Cột phải */}
-                  <div style={{ flex: 1 }}>
-                    <img
-                      src="https://bvphusanct.com.vn/Portals/0/67d0390c86dc42821bcd.jpg"
-                      alt="Xét nghiệm GenNovaX"
-                      style={{
-                        width: '100%',
-                        height: '280px',
-                        borderRadius: '10px',
-                        objectFit: 'cover',
-                      }}
-                    />
-                  </div>
-                </div>
-
-                {/* Phần dưới */}
-                <div style={{ background: '#fff9e6', padding: '15px 20px' }}>
-                  <h4
-                    style={{
-                      marginBottom: '10px',
-                      fontWeight: 'bold',
-                      fontSize: '15px',
-                    }}
-                  >
-                    Phù hợp cho khách hàng:
-                  </h4>
                   <div
                     style={{
                       display: 'flex',
-                      flexDirection: 'column',
-                      gap: '8px',
+                      gap: 10,
+                      pointerEvents: 'auto',
+                      // flexDirection: 'column',
                     }}
                   >
-                    {[
-                      'Cần kiểm tra sức khỏe định kỳ',
-                      'Có triệu chứng bất thường cần xét nghiệm gấp',
-                      'Gia đình muốn kiểm tra sức khỏe tổng quát',
-                    ].map((text, index) => (
-                      <div
-                        key={index}
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          background: index % 2 === 0 ? '#e8f5e9' : '#fff9e6', // thay đổi màu xen kẽ
-                          borderRadius: '20px',
-                          padding: '6px 12px',
-                          fontSize: '13px',
-                          color: '#333',
-                          fontWeight: 500,
-                        }}
-                      >
-                        <span
-                          style={{
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            width: '18px',
-                            height: '18px',
-                            borderRadius: '50%',
-                            background: '#4caf50',
-                            color: '#fff',
-                            fontSize: '12px',
-                            marginRight: '8px',
-                            flexShrink: 0,
-                          }}
-                        >
-                          ✓
-                        </span>
-                        {text}
-                      </div>
-                    ))}
+                    <button
+                      style={{
+                        ...buttonStyle,
+                        background: '#0071bc',
+                        boxShadow: `
+                  0 0 8px rgba(0, 113, 188, 0.9),
+                  0 0 20px rgba(0, 113, 188, 0.8)
+                `,
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'translateY(-3px)';
+                        e.currentTarget.style.boxShadow = `
+                  0 0 12px rgba(0, 113, 188, 1),
+                  0 0 28px rgba(0, 113, 188, 0.9)
+                `;
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'translateY(0)';
+                        e.currentTarget.style.boxShadow = `
+                  0 0 8px rgba(0, 113, 188, 0.9),
+                  0 0 20px rgba(0, 113, 188, 0.8)
+                `;
+                      }}
+                      onClick={() => {
+                        navigate('/y-te/danh-sach-dich-vu');
+                      }}
+                    >
+                      Gói Xét Nghiệm
+                    </button>
+
+                    <button
+                      style={{
+                        ...buttonStyle,
+                        background: '#00a859',
+                        boxShadow: `
+                  0 0 8px rgba(0, 168, 89, 0.9),
+                  0 0 20px rgba(0, 168, 89, 0.8)
+                `,
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'translateY(-3px)';
+                        e.currentTarget.style.boxShadow = `
+                  0 0 12px rgba(0, 168, 89, 1),
+                  0 0 28px rgba(59, 234, 152, 0.9)
+                `;
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'translateY(0)';
+                        e.currentTarget.style.boxShadow = `
+                  0 0 8px rgba(0, 168, 89, 0.9),
+                  0 0 20px rgba(39, 244, 148, 0.8)
+                `;
+                      }}
+                      onClick={() => {
+                        navigate('/y-te/dat-lich-xet-nghiem');
+                      }}
+                    >
+                      Đặt Ngay
+                    </button>
                   </div>
                 </div>
               </div>
@@ -1103,9 +1011,19 @@ const ContentComponent = () => {
               <img
                 src={appstore}
                 alt="App Store"
-                style={{ height: 50, marginRight: 10 }}
+                style={{ height: 40, marginRight: 20, cursor: 'pointer' }}
               />
-              <img src={googleplay} alt="Google Play" style={{ height: 50 }} />
+              <img
+                src={googleplay}
+                alt="Google Play"
+                style={{ height: 40, cursor: 'pointer' }}
+                onClick={() => {
+                  window.open(
+                    'https://expo.dev/accounts/bkc_duckien/projects/bio-app-frontent/builds/93d56238-ba85-44c0-ae18-3d10a6080c99',
+                    '_blank'
+                  );
+                }}
+              />
             </div>
 
             {/* Main layout */}
@@ -1117,29 +1035,99 @@ const ContentComponent = () => {
             >
               {/* Left Info */}
               <Col xs={24} md={6} style={{ textAlign: 'end' }}>
-                <Paragraph strong style={{ fontSize: 20, color: '#065c8c' }}>
-                  Lấy số thứ tự khám nhanh trực tuyến
-                </Paragraph>
-                <Paragraph type="secondary">
-                  Đăng ký khám, tái khám theo bác sĩ chuyên khoa, theo lịch hẹn
-                </Paragraph>
-
-                <Paragraph
-                  strong
-                  style={{ fontSize: 20, color: '#065c8c', paddingRight: 50 }}
+                {/* Mục 1 */}
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    marginBottom: 20,
+                  }}
                 >
-                  Tư vấn sức khỏe từ xa
-                </Paragraph>
-                <Paragraph type="secondary" style={{ paddingRight: 50 }}>
-                  Gọi video với bác sĩ, chuyên gia
-                </Paragraph>
+                  <div style={{ textAlign: 'end' }}>
+                    <Paragraph
+                      strong
+                      style={{
+                        fontSize: 20,
+                        color: '#065c8c',
+                        marginBottom: 0,
+                      }}
+                    >
+                      Lấy số thứ tự khám nhanh trực tuyến
+                    </Paragraph>
+                    <Paragraph type="secondary" style={{ margin: 0 }}>
+                      Đăng ký khám, tái khám theo bác sĩ chuyên khoa, theo lịch
+                      hẹn
+                    </Paragraph>
+                  </div>
+                  <img
+                    src="https://medpro.vn/_next/image?url=https%3A%2F%2Fcdn-pkh.longvan.net%2Fprod-partner%2Fbae71420-d9ef-48b7-91a9-0151c50c73da-fcf47d13-a9c5-4be8-aa6c-4d4e9b162c19-icon_dang_ky.svg.svg&w=3840&q=75"
+                    alt="icon"
+                    style={{ width: 60, height: 60, marginLeft: 20 }}
+                  />
+                </div>
 
-                <Paragraph strong style={{ fontSize: 20, color: '#065c8c' }}>
-                  Tra cứu kết quả cận lâm sàng
-                </Paragraph>
-                <Paragraph type="secondary">
-                  Xem kết quả xét nghiệm trực tuyến dễ dàng
-                </Paragraph>
+                {/* Mục 2 */}
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    marginBottom: 20,
+                    paddingRight: 60,
+                  }}
+                >
+                  <div style={{ textAlign: 'end' }}>
+                    <Paragraph
+                      strong
+                      style={{
+                        fontSize: 20,
+                        color: '#065c8c',
+                        marginBottom: 0,
+                      }}
+                    >
+                      Tư vấn sức khỏe từ xa
+                    </Paragraph>
+                    <Paragraph type="secondary" style={{ margin: 0 }}>
+                      Gọi video với bác sĩ, chuyên gia
+                    </Paragraph>
+                  </div>
+                  <img
+                    src="https://medpro.vn/_next/image?url=https%3A%2F%2Fcdn-pkh.longvan.net%2Fprod-partner%2Fbae71420-d9ef-48b7-91a9-0151c50c73da-fcf47d13-a9c5-4be8-aa6c-4d4e9b162c19-icon_dang_ky.svg.svg&w=3840&q=75"
+                    alt="icon"
+                    style={{ width: 60, height: 60, marginLeft: 20 }}
+                  />
+                </div>
+
+                {/* Mục 3 */}
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                  }}
+                >
+                  <div style={{ textAlign: 'end' }}>
+                    <Paragraph
+                      strong
+                      style={{
+                        fontSize: 20,
+                        color: '#065c8c',
+                        marginBottom: 0,
+                      }}
+                    >
+                      Tra cứu kết quả cận lâm sàng
+                    </Paragraph>
+                    <Paragraph type="secondary" style={{ margin: 0 }}>
+                      Xem kết quả xét nghiệm trực tuyến dễ dàng
+                    </Paragraph>
+                  </div>
+                  <img
+                    src="https://medpro.vn/_next/image?url=https%3A%2F%2Fcdn-pkh.longvan.net%2Fprod-partner%2Fbae71420-d9ef-48b7-91a9-0151c50c73da-fcf47d13-a9c5-4be8-aa6c-4d4e9b162c19-icon_dang_ky.svg.svg&w=3840&q=75"
+                    alt="icon"
+                    style={{ width: 60, height: 60, marginLeft: 20 }}
+                  />
+                </div>
               </Col>
 
               {/* Phone in center */}
@@ -1181,30 +1169,97 @@ const ContentComponent = () => {
               </Col>
 
               {/* Right Info */}
-              <Col xs={24} md={6}>
-                <Paragraph strong style={{ fontSize: 20, color: '#065c8c' }}>
-                  Thanh toán viện phí
-                </Paragraph>
-                <Paragraph type="secondary">
-                  Hỗ trợ nhiều hình thức thanh toán trực tuyến tiện lợi
-                </Paragraph>
-
-                <Paragraph
-                  strong
-                  style={{ fontSize: 20, color: '#065c8c', paddingLeft: 50 }}
+              <Col xs={24} md={6} style={{ textAlign: 'start' }}>
+                {/* Mục 1 */}
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    marginBottom: 20,
+                  }}
                 >
-                  Chăm sóc y tế tại nhà
-                </Paragraph>
-                <Paragraph type="secondary" style={{ paddingLeft: 50 }}>
-                  Điều dưỡng, xét nghiệm tại nhà chuyên nghiệp
-                </Paragraph>
+                  <img
+                    src="https://medpro.vn/_next/image?url=https%3A%2F%2Fcdn-pkh.longvan.net%2Fprod-partner%2F4fff6c05-f49b-4f4a-a532-f2de15060877-5.svg&w=3840&q=75"
+                    alt="icon"
+                    style={{ width: 60, height: 60, marginRight: 20 }}
+                  />
+                  <div>
+                    <Paragraph
+                      strong
+                      style={{
+                        fontSize: 20,
+                        color: '#065c8c',
+                        marginBottom: 0,
+                      }}
+                    >
+                      Thanh toán viện phí
+                    </Paragraph>
+                    <Paragraph type="secondary" style={{ margin: 0 }}>
+                      Hỗ trợ nhiều hình thức thanh toán trực tuyến tiện lợi
+                    </Paragraph>
+                  </div>
+                </div>
 
-                <Paragraph strong style={{ fontSize: 20, color: '#065c8c' }}>
-                  Mạng lưới cơ sở hợp tác
-                </Paragraph>
-                <Paragraph type="secondary">
-                  Kết nối phòng khám, bệnh viện khắp cả nước
-                </Paragraph>
+                {/* Mục 2 */}
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    marginBottom: 20,
+                    justifyContent: 'space-between',
+                    paddingLeft: 60,
+                  }}
+                >
+                  <img
+                    src="https://medpro.vn/_next/image?url=https%3A%2F%2Fcdn-pkh.longvan.net%2Fprod-partner%2F4fff6c05-f49b-4f4a-a532-f2de15060877-5.svg&w=3840&q=75"
+                    alt="icon"
+                    style={{ width: 60, height: 60, marginRight: 20 }}
+                  />
+                  <div>
+                    <Paragraph
+                      strong
+                      style={{
+                        fontSize: 20,
+                        color: '#065c8c',
+                        marginBottom: 0,
+                      }}
+                    >
+                      Chăm sóc y tế tại nhà
+                    </Paragraph>
+                    <Paragraph type="secondary" style={{ margin: 0 }}>
+                      Điều dưỡng, xét nghiệm tại nhà chuyên nghiệp
+                    </Paragraph>
+                  </div>
+                </div>
+
+                {/* Mục 3 */}
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                  }}
+                >
+                  <img
+                    src="https://medpro.vn/_next/image?url=https%3A%2F%2Fcdn-pkh.longvan.net%2Fprod-partner%2F4fff6c05-f49b-4f4a-a532-f2de15060877-5.svg&w=3840&q=75"
+                    alt="icon"
+                    style={{ width: 60, height: 60, marginRight: 20 }}
+                  />
+                  <div>
+                    <Paragraph
+                      strong
+                      style={{
+                        fontSize: 20,
+                        color: '#065c8c',
+                        marginBottom: 0,
+                      }}
+                    >
+                      Mạng lưới cơ sở hợp tác
+                    </Paragraph>
+                    <Paragraph type="secondary" style={{ margin: 0 }}>
+                      Kết nối phòng khám, bệnh viện khắp cả nước
+                    </Paragraph>
+                  </div>
+                </div>
               </Col>
             </Row>
           </div>
@@ -1226,9 +1281,280 @@ const ContentComponent = () => {
     );
   };
   const MobileLayout = () => {
-    console.log('re-render');
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    useEffect(() => {
+      const hasShown = sessionStorage.getItem('gennovaxModalShown');
+      if (!hasShown) {
+        const timer = setTimeout(() => {
+          setIsModalOpen(true);
+          sessionStorage.setItem('gennovaxModalShown', 'true');
+        }, 2000); // hiện sau 2 giây
+        return () => clearTimeout(timer);
+      }
+    }, []);
+
+    const handleClose = () => {
+      setIsModalOpen(false);
+    };
     return (
       <>
+        {isModalOpen && (
+          <div
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              background: 'rgba(0,0,0,0.4)',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              zIndex: 9999,
+              padding: '10px',
+            }}
+            onClick={handleClose}
+          >
+            <div
+              style={{
+                position: 'relative',
+                background: '#fff',
+                maxWidth: '500px',
+                width: '95%',
+                borderRadius: 20,
+                boxShadow: '0 6px 20px rgba(0,0,0,0.2)',
+              }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Nút X */}
+              <button
+                onClick={handleClose}
+                style={{
+                  position: 'absolute',
+                  top: '-15px',
+                  right: '-15px',
+                  width: '30px',
+                  height: '30px',
+                  borderRadius: '50%',
+                  border: '2px solid #ccc',
+                  background: '#fff',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  color: '#666',
+                  fontSize: '18px',
+                  transition: 'all 0.2s ease',
+                  zIndex: 10,
+                }}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.borderColor = '#0071bc';
+                  e.currentTarget.style.color = '#0071bc';
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.borderColor = '#ccc';
+                  e.currentTarget.style.color = '#666';
+                }}
+              >
+                <CloseOutlined />
+              </button>
+              <div style={{ overflow: 'hidden', borderRadius: 20 }}>
+                {/* Phần đầu */}
+                <div
+                  style={{
+                    background: 'linear-gradient(180deg, #ffffff, #e7f7ff)',
+                    padding: '15px',
+                    textAlign: 'center',
+                  }}
+                >
+                  <h3
+                    style={{
+                      color: '#0071bc',
+                      fontWeight: 'bold',
+                      fontSize: '15px',
+                      marginBottom: '6px',
+                    }}
+                  >
+                    → ĐẶT LỊCH XÉT NGHIỆM TẠI NHÀ ←
+                  </h3>
+                  <h1
+                    style={{
+                      color: '#0071bc',
+                      fontWeight: 900,
+                      fontSize: '18px',
+                      marginBottom: '6px',
+                    }}
+                  >
+                    DỊCH VỤ XÉT NGHIỆM TỔNG QUÁT GenNovaX
+                  </h1>
+                  <h2
+                    style={{
+                      color: '#00a859',
+                      fontWeight: 'bold',
+                      fontSize: '15px',
+                      margin: 0,
+                    }}
+                  >
+                    NHANH CHÓNG - CHÍNH XÁC - AN TOÀN
+                  </h2>
+                </div>
+
+                {/* Phần giữa */}
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    padding: '15px',
+                    gap: '15px',
+                    background: '#f9fcff',
+                  }}
+                >
+                  {/* Cột trái */}
+                  <div>
+                    <div
+                      style={{
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        gap: '8px',
+                        marginBottom: '12px',
+                      }}
+                    >
+                      <button
+                        style={{
+                          background: '#0071bc',
+                          border: 'none',
+                          color: '#fff',
+                          borderRadius: '20px',
+                          padding: '8px 14px',
+                          fontWeight: 'bold',
+                          cursor: 'pointer',
+                          fontSize: '13px',
+                          flex: '1 1 auto',
+                          boxShadow:
+                            '0 0 8px rgba(0, 113, 188, 0.5), 0 0 16px rgba(0, 113, 188, 0.4)',
+                          transition: 'all 0.3s ease',
+                        }}
+                        onMouseEnter={(e) => {
+                          e.target.style.transform = 'translateY(-3px)';
+                          e.target.style.boxShadow =
+                            '0 0 12px rgba(0, 113, 188, 0.6), 0 0 22px rgba(0, 113, 188, 0.5)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.target.style.transform = 'translateY(0)';
+                          e.target.style.boxShadow =
+                            '0 0 8px rgba(0, 113, 188, 0.5), 0 0 16px rgba(0, 113, 188, 0.4)';
+                        }}
+                        onClick={() => {
+                          navigate('/y-te/danh-sach-dich-vu');
+                        }}
+                      >
+                        Xem Gói Xét Nghiệm
+                      </button>
+
+                      <button
+                        style={{
+                          background: '#00a859',
+                          border: 'none',
+                          color: '#fff',
+                          borderRadius: '20px',
+                          padding: '8px 14px',
+                          fontWeight: 'bold',
+                          cursor: 'pointer',
+                          fontSize: '13px',
+                          flex: '1 1 auto',
+                          boxShadow:
+                            '0 0 8px rgba(0, 168, 89, 0.5), 0 0 16px rgba(0, 168, 89, 0.4)',
+                          transition: 'all 0.3s ease',
+                        }}
+                        onMouseEnter={(e) => {
+                          e.target.style.transform = 'translateY(-3px)';
+                          e.target.style.boxShadow =
+                            '0 0 12px rgba(0, 168, 89, 0.6), 0 0 22px rgba(0, 168, 89, 0.5)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.target.style.transform = 'translateY(0)';
+                          e.target.style.boxShadow =
+                            '0 0 8px rgba(0, 168, 89, 0.5), 0 0 16px rgba(0, 168, 89, 0.4)';
+                        }}
+                        onClick={() => {
+                          navigate('/y-te/dat-lich-xet-nghiem');
+                        }}
+                      >
+                        Đặt Ngay
+                      </button>
+                    </div>
+
+                    <h3
+                      style={{
+                        fontSize: '16px',
+                        fontWeight: 'bold',
+                        color: '#0071bc',
+                        marginBottom: '8px',
+                      }}
+                    >
+                      Dịch vụ xét nghiệm GenNovaX
+                    </h3>
+
+                    <p
+                      style={{
+                        fontSize: '14px',
+                        lineHeight: '1.5',
+                        color: '#534c4cff',
+                        marginBottom: '14px',
+                        fontWeight: 500,
+                      }}
+                    >
+                      Đội ngũ kỹ thuật viên y tế chuyên nghiệp, lấy mẫu tại nhà,
+                      trả kết quả nhanh chóng qua ứng dụng.
+                    </p>
+
+                    {/* <div
+                      style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}
+                    >
+                      {[
+                        'Xét nghiệm máu tổng quát',
+                        'Xét nghiệm đường huyết',
+                        'Xét nghiệm mỡ máu',
+                        'Xét nghiệm chức năng gan, thận',
+                        'Xét nghiệm tầm soát bệnh lý',
+                      ].map((item, index) => (
+                        <div
+                          key={index}
+                          style={{
+                            background: '#e6f4f9',
+                            padding: '6px 12px',
+                            borderRadius: '20px',
+                            fontSize: '13px',
+                            color: '#0071bc',
+                            fontWeight: 500,
+                            whiteSpace: 'nowrap',
+                          }}
+                        >
+                          {item}
+                        </div>
+                      ))}
+                    </div> */}
+                  </div>
+
+                  {/* Cột phải */}
+                  <div>
+                    <img
+                      src="https://bvphusanct.com.vn/Portals/0/67d0390c86dc42821bcd.jpg"
+                      alt="Xét nghiệm GenNovaX"
+                      style={{
+                        width: '100%',
+                        height: '200px',
+                        borderRadius: '10px',
+                        objectFit: 'cover',
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
         <div
           style={{
             width: '100%',
@@ -1610,8 +1936,8 @@ const ContentComponent = () => {
             >
               <Row
                 gutter={[8, 8]}
-                wrap={false} // quan trọng: không xuống dòng
-                style={{ minWidth: 'max-content' }} // giữ các item theo chiều ngang
+                wrap={false}
+                style={{ minWidth: 'max-content' }}
               >
                 {serviceList.map((service, i) => (
                   <Col key={i} style={{ width: 200 }}>
@@ -1722,6 +2048,15 @@ const ContentComponent = () => {
               </Row>
             </div>
           </div>
+          <div
+            style={{ width: '100%', margin: '16px auto', textAlign: 'center' }}
+          >
+            <audio
+              src="http://res.cloudinary.com/dh3rdryux/video/upload/v1755654842/kao5bk7olka8a7p2ym67.mp3"
+              controls
+              style={{ width: '90%', display: 'block', margin: '0 auto' }}
+            />
+          </div>
 
           <div style={{ padding: '0px 20px' }}>
             <Title
@@ -1752,7 +2087,17 @@ const ContentComponent = () => {
                 alt="App Store"
                 style={{ height: 45, marginRight: 10 }}
               />
-              <img src={googleplay} alt="Google Play" style={{ height: 45 }} />
+              <img
+                src={googleplay}
+                alt="Google Play"
+                style={{ height: 45 }}
+                onClick={() => {
+                  window.open(
+                    'https://expo.dev/accounts/bkc_duckien/projects/bio-app-frontent/builds/93d56238-ba85-44c0-ae18-3d10a6080c99',
+                    '_blank'
+                  );
+                }}
+              />
             </div>
           </div>
           <div
