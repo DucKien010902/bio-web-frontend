@@ -10,17 +10,29 @@ import { useLocation, useNavigate } from 'react-router-dom';
 const tabItems = [
   {
     label: 'Trang chủ',
-    icon: <MedicineBoxOutlined />,
+    icon: <MedicineBoxOutlined style={{ fontWeight: 500 }} />,
     path: '/y-te',
   },
   {
     label: 'Đặt lịch',
-    icon: <CalendarOutlined />,
+    icon: <CalendarOutlined style={{ fontWeight: 500 }} />,
     path: '/y-te/dat-lich-xet-nghiem',
   },
-  { label: 'Kết quả', icon: <DiffOutlined />, path: '/y-te/tai-khoan' },
-  { label: 'Sản phẩm', icon: <ProductOutlined />, path: '/san-pham/trang-chu' },
-  { label: 'Tài khoản', icon: <UserOutlined />, path: '/san-pham/tai-khoan' },
+  {
+    label: 'Kết quả',
+    icon: <DiffOutlined style={{ fontWeight: 500 }} />,
+    path: '/y-te/tai-khoan',
+  },
+  {
+    label: 'Sản phẩm',
+    icon: <ProductOutlined style={{ fontWeight: 500 }} />,
+    path: '/san-pham/trang-chu',
+  },
+  {
+    label: 'Tài khoản',
+    icon: <UserOutlined style={{ fontWeight: 500 }} />,
+    path: '/san-pham/tai-khoan',
+  },
 ];
 
 const BottomTabBar = () => {
@@ -41,7 +53,7 @@ const BottomTabBar = () => {
         left: 0,
         right: 0,
         background: '#fff',
-        borderTop: '1px solid #ddd',
+        borderTop: '1px solid #f6f6f6ff',
         display: 'flex',
         justifyContent: 'space-around',
         alignItems: 'center',
@@ -73,8 +85,8 @@ const BottomTabBar = () => {
             style={{
               flex: 1,
               textAlign: 'center',
-              fontSize: 12,
-              color: active ? '#ee4d2d' : '#888',
+              fontSize: 13,
+              color: active ? '#1da1f2' : '#3d3535ff',
               userSelect: 'none',
               cursor: 'pointer',
               padding: '6px 0',

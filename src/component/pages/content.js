@@ -26,6 +26,7 @@ import phone from '../../assets/images/phone.png';
 import round from '../../assets/images/round.png';
 import './content.css';
 import TypingInput from './contentSearchInput';
+import LatestNews from './LatestNews';
 
 const { Text } = Typography;
 
@@ -198,7 +199,7 @@ const ContentComponent = () => {
     fetchAllClinic();
   }, []);
   const DesktopLayOut = () => {
-    const [isModalOpen, setIsModalOpen] = useState(true); // ban đầu false
+    const [isModalOpen, setIsModalOpen] = useState(false); // ban đầu false
 
     useEffect(() => {
       const hasShown = sessionStorage.getItem('gennovaxModalShown');
@@ -964,34 +965,36 @@ const ContentComponent = () => {
                 fontWeight: 700,
               }}
             >
-              Tin tức y tế
+              Tin tức y tế mới nhất
             </Title>
-            <Row
-              gutter={[32, 32]}
-              style={{ padding: '2% 10%', paddingTop: 40, paddingBottom: 40 }}
+            <div
+              style={{
+                width: '100%',
+                margin: '16px auto',
+                textAlign: 'center',
+              }}
             >
-              {newsList.map((news, i) => (
-                <Col xs={24} sm={12} md={8} key={i}>
-                  <Card
-                    style={{ boxShadow: '4px 2px 8px rgba(0, 191, 255, 0.4)' }}
-                    hoverable
-                    cover={
-                      <img
-                        alt={news.title}
-                        src={news.image}
-                        style={{
-                          height: 180,
-                          objectFit: 'cover',
-                          // shadow màu xanh
-                        }}
-                      />
-                    }
-                  >
-                    <Card.Meta title={news.title} />
-                  </Card>
-                </Col>
-              ))}
-            </Row>
+              <div
+                style={{
+                  width: '60%',
+                  margin: '0 auto',
+                  backgroundColor: '#b4e4f4ff',
+                  borderRadius: 8,
+                  padding: '12px 16px', // tăng chiều cao
+                }}
+              >
+                <audio
+                  src="http://res.cloudinary.com/dh3rdryux/video/upload/v1755654842/kao5bk7olka8a7p2ym67.mp3"
+                  controls
+                  style={{
+                    width: '100%',
+                    display: 'block',
+                  }}
+                />
+              </div>
+            </div>
+
+            <LatestNews />
           </div>
 
           <div style={{ padding: '40px 20px' }}>
@@ -1835,7 +1838,13 @@ const ContentComponent = () => {
                       </div>
                       <Title
                         level={5}
-                        style={{ marginBottom: 8, fontSize: 14 }}
+                        style={{
+                          marginBottom: 8,
+                          fontSize: 14,
+                          lineHeight: '20px', // chiều cao 1 dòng
+                          height: '40px', // 2 dòng (20px * 2)
+                          overflow: 'hidden',
+                        }}
                       >
                         {clinic.name}{' '}
                         {clinic.verified && (
@@ -1844,12 +1853,16 @@ const ContentComponent = () => {
                           />
                         )}
                       </Title>
+
                       <p
                         style={{
                           color: '#003553',
                           marginBottom: 8,
                           fontSize: 13,
                           fontWeight: 500,
+                          lineHeight: '20px', // chiều cao 1 dòng
+                          height: '60px', // 3 dòng (20px * 3)
+                          overflow: 'hidden',
                         }}
                       >
                         <EnvironmentOutlined
@@ -2048,14 +2061,34 @@ const ContentComponent = () => {
               </Row>
             </div>
           </div>
-          <div
-            style={{ width: '100%', margin: '16px auto', textAlign: 'center' }}
-          >
-            <audio
-              src="http://res.cloudinary.com/dh3rdryux/video/upload/v1755654842/kao5bk7olka8a7p2ym67.mp3"
-              controls
-              style={{ width: '90%', display: 'block', margin: '0 auto' }}
-            />
+          <div>
+            <Title
+              level={4}
+              style={{
+                fontSize: 18,
+                margin: '20px 0 10px',
+                color: '#065c8c',
+                textAlign: 'center',
+                fontWeight: 600,
+                // marginTop: 100,
+              }}
+            >
+              Tin tức y tế mới nhất
+            </Title>
+            <div
+              style={{
+                width: '100%',
+                margin: '16px auto',
+                textAlign: 'center',
+              }}
+            >
+              <audio
+                src="http://res.cloudinary.com/dh3rdryux/video/upload/v1755654842/kao5bk7olka8a7p2ym67.mp3"
+                controls
+                style={{ width: '90%', display: 'block', margin: '0 auto' }}
+              />
+            </div>
+            <LatestNews />
           </div>
 
           <div style={{ padding: '0px 20px' }}>
