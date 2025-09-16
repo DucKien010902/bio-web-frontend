@@ -1,7 +1,16 @@
 // src/components/ChatDrawerAI.jsx
-import React, { useState, useEffect, useRef } from 'react';
-import { Drawer, Input, Button, Avatar, Modal, List, Typography } from 'antd';
-import { RobotOutlined, QuestionCircleOutlined } from '@ant-design/icons';
+import { QuestionCircleOutlined } from '@ant-design/icons';
+import {
+  Avatar,
+  Button,
+  Drawer,
+  Image,
+  Input,
+  List,
+  Modal,
+  Typography,
+} from 'antd';
+import { useEffect, useRef, useState } from 'react';
 import './ChatDrawerAI.css';
 
 const SESSION_KEY = 'chat_ai_messages';
@@ -12,6 +21,8 @@ const ChatDrawerAI = ({ open, onClose }) => {
   const [loading, setLoading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const scrollRef = useRef(null);
+  // thêm ref cho input
+  const inputRef = useRef(null);
 
   const suggestedQuestions = [
     'Làm sao để đặt lịch xét nghiệm?',
@@ -40,7 +51,7 @@ const ChatDrawerAI = ({ open, onClose }) => {
   const askQuestion1 = async (question) => {
     try {
       const response = await fetch(
-        'https://rationally-pleased-antelope.ngrok-free.app/webhook/ai-train-GPT',
+        'https://advanced-bengal-many.ngrok-free.app/webhook/ai-train-GPT',
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -116,8 +127,13 @@ const ChatDrawerAI = ({ open, onClose }) => {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [messages, loading]);
+  useEffect(() => {
+    if (newMsg && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [newMsg]);
 
-  // Regex link render
+  // Regex link render (markdown link)
   const renderLine = (line, index) => {
     const markdownLinkRegex =
       /\[([^\]]+)\]\((https:\/\/genapp\.vn\/y-te\/dat-lich-xet-nghiem)\)/g;
@@ -164,6 +180,40 @@ const ChatDrawerAI = ({ open, onClose }) => {
     return parts.length ? <>{parts}</> : <span key={index}>{line}</span>;
   };
 
+  // Xử lý loại bỏ link ảnh cụ thể và render ảnh phía trên
+  const IMAGE_LINK =
+    '(https://res.cloudinary.com/dh3rdryux/image/upload/v1757389920/z6992270543389_473881ffd3549bf4a273390960f43bbc_k3hhf3.jpg)';
+
+  const renderMessageContent = (m) => {
+    if (!m.fromUser) {
+      // Nếu có chứa link ảnh
+      if (m.content.includes(IMAGE_LINK)) {
+        const textWithoutLink = m.content.replace(IMAGE_LINK, '').trim();
+        return (
+          <div>
+            <Image
+              src={IMAGE_LINK.slice(1, -1)} // bỏ ngoặc ()
+              alt="AI gợi ý"
+              style={{
+                maxWidth: '100%',
+                borderRadius: 8,
+                marginBottom: 8,
+              }}
+              preview={true} // bật phóng to khi click
+            />
+            {textWithoutLink.split('\n').map((line, index) => (
+              <div key={index}>{renderLine(line, index)}</div>
+            ))}
+          </div>
+        );
+      }
+    }
+    // Không có link thì render bình thường
+    return m.content
+      .split('\n')
+      .map((line, index) => <div key={index}>{renderLine(line, index)}</div>);
+  };
+
   return (
     <Drawer
       open={open}
@@ -179,6 +229,11 @@ const ChatDrawerAI = ({ open, onClose }) => {
         open={modalOpen}
         onCancel={() => setModalOpen(false)}
         footer={null}
+        afterClose={() => {
+          if (inputRef.current) {
+            inputRef.current.focus();
+          }
+        }}
       >
         <div style={{ maxHeight: 400, overflowY: 'auto', paddingRight: 8 }}>
           <List
@@ -226,7 +281,7 @@ const ChatDrawerAI = ({ open, onClose }) => {
             }}
           >
             {!m.fromUser && (
-              <Avatar src="https://png.pngtree.com/png-vector/20230225/ourmid/pngtree-smart-chatbot-cartoon-clipart-png-image_6620453.png" />
+              <Avatar src="https://i.pinimg.com/236x/a6/3f/b8/a63fb8726fd60309aa2041b6a9d25777.jpg" />
             )}
             <div
               style={{
@@ -239,9 +294,7 @@ const ChatDrawerAI = ({ open, onClose }) => {
                 marginLeft: 5,
               }}
             >
-              {m.content.split('\n').map((line, index) => (
-                <div key={index}>{renderLine(line, index)}</div>
-              ))}
+              {renderMessageContent(m)}
             </div>
           </div>
         ))}
@@ -285,7 +338,6 @@ const ChatDrawerAI = ({ open, onClose }) => {
               border: 'none',
             }}
             onMouseEnter={() => setModalOpen(true)}
-            // onMouseLeave={() => setModalOpen(false)}
           >
             Câu hỏi gợi ý
           </Button>
@@ -293,6 +345,7 @@ const ChatDrawerAI = ({ open, onClose }) => {
 
         <div style={{ display: 'flex', gap: 8 }}>
           <Input.TextArea
+            ref={inputRef} // 👈 thêm ref
             autoSize={{ minRows: 1, maxRows: 4 }}
             value={newMsg}
             onChange={(e) => setNewMsg(e.target.value)}
@@ -304,6 +357,7 @@ const ChatDrawerAI = ({ open, onClose }) => {
               }
             }}
           />
+
           <Button type="primary" onClick={sendMessage} disabled={loading}>
             Gửi
           </Button>

@@ -262,7 +262,9 @@ const ClinicListPage = () => {
               <div style={{ marginBottom: 16 }}>
                 {Array.isArray(selectedClinic.descriptions) ? (
                   selectedClinic.descriptions.map((desc, index) => (
-                    <Paragraph key={index}>{desc}</Paragraph>
+                    <Paragraph key={index} style={{ textAlign: 'start' }}>
+                      {desc}
+                    </Paragraph>
                   ))
                 ) : (
                   <Paragraph>

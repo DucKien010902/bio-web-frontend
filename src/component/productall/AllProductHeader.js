@@ -12,7 +12,7 @@ import { MdOutlineShoppingCart } from 'react-icons/md';
 import { RxDividerVertical } from 'react-icons/rx';
 import { useDispatch, useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import axiosClient from '../../api/apiConfig';
 import genAppLogo from '../../assets/images/GenApp logo.png';
 import { closeChatPanel, openChatPanel } from '../../redux/slices/chatSlice';
@@ -32,6 +32,7 @@ const AllProductHeader = ({
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const isDesktop = useMediaQuery({ minWidth: 992 });
   const navigate = useNavigate();
+  const location = useLocation();
   const phoneNumber = JSON.parse(localStorage.getItem('user'))?.phoneNumber;
   const fullName =
     JSON.parse(localStorage.getItem('user'))?.fullName == 'undefined'
@@ -98,6 +99,9 @@ const AllProductHeader = ({
                 alignItems: 'center',
                 cursor: 'pointer',
               }}
+              onClick={() => {
+                navigate('/login');
+              }}
             >
               Kênh người bán <RxDividerVertical />
             </div>
@@ -109,7 +113,7 @@ const AllProductHeader = ({
               }}
               onClick={() => {
                 window.open(
-                  'https://play.google.com/store/games?hl=vi',
+                  'https://expo.dev/accounts/bkc_duckien/projects/bio-app-frontent/builds/0d8138ea-3da8-4107-8acb-30db9a6463ee',
                   'blank'
                 );
               }}
@@ -191,7 +195,7 @@ const AllProductHeader = ({
                 } else {
                   localStorage.setItem(
                     'redirectAfterLogin',
-                    window.location.pathname
+                    location.pathname + location.search
                   );
                   navigate('/login');
                 }
@@ -282,6 +286,10 @@ const AllProductHeader = ({
                       window.location.pathname
                     );
                     navigate('/login');
+                    localStorage.setItem(
+                      'redirectAfterLogin',
+                      location.pathname + location.search
+                    );
                   } else {
                     navigate('/san-pham/gio-hang');
                   }
@@ -452,6 +460,10 @@ const AllProductHeader = ({
                     window.location.pathname
                   );
                   navigate('/login');
+                  localStorage.setItem(
+                    'redirectAfterLogin',
+                    location.pathname + location.search
+                  );
                 } else {
                   navigate('/san-pham/gio-hang');
                 }

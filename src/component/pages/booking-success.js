@@ -1,7 +1,6 @@
-import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Card, Typography, Button } from 'antd';
+import { Button, Card, Typography } from 'antd';
 import { useMediaQuery } from 'react-responsive';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const { Title, Text } = Typography;
 
@@ -69,6 +68,7 @@ const BookingSuccess = () => {
           <Text>{data.serviceCode}</Text> */}
             <Text strong>Dịch vụ xét nghiệm:</Text>{' '}
             <Text>{data.serviceName}</Text>
+            <Text strong>Tổng giá:</Text> <Text>{data.servicePrice}</Text>
           </div>
 
           <Button

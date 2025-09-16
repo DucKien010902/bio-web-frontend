@@ -1,0 +1,18 @@
+.booking-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25) !important;
+}
+/* Phóng to checkbox */
+.ant-checkbox-inner {
+  width: 22px !important;
+  height: 22px !important;
+}
+
+.ant-checkbox-inner::after {
+  /* vẽ dấu tích cũng to hơn */
+  transform: rotate(45deg) scale(1.2) translate(-2px, -2px) !important;
+}
+
+.ant-checkbox {
+  transform: scale(1.2);
+}

@@ -1,20 +1,20 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Layout, Menu, Checkbox, Input, Button, Divider, Select } from 'antd';
-import ProductDetailPage from './productdetail';
-import ShopeeProductCard from './productcard';
-import axiosClient from '../../api/apiConfig';
-import AllProductHeader from './AllProductHeader';
-import AllProductFooter from './AllProductFooter';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { Checkbox, Divider, Layout, Menu, Select } from 'antd';
+import { useEffect, useRef, useState } from 'react';
+import { AiFillFire } from 'react-icons/ai';
 import { useMediaQuery } from 'react-responsive';
-import AllProductContentMobile2 from './AllProductContentMobile2';
+import { useLocation, useNavigate } from 'react-router-dom';
+import axiosClient from '../../api/apiConfig';
 import dichvu from '../../assets/images/dichvu.webp';
 import dichvu1 from '../../assets/images/dichvu1.webp';
 import dichvu2 from '../../assets/images/dichvu2.webp';
 import dichvu3 from '../../assets/images/dichvu3.webp';
 import dichvu4 from '../../assets/images/dichvu4.webp';
 import dichvu5 from '../../assets/images/dichvu5.webp';
-import { AiFillFire } from 'react-icons/ai';
+import AllProductContentMobile2 from './AllProductContentMobile2';
+import AllProductFooter from './AllProductFooter';
+import AllProductHeader from './AllProductHeader';
+import ShopeeProductCard from './productcard';
+import ProductDetailPage from './productdetail';
 const { Sider, Content } = Layout;
 
 const AllProductContent = () => {
@@ -448,7 +448,7 @@ const AllProductContent = () => {
               </div> */}
               <div
                 style={{
-                  // height: 540,
+                  // minHeight: 720,
                   backgroundColor: 'white',
                   // marginTop: 10,
                   padding: '10px 10px',

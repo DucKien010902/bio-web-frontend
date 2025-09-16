@@ -1,48 +1,48 @@
-import Header from './component/layout/header';
-import ContentComponent from './component/pages/content';
-import FooterComponent from './component/layout/footer';
-import { Router, Route, Routes } from 'react-router-dom';
-import IntroPage from './component/pages/intro-page';
-import Error from './component/pages/error';
-import ClinicListPage from './component/pages/list-clinic';
-import DetailClinic from './component/pages/detail-clinic';
-import ServicePage from './component/pages/list-service';
-import BookingPage from './component/pages/book-calender';
+import 'antd/dist/reset.css';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useMediaQuery } from 'react-responsive';
+import { Route, Routes, useLocation } from 'react-router-dom';
+import AdminLayout from './component/admin/homeAdmin';
+import StaffLayout from './component/advisor/homeStaff';
+import ForgotPasswordPage from './component/auth/forgotPass';
 import LoginPage from './component/auth/login';
 import RegisterPage from './component/auth/register';
-import UserProfile from './component/profile/profile';
-import BookingSuccess from './component/pages/booking-success';
-import AdminLayout from './component/admin/homeAdmin';
 import ClinicLayout from './component/coordinator/homeClinic';
-import 'antd/dist/reset.css';
-import StaffLayout from './component/advisor/homeStaff';
-import VNPaySuccess from './component/productall/VNPaySuccess';
-import { useMediaQuery } from 'react-responsive';
-import AllProductContent from './component/productall/AllProductContent';
-import CartPage from './component/productall/AllProductCart';
-import ShopeeProfile from './component/productall/customerProfile';
-import CheckoutPage from './component/productall/productinvoice';
-import ProductDetailPage from './component/productall/productdetail';
-import ShopLayout from './component/shop/shopHome';
-import ShopProfile from './component/productall/shopInfo';
-import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import HomePageProduct from './component/productall/HomeProduct';
-import ChatWidget from './component/productall/ChatWidget';
-import ChatWidgetAI from './component/productall/ChatWidgetAI';
-import BottomTabBar from './component/productall/BottomTab';
-import { useSelector } from 'react-redux';
-import LiveStreamLayOut from './component/productall/LiveStream';
-import NotificationLayOut from './component/productall/NotificationLayOut';
-import AllProductContentSearch from './component/productall/AllproductContentForSearch';
+import FooterComponent from './component/layout/footer';
+import Header from './component/layout/header';
 import MobileMenu from './component/pages/MobileMenu';
+import PostList from './component/pages/PostList';
+import BookingPage from './component/pages/book-calender';
+import BookingPageMobile from './component/pages/book-calenderMobile';
+import BookingSuccess from './component/pages/booking-success';
+import ContentComponent from './component/pages/content';
+import DetailClinic from './component/pages/detail-clinic';
+import DetailClinicMobile from './component/pages/detail-clinicMobile';
+import Error from './component/pages/error';
+import FirstPage from './component/pages/firstPage';
+import IntroPage from './component/pages/intro-page';
+import ClinicListPage from './component/pages/list-clinic';
 import ClinicListMobilePage from './component/pages/list-clinicMobile';
 import ServicePageMobile from './component/pages/list-serciceMobile';
-import BookingPageMobile from './component/pages/book-calenderMobile';
-import DetailClinicMobile from './component/pages/detail-clinicMobile';
-import PostList from './component/pages/PostList';
-import FirstPage from './component/pages/firstPage';
-import ForgotPasswordPage from './component/auth/forgotPass';
+import ServicePage from './component/pages/list-service';
+// import HealthNewsMobile from './component/pages/notice';
+import BookingCart from './component/pages/orderServices';
+import CartPage from './component/productall/AllProductCart';
+import AllProductContent from './component/productall/AllProductContent';
+import AllProductContentSearch from './component/productall/AllproductContentForSearch';
+import BottomTabBar from './component/productall/BottomTab';
+import ChatWidget from './component/productall/ChatWidget';
+import ChatWidgetAI from './component/productall/ChatWidgetAI';
+import HomePageProduct from './component/productall/HomeProduct';
+import LiveStreamLayOut from './component/productall/LiveStream';
+import VNPaySuccess from './component/productall/VNPaySuccess';
+import ShopeeProfile from './component/productall/customerProfile';
+import ProductDetailPage from './component/productall/productdetail';
+import CheckoutPage from './component/productall/productinvoice';
+import ShopProfile from './component/productall/shopInfo';
+import UserProfile from './component/profile/profile';
+import ShopLayout from './component/shop/shopHome';
 const ScrollToTop = () => {
   const { pathname } = useLocation();
 
@@ -81,7 +81,7 @@ const Product = ({ chatOpen, setChatOpen }) => {
         <Route path="" element={<AllProductContent />} />
         <Route path="trang-chu" element={<HomePageProduct />} />
         <Route path="tim-kiem" element={<AllProductContentSearch />} />
-        <Route path="result" element={<VNPaySuccess />} />
+        <Route path="don-hang" element={<VNPaySuccess />} />
         <Route path="gio-hang" element={<CartPage />} />
         <Route path="tai-khoan" element={<ShopeeProfile />} />
         <Route path="dat-hang" element={<CheckoutPage />} />
@@ -127,6 +127,8 @@ function MainApp() {
         <Route path="booking-success" element={<BookingSuccess />} />
         <Route path="menu" element={<MobileMenu />} />
         <Route path="tin-tuc" element={<PostList />} />
+        <Route path="thanh-toan-dich-vu" element={<BookingCart />} />
+        {/* <Route path="thong-bao" element={<HealthNewsMobile />} /> */}
       </Routes>
       <FooterComponent />
     </>
@@ -143,7 +145,8 @@ function App() {
   const shouldShowChat =
     (pathname === '/san-pham' && isDesktop) ||
     (pathname === '/shopInfo' && isDesktop);
-  const shouldShowChatAI = pathname === '/y-te' || pathname === '/';
+  const shouldShowChatAI = pathname === '/' || pathname.startsWith('/y-te');
+
   return (
     <div className="app-wrapper">
       <ScrollToTop />
@@ -164,7 +167,7 @@ function App() {
         <Route path="/*" element={isMobile ? <MainApp /> : <FirstPage />} />
 
         <Route path="/livestream*" element={<LiveStreamLayOut />} />
-        <Route path="/notification*" element={<NotificationLayOut />} />
+        {/* <Route path="/notification" element={<HealthNewsMobile />} /> */}
         <Route path="/y-te*" element={<MainApp />} />
       </Routes>
       {!chatOpen && isMobile && <BottomTabBar />}

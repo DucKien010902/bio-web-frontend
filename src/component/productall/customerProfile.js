@@ -1,29 +1,39 @@
-import React, { useEffect, useState } from 'react';
-import { Layout, Menu, Avatar, Button } from 'antd';
-import { UserOutlined, LogoutOutlined } from '@ant-design/icons';
-import { useNavigate } from 'react-router-dom';
-import ProfileContent from './customerProfileInfo';
-import OrdersContent from './customerProfileOrder';
-import AllProductHeader from './AllProductHeader';
-import AllProductFooter from './AllProductFooter';
-import { FaClipboardList } from 'react-icons/fa';
+import { LogoutOutlined, UserOutlined } from '@ant-design/icons';
+import { Avatar, Button, Layout, Menu } from 'antd';
+import { useEffect, useState } from 'react';
 import { CgProfile } from 'react-icons/cg';
+import { FaClipboardList, FaRegUser } from 'react-icons/fa';
 import { GrNotification } from 'react-icons/gr';
 import { SlEnvolopeLetter } from 'react-icons/sl';
-import { MdHome } from 'react-icons/md';
-import { FaRegUser } from 'react-icons/fa';
+import { useMediaQuery } from 'react-responsive';
+import { useLocation, useNavigate } from 'react-router-dom';
+import AllProductFooter from './AllProductFooter';
+import AllProductHeader from './AllProductHeader';
+import ProfileContent from './customerProfileInfo';
+import OrdersContent from './customerProfileOrder';
 import VoucherListUser from './customerProfileVoucher';
 import ProfilePage from './userprofile';
-import { useMediaQuery } from 'react-responsive';
 
 const { Content, Sider } = Layout;
 
 const ShopeeProfile = () => {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const isDesktop = useMediaQuery({ minWidth: 992 });
-  const [selectedKey, setSelectedKey] = useState('1');
+
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const [selectedKey, setSelectedKey] = useState('1');
   const user = JSON.parse(localStorage.getItem('user'));
+
+  // Đọc query param "case"
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const caseParam = searchParams.get('case');
+    if (caseParam) {
+      setSelectedKey(caseParam);
+    }
+  }, [location.search]);
 
   const handleLogout = () => {
     localStorage.clear();
@@ -44,11 +54,13 @@ const ShopeeProfile = () => {
         return <ProfilePage />;
       case '6': {
         navigate('/');
+        return null;
       }
       default:
         return <div>Chức năng đang được phát triển...</div>;
     }
   };
+
   const DesktopLayout = () => {
     useEffect(() => {
       if (!user) {
@@ -56,7 +68,7 @@ const ShopeeProfile = () => {
       }
     }, []);
     if (!user) {
-      return;
+      return null;
     }
     return (
       <>
@@ -139,12 +151,13 @@ const ShopeeProfile = () => {
       </>
     );
   };
+
   const MobileLayout = () => {
     return (
       <>
         <AllProductHeader />
         <Layout style={{ minHeight: '100vh', backgroundColor: '#fff' }}>
-          {/* Thanh tab KHÔNG cố định, nằm đầu nội dung */}
+          {/* Tab menu đầu nội dung */}
           <div
             style={{
               height: 40,
@@ -153,7 +166,7 @@ const ShopeeProfile = () => {
               justifyContent: 'space-around',
               alignItems: 'center',
               backgroundColor: '#fff',
-              marginBottom: 12, // tạo khoảng cách nếu cần
+              marginBottom: 12,
             }}
           >
             <div
@@ -163,7 +176,6 @@ const ShopeeProfile = () => {
                 color: selectedKey === '1' ? 'orange' : '#aaa',
               }}
             >
-              {/* <CgProfile size={20} /> */}
               <div style={{ fontSize: 12 }}>Hồ sơ</div>
             </div>
             <div
@@ -173,7 +185,6 @@ const ShopeeProfile = () => {
                 color: selectedKey === '2' ? '#2b88d9' : '#aaa',
               }}
             >
-              {/* <FaClipboardList size={20} /> */}
               <div style={{ fontSize: 12 }}>Đơn mua</div>
             </div>
             <div
@@ -183,7 +194,6 @@ const ShopeeProfile = () => {
                 color: selectedKey === '3' ? '#eb4242' : '#aaa',
               }}
             >
-              {/* <GrNotification size={20} /> */}
               <div style={{ fontSize: 12 }}>Tiện ích</div>
             </div>
             <div
@@ -193,12 +203,10 @@ const ShopeeProfile = () => {
                 color: selectedKey === '4' ? '#c712c1' : '#aaa',
               }}
             >
-              {/* <SlEnvolopeLetter size={20} /> */}
               <div style={{ fontSize: 12 }}>Voucher</div>
             </div>
           </div>
 
-          {/* Nội dung trang */}
           <Content style={{ paddingBottom: 60 }}>{renderContent()}</Content>
         </Layout>
         <AllProductFooter />

@@ -10,18 +10,22 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import PatientRecordForm from './history';
 import MedicalTickets from './medicalTicket';
 import Notifications from './notification';
+
 const { Sider, Content } = Layout;
 
 const UserDashboard = () => {
   const isMobile = useMediaQuery({ maxWidth: 797 });
   const isDesktop = useMediaQuery({ minWidth: 992 });
+
   const user = JSON.parse(localStorage.getItem('user'));
   const [selectedKey, setSelectedKey] = useState('');
+
   const location = useLocation();
   const firstKey = location.state?.key;
   const searchParams = new URLSearchParams(location.search);
   const key = searchParams.get('key');
   const navigate = useNavigate();
+
   const renderContent = () => {
     switch (selectedKey) {
       case 'history':
@@ -34,24 +38,30 @@ const UserDashboard = () => {
         return <Empty />;
     }
   };
-  useEffect(() => {
-    if (!user) {
-      navigate('/');
-    }
-  }, []);
-  useEffect(() => {
-    if (firstKey) {
-      setSelectedKey(firstKey);
-    }
-  }, [firstKey]);
+
+  // Ưu tiên gán selectedKey trước khi kiểm tra user
   useEffect(() => {
     if (key) {
       setSelectedKey(key);
+    } else if (firstKey) {
+      setSelectedKey(firstKey);
+    } else {
+      setSelectedKey('notifications'); // fallback mặc định
     }
-  }, [key]);
-  if (!user) {
+  }, [key, firstKey]);
+
+  // Check user, cho phép notifications khi chưa đăng nhập
+  useEffect(() => {
+    if (!user && selectedKey && selectedKey !== 'notifications') {
+      navigate('/login');
+    }
+  }, [user, selectedKey, navigate]);
+
+  // Nếu chưa có user và không phải notifications thì không render
+  if (!user && selectedKey !== 'notifications') {
     return null;
   }
+
   const DesktopLayout = () => {
     return (
       <Layout
@@ -135,7 +145,7 @@ const UserDashboard = () => {
         <Layout>
           <Content
             style={{
-              margin: '24px',
+              margin: '0px',
               padding: 24,
               background: '#f5f5f5',
               paddingTop: 0,
@@ -147,6 +157,7 @@ const UserDashboard = () => {
       </Layout>
     );
   };
+
   const MobileLayout = () => {
     return (
       <Layout style={{ minHeight: '100vh', background: '#ffffff' }}>

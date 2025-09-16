@@ -15,7 +15,6 @@ import { LuMessageSquareMore } from 'react-icons/lu';
 import { SiTicktick } from 'react-icons/si';
 import { useMediaQuery } from 'react-responsive';
 import { useLocation, useNavigate } from 'react-router-dom';
-import articalPost from '../../assets/images/artical.png';
 import AllProductContent1 from '../productall/AllProductContent1';
 import AllProductHeader from '../productall/AllProductHeader';
 import AllProductContent2 from './AllProductContent2';
@@ -165,59 +164,60 @@ const HomePageProduct = () => {
   const feedbacks = [
     {
       content:
-        '“Đặt lịch xét nghiệm bên này rất gọn, có ngày giờ cụ thể luôn lên là được xét nghiệm liền không rườm rà gì mấy. An tâm đặt cho gia đình, có cả xét nghiệm tận nhà, không mất thời gian.”',
-      name: 'Trần Mai',
+        '“Máy đo huyết áp mua ở đây dùng ổn định, màn hình rõ ràng, dễ thao tác. Người lớn tuổi trong nhà cũng tự đo được mà không cần trợ giúp.”',
+      name: 'Nguyễn Thị Hồng',
       location: 'Hà Nội',
-      avatar: 'https://randomuser.me/api/portraits/women/44.jpg',
+      avatar: 'https://randomuser.me/api/portraits/women/45.jpg',
     },
     {
       content:
-        '“Đặt lịch xét nghiệm bên này rất gọn, có ngày giờ cụ thể luôn lên là được xét nghiệm liền không rườm rà gì mấy. An tâm đặt cho gia đình, có cả xét nghiệm tận nhà, không mất thời gian.”',
-      name: 'Trần Mai',
-      location: 'Hà Nội',
-      avatar: 'https://randomuser.me/api/portraits/women/44.jpg',
+        '“Nhiệt kế điện tử đo rất nhanh, chỉ vài giây có kết quả. So với loại thủy ngân thì an toàn hơn nhiều, nhất là khi có trẻ nhỏ.”',
+      name: 'Phạm Văn Cường',
+      location: 'TP. Hồ Chí Minh',
+      avatar: 'https://randomuser.me/api/portraits/men/23.jpg',
     },
     {
       content:
-        '“Đặt lịch xét nghiệm bên này rất gọn, có ngày giờ cụ thể luôn lên là được xét nghiệm liền không rườm rà gì mấy. An tâm đặt cho gia đình, có cả xét nghiệm tận nhà, không mất thời gian.”',
-      name: 'Trần Mai',
-      location: 'Hà Nội',
-      avatar: 'https://randomuser.me/api/portraits/women/44.jpg',
+        '“Tôi mua máy xông mũi họng cho con, chạy êm, hơi mịn và đều. Bé hợp tác hơn hẳn, không còn sợ mỗi lần phải xông nữa.”',
+      name: 'Lê Thu Trang',
+      location: 'Đà Nẵng',
+      avatar: 'https://randomuser.me/api/portraits/women/30.jpg',
     },
   ];
   const articles = [
     {
-      title:
-        'Nội soi dạ dày, đại tràng không đau tại Doctor Check có tốt không?',
-      image: articalPost,
+      title: 'Khách hàng đánh giá cao độ bền của máy đo huyết áp Omron',
+      image:
+        'https://product.hstatic.net/200000727141/product/100610698__7__bc676f375b4344b19b4997caa6f6a01a_master.jpg',
       highlight: true,
       summary:
-        'Bạn đang tìm kiếm địa chỉ nội soi dạ dày, đại tràng không đau? Tham khảo ngay Trung Tâm Nội Soi Tiêu Hóa Doctor Check trên GennovaX!',
+        'Nhiều khách hàng sau khi sử dụng máy đo huyết áp Omron cho biết sản phẩm có thiết kế chắc chắn, đo nhanh và chính xác.',
       detail:
-        'Doctor Check hiện là một trong những địa chỉ nội soi tiêu hóa uy tín, được nhiều người biết đến tại TPHCM. GennovaX đã có bài đánh giá khách quan về dịch vụ nội soi dạ dày, đại tràng không đau tại đây, giúp bạn có góc nhìn rõ ràng và đưa ra lựa chọn phù hợp ...',
+        'Máy đo huyết áp Omron được nhiều người dùng y tế tại nhà cũng như phòng khám tin tưởng. Trên GennovaX, khách hàng chia sẻ rằng thiết bị hoạt động ổn định, pin lâu, màn hình dễ quan sát và có chế độ lưu kết quả tiện lợi. Đây là lựa chọn phổ biến cho gia đình muốn theo dõi sức khỏe hằng ngày.',
     },
     {
-      title:
-        'Nội soi dạ dày, đại tràng không đau tại Doctor Check có tốt không?',
-      image: articalPost,
+      title: 'Cảm nhận về nhiệt kế điện tử Microlife từ người dùng',
+      image:
+        'https://product.hstatic.net/200000727141/product/100610698__7__bc676f375b4344b19b4997caa6f6a01a_master.jpg',
       summary:
-        'Bạn đang tìm kiếm địa chỉ nội soi dạ dày, đại tràng không đau? Tham khảo ngay Trung Tâm Nội Soi Tiêu Hóa Doctor Check trên GennovaX!',
+        'Người dùng nhận xét nhiệt kế Microlife đo nhanh, tiện lợi, phù hợp với cả trẻ nhỏ và người lớn.',
     },
     {
-      title:
-        'Nội soi dạ dày, đại tràng không đau tại Doctor Check có tốt không?',
-      image: articalPost,
+      title: 'Người bệnh chia sẻ trải nghiệm sử dụng máy xông khí dung',
+      image:
+        'https://product.hstatic.net/200000727141/product/100610698__7__bc676f375b4344b19b4997caa6f6a01a_master.jpg',
       summary:
-        'Bạn đang tìm kiếm địa chỉ nội soi dạ dày, đại tràng không đau? Tham khảo ngay Trung Tâm Nội Soi Tiêu Hóa Doctor Check trên GennovaX!',
+        'Máy xông khí dung được đánh giá là hỗ trợ hiệu quả cho bệnh nhân hô hấp, dễ vệ sinh và sử dụng tại nhà.',
     },
     {
-      title:
-        'Nội soi dạ dày, đại tràng không đau tại Doctor Check có tốt không?',
-      image: articalPost,
+      title: 'Khách hàng nói gì về gối y tế chỉnh hình cổ?',
+      image:
+        'https://product.hstatic.net/200000727141/product/100610698__7__bc676f375b4344b19b4997caa6f6a01a_master.jpg',
       summary:
-        'Bạn đang tìm kiếm địa chỉ nội soi dạ dày, đại tràng không đau? Tham khảo ngay Trung Tâm Nội Soi Tiêu Hóa Doctor Check trên GennovaX!',
+        'Nhiều phản hồi tích cực cho rằng gối chỉnh hình giúp giảm đau mỏi cổ vai gáy, hỗ trợ giấc ngủ sâu hơn.',
     },
   ];
+
   const bannerImages = [
     'https://royalmed.com.vn/wp-content/uploads/2025/03/banner-y-te-1-1.jpg',
     'https://royalmed.com.vn/wp-content/uploads/2025/03/banner-y-te-2.1.jpg',
@@ -645,8 +645,14 @@ const HomePageProduct = () => {
                         <p
                           style={{
                             margin: '16px 0',
-                            fontSize: 12,
-                            lineHeight: 1.2,
+                            fontSize: 13,
+                            lineHeight: 1.4,
+                            display: '-webkit-box',
+                            WebkitLineClamp: 4, // Giữ cố định 4 dòng
+                            WebkitBoxOrient: 'vertical',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            height: '6em', // 4 dòng * lineHeight (1.2 ~ 1.4)
                           }}
                         >
                           {fb.content}
@@ -674,132 +680,7 @@ const HomePageProduct = () => {
                   ))}
                 </Row>
               </div>
-              <div
-                style={{
-                  width: '100%',
-                  height: 600,
-                  padding: '30px 60px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  maxWidth: 1300,
-                  backgroundColor: 'white',
-                  margin: '0 auto',
-                  borderRadius: 40,
-                  marginBottom: 30,
-                }}
-              >
-                <Title
-                  level={3}
-                  style={{
-                    textAlign: 'center',
-                    color: '#1c3380',
-                    marginBottom: 30,
-                    fontSize: 24,
-                    fontWeight: 700,
-                  }}
-                >
-                  TIN TỨC Y TẾ
-                </Title>
-                <Row gutter={24}>
-                  {/* Bài viết nổi bật bên trái */}
-                  <Col span={10}>
-                    <Card
-                      style={{
-                        borderRadius: 30,
-                        boxShadow: '0 4px 16px rgba(0, 0, 0, 0.2)',
-                        height: '100%',
-                      }}
-                      bodyStyle={{ padding: 16 }}
-                    >
-                      <img
-                        src={articles[0].image}
-                        alt="news"
-                        style={{
-                          width: '100%',
-                          height: 200,
-                          objectFit: 'cover',
-                          borderRadius: 8,
-                          marginBottom: 16,
-                        }}
-                      />
-                      <Title level={5} style={{ fontWeight: 600 }}>
-                        {articles[0].title}
-                      </Title>
-                      <div
-                        style={{
-                          height: 2,
-                          width: 40,
-                          backgroundColor: '#b33030',
-                          margin: '8px 0',
-                        }}
-                      ></div>
-                      <Paragraph
-                        italic
-                        style={{ fontSize: 14, marginBottom: 8, color: '#444' }}
-                      >
-                        {articles[0].summary}
-                      </Paragraph>
-                      <Paragraph style={{ fontSize: 14, color: '#444' }}>
-                        {articles[0].detail}
-                      </Paragraph>
-                    </Card>
-                  </Col>
 
-                  {/* Danh sách bài viết bên phải */}
-                  <Col span={14}>
-                    <div
-                      style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: 20,
-                        height: '100%',
-                        justifyContent: 'space-around',
-                      }}
-                    >
-                      {articles.slice(1).map((item, index) => (
-                        <Card
-                          key={index}
-                          style={{
-                            borderRadius: 30,
-                            boxShadow: '0 6px 20px rgba(0,0,0,0.2)',
-                          }}
-                          bodyStyle={{ display: 'flex', gap: 16, padding: 16 }}
-                        >
-                          <img
-                            src={item.image}
-                            alt="news"
-                            style={{
-                              width: 140,
-                              height: 90,
-                              objectFit: 'cover',
-                              borderRadius: 10,
-                            }}
-                          />
-                          <div>
-                            <Text strong style={{ fontSize: 15 }}>
-                              {item.title}
-                            </Text>
-                            <div
-                              style={{
-                                height: 2,
-                                width: 40,
-                                backgroundColor: '#b33030',
-                                margin: '8px 0',
-                              }}
-                            ></div>
-                            <Text
-                              italic
-                              style={{ fontSize: 13, color: '#444' }}
-                            >
-                              {item.summary}
-                            </Text>
-                          </div>
-                        </Card>
-                      ))}
-                    </div>
-                  </Col>
-                </Row>
-              </div>
               <div
                 style={{
                   // marginTop: 30,
@@ -1239,7 +1120,14 @@ const HomePageProduct = () => {
                                   fontSize: 32,
                                   cursor: 'pointer',
                                 }}
-                                onClick={() => navigate('/product')}
+                                onClick={() => {
+                                  const category = item.title;
+                                  const encodedCategory =
+                                    encodeURIComponent(category);
+                                  navigate(
+                                    `/san-pham?danhmuc=${encodedCategory}`
+                                  );
+                                }}
                               >
                                 <img
                                   src={item.image}

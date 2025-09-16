@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
 import { Layout, Spin } from 'antd';
-import ProductDetailPage from './productdetail';
-import ShopeeProductCardMobile from './productcardMobile';
-import axiosClient from '../../api/apiConfig';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axiosClient from '../../api/apiConfig';
+import ShopeeProductCardMobile from './productcardMobile';
+import ProductDetailPage from './productdetail';
 
 const { Content } = Layout;
 
@@ -42,7 +42,7 @@ const AllProductContentMobile2 = ({ productsCate }) => {
   }, [productsCate]);
 
   return (
-    <Layout style={{ backgroundColor: '#f5f5f5', minHeight: 300 }}>
+    <Layout style={{ backgroundColor: '#f5f5f5', minHeight: 900 }}>
       <Content style={{ padding: '10px' }}>
         {selectedProduct ? (
           <ProductDetailPage

@@ -5,12 +5,15 @@ import {
   DollarOutlined,
   EnvironmentOutlined,
   StarFilled,
+  TeamOutlined,
   UserOutlined,
 } from '@ant-design/icons';
 import { Avatar, Card, Carousel, Col, Divider, Row, Typography } from 'antd';
 import { useEffect, useState } from 'react';
-import { FaQuoteLeft } from 'react-icons/fa';
+import { FaQuoteLeft, FaUser } from 'react-icons/fa';
+import { LuMessageSquareMore } from 'react-icons/lu';
 import { RxCaretLeft, RxCaretRight } from 'react-icons/rx';
+import { SiTicktick } from 'react-icons/si';
 import { useMediaQuery } from 'react-responsive';
 import { useNavigate } from 'react-router-dom';
 import axiosClient from '../../api/apiConfig';
@@ -48,7 +51,7 @@ const clinicList = [
     name: 'Trung tâm xét nghiệm GoLAB Hà Đông',
     address: ' Số 12 Trần Phú, Quận Hà Đông, Hà Nội',
     rating: 5,
-    logo: imagehoptac1,
+    logo: 'https://edeninterior.vn/wp-content/uploads/2025/06/thiet-ke-logo-phong-kham-28.jpg',
     verified: true,
     id: 'golab-hadong',
   },
@@ -56,7 +59,7 @@ const clinicList = [
     name: 'Phòng xét nghiệm GoLAB Ba Đình',
     address: 'Số 10 Nguyễn Thái Học, Ba Đình, Hà Nội',
     rating: 5,
-    logo: imagehoptac1,
+    logo: 'https://edeninterior.vn/wp-content/uploads/2025/06/thiet-ke-logo-phong-kham-24.jpg',
     verified: true,
     id: 'golab-badinh',
   },
@@ -64,7 +67,7 @@ const clinicList = [
     name: 'Phòng xét nghiệm GoLab Vĩnh Yên',
     address: 'Đinh Tiên Hoàng, Khai Quang, Vĩnh Yên, Vĩnh Phúc, Việt Nam',
     rating: 5,
-    logo: imagehoptac1,
+    logo: 'https://edeninterior.vn/wp-content/uploads/2025/06/thiet-ke-logo-phong-kham-4.jpg',
     verified: true,
     id: 'golab-vinhyen',
   },
@@ -73,7 +76,7 @@ const clinicList = [
     address:
       'Số 83 Cù Chính Lan, phường Đồng Tiến, TP Hòa Bỉnh,  Tỉnh Hòa Bình, Hòa Bình',
     rating: 5,
-    logo: imagehoptac1,
+    logo: 'https://edeninterior.vn/wp-content/uploads/2025/06/thiet-ke-logo-phong-kham-10.jpg',
     verified: true,
     id: 'golab-hoabinh',
   },
@@ -89,8 +92,8 @@ const serviceList = [
   {
     name: 'Xét nghiệm huyết thống cha - con',
     image:
-      'https://medpro.vn/_next/image?url=https%3A%2F%2Fcdn.medpro.vn%2Fprod-partner%2Fcce223da-f510-40d2-9d96-21fcac5d4bd8-tiaaam_ngaaaa_-_banner_section_-_277x150_px_.png&w=640&q=75',
-    clinic: 'Trung tâm nội soi tiêu hóa Doctor Check',
+      'https://i-suckhoe.vnecdn.net/2016/03/11/Xet-nghiem-adn-truy-nhan-cha-c-1132-7786-1457689550.jpg',
+    clinic: 'Trung tâm xét nghiệm GoLAB Hà Đông',
     verified: true,
     price: 3000,
     id: 'ADN01',
@@ -98,8 +101,8 @@ const serviceList = [
   {
     name: 'Kiểm tra chức năng gan',
     image:
-      'https://medpro.vn/_next/image?url=https%3A%2F%2Fcdn.medpro.vn%2Fprod-partner%2Fcce223da-f510-40d2-9d96-21fcac5d4bd8-tiaaam_ngaaaa_-_banner_section_-_277x150_px_.png&w=640&q=75',
-    clinic: 'Trung tâm nội soi tiêu hóa Doctor Check',
+      'https://cdn.diag.vn/2024/08/9f0ddb90-kiem-tra-chuc-nang-gan-can-thuc-hien-nhieu-xet-nghiem-mau..jpg',
+    clinic: 'Trung tâm xét nghiệm GoLAB Hà Đông',
     verified: true,
     price: 3000,
     id: 'SBH01',
@@ -107,8 +110,8 @@ const serviceList = [
   {
     name: 'Sàng lọc trước sinh không xâm lấn',
     image:
-      'https://medpro.vn/_next/image?url=https%3A%2F%2Fcdn.medpro.vn%2Fprod-partner%2Fcce223da-f510-40d2-9d96-21fcac5d4bd8-tiaaam_ngaaaa_-_banner_section_-_277x150_px_.png&w=640&q=75',
-    clinic: 'Trung tâm nội soi tiêu hóa Doctor Check',
+      'https://tasscare.com/wp-content/uploads/2022/03/xet-nghiem-sang-loc-truoc-sinh-nipt.jpg',
+    clinic: 'Phòng xét nghiệm GoLAB Ba Đình',
     verified: true,
     price: 3000,
     id: 'NIP01',
@@ -116,8 +119,8 @@ const serviceList = [
   {
     name: 'Tiêm ngừa viêm gan B',
     image:
-      'https://medpro.vn/_next/image?url=https%3A%2F%2Fcdn.medpro.vn%2Fprod-partner%2Fcce223da-f510-40d2-9d96-21fcac5d4bd8-tiaaam_ngaaaa_-_banner_section_-_277x150_px_.png&w=640&q=75',
-    clinic: 'Trung tâm nội soi tiêu hóa Doctor Check',
+      'https://cdn.tiemchunglongchau.com.vn/unsafe/2560x0/filters:quality(90)/tiem_ngua_viem_gan_b_co_uong_ruou_bia_duoc_khong_1_a6ce8d1e96.jpg',
+    clinic: 'Phòng xét nghiệm GoLAB Ba Đình',
     verified: true,
     price: 300,
   },
@@ -125,7 +128,7 @@ const serviceList = [
     name: 'Tiêm ngừa viêm gan B',
     image:
       'https://medpro.vn/_next/image?url=https%3A%2F%2Fcdn.medpro.vn%2Fprod-partner%2Fcce223da-f510-40d2-9d96-21fcac5d4bd8-tiaaam_ngaaaa_-_banner_section_-_277x150_px_.png&w=640&q=75',
-    clinic: 'Trung tâm nội soi tiêu hóa Doctor Check',
+    clinic: 'Phòng xét nghiệm GoLAB Ba Đình',
     verified: true,
     price: 300,
   },
@@ -143,6 +146,87 @@ const newsList = [
     title: 'Chăm sóc sức khỏe người cao tuổi',
     image:
       'https://images2.thanhnien.vn/zoom/686_429/528068263637045248/2025/5/21/y-te-1-17477964568891106942355-5-0-805-1280-crop-17477965632561903370553.jpg',
+  },
+];
+const feedbacks = [
+  {
+    content:
+      '“Tôi đăng ký gói xét nghiệm máu tổng quát, nhân viên đến đúng giờ, thao tác nhanh và rất nhẹ nhàng. Kết quả có trong ngày nên theo dõi sức khỏe tiện lợi.”',
+    name: 'Nguyễn Văn An',
+    location: 'Hà Nội',
+    avatar: 'https://randomuser.me/api/portraits/men/14.jpg',
+  },
+  {
+    content:
+      '“Xét nghiệm tầm soát mỡ máu cho bố mẹ, quy trình gọn gàng, không phải chờ đợi. Có cả tư vấn bác sĩ sau khi có kết quả nên gia đình rất yên tâm.”',
+    name: 'Trần Thị Thu',
+    location: 'Đà Nẵng',
+    avatar: 'https://randomuser.me/api/portraits/women/28.jpg',
+  },
+  {
+    content:
+      '“Đặt lịch xét nghiệm tiểu đường online rất nhanh, chỉ vài phút là xác nhận. Nhân viên tận tình, có kết quả gửi qua ứng dụng nên dễ theo dõi lâu dài.”',
+    name: 'Lê Quốc Hùng',
+    location: 'TP. Hồ Chí Minh',
+    avatar: 'https://randomuser.me/api/portraits/men/36.jpg',
+  },
+];
+const doctorList = [
+  {
+    id: 1,
+    name: 'BS CKI. Vũ Thị Hà',
+    specialty: 'Mắt',
+    price: 150000,
+    rating: 4.7,
+    visits: 30,
+    role: 'Bác sĩ Chuyên Khoa',
+    image:
+      'https://hthaostudio.com/wp-content/uploads/2022/08/Anh-profile-bac-si-min.jpg',
+  },
+  {
+    id: 2,
+    name: 'Ths BS. Lê Hoàng Thiên',
+    specialty: 'Nội tổng quát',
+    price: 149000,
+    rating: 4.8,
+    visits: 40,
+    role: 'Bác sĩ Chuyên Khoa',
+    image:
+      'https://hthaostudio.com/wp-content/uploads/2022/08/Anh-profile-bac-si-min.jpg',
+  },
+  {
+    id: 3,
+    name: 'BS CKI. Đỗ Đăng Khoa',
+    specialty: 'Tim mạch can thiệp',
+    price: 200000,
+    rating: 4.4,
+    visits: 75,
+    role: 'Bác sĩ Chuyên Khoa',
+    image:
+      'https://hthaostudio.com/wp-content/uploads/2022/08/Anh-profile-bac-si-min.jpg',
+  },
+  {
+    id: 4,
+    name: 'BS CKI. Nguyễn Phúc Thiện',
+    specialty: 'Nội tim mạch',
+    price: 0,
+    priceMax: 300000,
+    rating: 4.9,
+    visits: 143,
+    role: 'Bác sĩ Chuyên Khoa',
+    image:
+      'https://hthaostudio.com/wp-content/uploads/2022/08/Anh-profile-bac-si-min.jpg',
+  },
+  {
+    id: 5,
+    name: 'Ths BS. Trần Thị Lan',
+    specialty: 'Tai Mũi Họng',
+    price: 180000,
+    rating: 4.7,
+    visits: 89,
+    role: 'Bác sĩ Chuyên Khoa',
+    image:
+      'https://hthaostudio.com/wp-content/uploads/2022/08/Anh-profile-bac-si-min.jpg',
   },
 ];
 
@@ -519,7 +603,13 @@ const ContentComponent = () => {
                     image: dichvu,
                   },
                 ].map((item, index) => (
-                  <div key={index} className="service-card">
+                  <div
+                    key={index}
+                    className="service-card"
+                    onClick={() => {
+                      navigate('/y-te/danh-sach-dich-vu');
+                    }}
+                  >
                     <img
                       src={item.image}
                       alt={item.title}
@@ -566,43 +656,45 @@ const ContentComponent = () => {
             <div className="service-cards-container" id="carousel1">
               {[
                 {
-                  title: 'Xét nghiệm tổng quát',
+                  title: 'Phòng khám Đa khoa Quốc tế Thu Cúc',
                   image: imagehoptac1,
                 },
                 {
-                  title: 'Xét nghiệm máu',
+                  title: 'Phòng khám Đa khoa Medlatec',
                   image: imagehoptac2,
                 },
                 {
-                  title: 'Xét nghiệm ADN huyết thống',
+                  title: 'Phòng khám Đa khoa Hồng Ngọc',
                   image: imagehoptac3,
                 },
                 {
-                  title: 'Xét nghiệm dị tật thai nhi (NIPT)',
+                  title: 'Trung tâm Y tế Vinmec Times City',
+                  image:
+                    'https://medpro.vn/_next/image?url=https%3A%2F%2Fbo-api.medpro.com.vn%2Fstatic%2Fimages%2Fumc2%2Fweb%2Flogo.png&w=128&q=75',
+                },
+                {
+                  title: 'Phòng khám Đa khoa Bạch Mai (Hà Nội)',
+                  image:
+                    'https://medpro.vn/_next/image?url=https%3A%2F%2Fbo-api.medpro.com.vn%3A5000%2Fstatic%2Fimages%2Fbinhthanhhcm%2Fweb%2Flogo.png%3Ft%3DTue%2520Sep%252013%25202022%252010%3A08%3A08%2520GMT%2B0700%2520(Indochina%2520Time)&w=128&q=75',
+                },
+                {
+                  title: 'Trung tâm Y khoa Family Medical Practice Hà Nội',
+                  image: imagehoptac3,
+                },
+                {
+                  title: 'Bệnh viện Đa khoa Quốc tế Hải Phòng',
                   image: imagehoptac1,
                 },
                 {
-                  title: 'Xét nghiệm bệnh lây qua đường tình dục',
+                  title: 'Phòng khám Đa khoa Hoàn Mỹ Bắc Ninh',
                   image: imagehoptac2,
                 },
                 {
-                  title: 'Xét nghiệm miễn dịch',
+                  title: 'Trung tâm Xét nghiệm Quảng Ninh',
                   image: imagehoptac3,
                 },
                 {
-                  title: 'Xét nghiệm COVID-19 PCR',
-                  image: imagehoptac1,
-                },
-                {
-                  title: 'Xét nghiệm COVID-19 PCR',
-                  image: imagehoptac1,
-                },
-                {
-                  title: 'Xét nghiệm COVID-19 PCR',
-                  image: imagehoptac1,
-                },
-                {
-                  title: 'Xét nghiệm COVID-19 PCR',
+                  title: 'Phòng khám Đa khoa Hưng Thịnh (Hà Nội)',
                   image: imagehoptac1,
                 },
               ].map((item, index) => (
@@ -685,6 +777,7 @@ const ContentComponent = () => {
               Cơ sở y tế được yêu thích
             </Title>
             <div
+              className="scroll-container"
               style={{
                 width: '80%',
                 margin: '0 auto',
@@ -822,6 +915,7 @@ const ContentComponent = () => {
             </Title>
 
             <div
+              className="scroll-container"
               style={{
                 width: '80%',
                 margin: '0 auto',
@@ -858,7 +952,8 @@ const ContentComponent = () => {
                           alt={service.name}
                           style={{
                             width: '100%',
-                            objectFit: 'contain',
+                            height: 170,
+                            objectFit: 'cover',
                             borderTopLeftRadius: 16,
                             borderTopRightRadius: 16,
                           }}
@@ -943,6 +1038,165 @@ const ContentComponent = () => {
               </Row>
             </div>
           </div>
+          <div
+            style={{
+              background: `linear-gradient(
+          to bottom,
+          white 0px,
+          #e8f8fd 50px,
+          #e8f8fd calc(100% - 50px),
+          white 100%
+        )`,
+              paddingBottom: 40,
+            }}
+          >
+            <Title
+              level={2}
+              style={{
+                margin: '60px 0 10px',
+                color: '#065c8c',
+                textAlign: 'center',
+                fontWeight: 700,
+              }}
+            >
+              Danh sách bác sỹ được đề xuất
+            </Title>
+
+            <div
+              className="scroll-container"
+              style={{
+                width: '80%',
+                margin: '0 auto',
+                overflowX: 'auto',
+                padding: '40px 0',
+              }}
+            >
+              <Row
+                gutter={[32, 32]}
+                wrap={false}
+                style={{ minWidth: 'max-content' }}
+              >
+                {doctorList.map((doctor) => (
+                  <Col key={doctor.id} style={{ width: 310 }}>
+                    <Card
+                      hoverable
+                      bodyStyle={{ padding: 0 }}
+                      style={{
+                        borderRadius: 16,
+                        boxShadow: '0 4px 12px rgba(0, 191, 255, 0.3)',
+                        textAlign: 'start',
+                      }}
+                    >
+                      <div
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                          marginTop: 16,
+                        }}
+                      >
+                        <img
+                          src={doctor.image}
+                          alt={doctor.name}
+                          style={{
+                            width: 120,
+                            height: 120,
+                            borderRadius: '50%',
+                            objectFit: 'cover',
+                          }}
+                        />
+                      </div>
+
+                      <div style={{ padding: '16px' }}>
+                        <div
+                          style={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            marginBottom: 8,
+                            fontSize: 15,
+                            color: '#003553',
+                          }}
+                        >
+                          <span>
+                            Đánh giá: {doctor.rating}{' '}
+                            <StarFilled style={{ color: '#facc14ff' }} />
+                          </span>
+                          <span>
+                            Lượt khám: {doctor.visits}{' '}
+                            <FaUser
+                              style={{ marginLeft: 4, color: '#facc14ff' }}
+                            />
+                          </span>
+                        </div>
+
+                        <Title
+                          level={4}
+                          style={{ margin: '4px 0', fontSize: 19 }}
+                        >
+                          {doctor.name}
+                        </Title>
+
+                        <p
+                          style={{
+                            marginBottom: 6,
+                            fontSize: 17,
+                            color: '#003553',
+                          }}
+                        >
+                          <TeamOutlined style={{ marginRight: 6 }} />
+                          {doctor.specialty}
+                        </p>
+
+                        <p
+                          style={{
+                            marginBottom: 6,
+                            fontSize: 17,
+                            color: '#003553',
+                          }}
+                        >
+                          <DollarOutlined style={{ marginRight: 6 }} />
+                          {doctor.priceMax
+                            ? `${doctor.price}đ - ${doctor.priceMax}đ`
+                            : `${doctor.price.toLocaleString()}đ`}
+                        </p>
+
+                        <p
+                          style={{
+                            marginBottom: 12,
+                            fontSize: 17,
+                            color: '#003553',
+                          }}
+                        >
+                          {doctor.role}
+                        </p>
+
+                        <button
+                          style={{
+                            backgroundColor: '#00bfff',
+                            color: 'white',
+                            border: 'none',
+                            padding: '6px 8px',
+                            borderRadius: 8,
+                            width: '100%',
+                            height: 36,
+                            cursor: 'pointer',
+                            fontWeight: 'bold',
+                            fontSize: 16,
+                          }}
+                          onClick={() =>
+                            navigate(
+                              `/y-te/dat-lich-tu-van?doctor=${doctor.id}`
+                            )
+                          }
+                        >
+                          Tư vấn ngay
+                        </button>
+                      </div>
+                    </Card>
+                  </Col>
+                ))}
+              </Row>
+            </div>
+          </div>
 
           <div
             style={{
@@ -984,7 +1238,7 @@ const ContentComponent = () => {
                 }}
               >
                 <audio
-                  src="http://res.cloudinary.com/dh3rdryux/video/upload/v1755654842/kao5bk7olka8a7p2ym67.mp3"
+                  src="https://res.cloudinary.com/dh3rdryux/video/upload/v1756357363/udrxrrusumrrvg51xixt.mp3"
                   controls
                   style={{
                     width: '100%',
@@ -1022,7 +1276,7 @@ const ContentComponent = () => {
                 style={{ height: 40, cursor: 'pointer' }}
                 onClick={() => {
                   window.open(
-                    'https://expo.dev/accounts/bkc_duckien/projects/bio-app-frontent/builds/93d56238-ba85-44c0-ae18-3d10a6080c99',
+                    'https://expo.dev/accounts/bkc_duckien/projects/bio-app-frontent/builds/0d8138ea-3da8-4107-8acb-30db9a6463ee',
                     '_blank'
                   );
                 }}
@@ -1266,18 +1520,203 @@ const ContentComponent = () => {
               </Col>
             </Row>
           </div>
-          <div style={{ marginTop: 100 }}>
-            <iframe
-              width="900"
-              height="500"
-              src="https://www.youtube.com/embed/qb9kSd-e8_s"
-              title="Tập 1: Làm thế nào để cả nhà cùng sống vui - sống khỏe? | PGS.TS.BS Nguyễn Văn Trí | Video AloBacsi"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerpolicy="strict-origin-when-cross-origin"
-              allowfullscreen
-              style={{ display: 'block', margin: '40px auto' }}
-            ></iframe>
+          <div
+            style={{
+              height: 400,
+              padding: '30px 70px',
+              display: 'flex',
+              flexDirection: 'column',
+              maxWidth: 1000,
+              margin: '0 auto',
+              marginTop: 30,
+            }}
+          >
+            <Title
+              level={3}
+              style={{
+                textAlign: 'center',
+                color: '#1c3380',
+                marginBottom: 32,
+                fontSize: 24,
+                fontWeight: 700,
+              }}
+            >
+              CẢM NHẬN TỪ KHÁCH HÀNG
+            </Title>
+
+            <Row gutter={24} justify="center">
+              {feedbacks.map((fb, index) => (
+                <Col key={index} xs={24} sm={12} md={8}>
+                  <Card
+                    style={{
+                      borderRadius: 10,
+                      minHeight: 200,
+                      boxShadow: '0 6px 16px rgba(0, 0, 0, 0.08)',
+                    }}
+                  >
+                    <LuMessageSquareMore
+                      style={{ fontSize: 30, color: '#999' }}
+                    />
+                    <p
+                      style={{
+                        margin: '16px 0',
+                        fontSize: 12,
+                        lineHeight: 1.2,
+                      }}
+                    >
+                      {fb.content}
+                    </p>
+
+                    <div
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        marginTop: 16,
+                      }}
+                    >
+                      <Avatar src={fb.avatar} size={40} />
+                      <div style={{ marginLeft: 12 }}>
+                        <Text style={{ fontWeight: 600, color: '#1c3380' }}>
+                          {fb.name}
+                        </Text>
+                        <div style={{ fontSize: 13, color: '#888' }}>
+                          {fb.location}
+                        </div>
+                      </div>
+                    </div>
+                  </Card>
+                </Col>
+              ))}
+            </Row>
+          </div>
+
+          <div
+            style={{
+              // marginTop: 30,
+              marginBottom: 30,
+              width: '100%',
+              height: 450,
+              padding: '30px 60px',
+              display: 'flex',
+              flexDirection: 'column',
+              maxWidth: 1300,
+              backgroundColor: 'white',
+              margin: '0 auto',
+            }}
+          >
+            <Row gutter={32} align="middle" style={{ height: '100%' }}>
+              {/* Ảnh bên trái */}
+              <Col span={10}>
+                <img
+                  src="https://nld.mediacdn.vn/2020/3/23/89963885102126374520495725234434303294701568o-15849685424641174163940.jpg"
+                  alt="Doctors"
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    borderRadius: 32,
+                  }}
+                />
+              </Col>
+
+              {/* Nội dung bên phải */}
+              <Col
+                span={14}
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                  height: '100%',
+                  padding: '20px 20px',
+                }}
+              >
+                {/* Tiêu đề */}
+                <div>
+                  <Title
+                    level={3}
+                    style={{
+                      color: '#1c3380',
+                      fontWeight: 700,
+                      marginBottom: 8,
+                    }}
+                  >
+                    Về GenApp
+                  </Title>
+                  <Title
+                    level={4}
+                    style={{
+                      color: '#4d8dde',
+                      marginTop: 0,
+                      fontWeight: 500,
+                    }}
+                  >
+                    Nền tảng kết nối hệ thống Y Tế toàn quốc dành cho người Việt
+                    Nam
+                  </Title>
+                </div>
+
+                {/* Đoạn giới thiệu */}
+                <Paragraph style={{ fontSize: 17 }}>
+                  Sứ mệnh của chúng tôi là giúp người Việt tiếp cận các dịch vụ
+                  Y tế{' '}
+                  <strong>
+                    nhanh chóng, tiện lợi với chất lượng dịch vụ cao nhất
+                  </strong>
+                </Paragraph>
+
+                {/* Danh sách tính năng */}
+                <div>
+                  <Paragraph style={{ fontSize: 17 }}>
+                    <SiTicktick
+                      style={{
+                        marginRight: 10,
+                        color: '#4d8dde',
+                        fontSize: 20,
+                      }}
+                    />
+                    Thanh toán tiện lợi ngay trên nền tảng
+                  </Paragraph>
+
+                  <Paragraph style={{ fontSize: 17 }}>
+                    <SiTicktick
+                      style={{
+                        marginRight: 10,
+                        color: '#4d8dde',
+                        fontSize: 20,
+                      }}
+                    />
+                    Đối tác Y tế Toàn quốc (Bệnh viện, bác sĩ, nhà thuốc, ...)
+                  </Paragraph>
+
+                  <Paragraph style={{ fontSize: 17 }}>
+                    <SiTicktick
+                      style={{
+                        marginRight: 10,
+                        color: '#4d8dde',
+                        fontSize: 20,
+                      }}
+                    />
+                    Quản lý Dữ liệu người bệnh trực tuyến
+                  </Paragraph>
+                </div>
+
+                {/* Link xem thêm */}
+                <Paragraph style={{ marginBottom: 0 }}>
+                  <a
+                    href="http://gennovax.vn"
+                    style={{
+                      fontWeight: 600,
+                      color: '#1c3380',
+                      textDecoration: 'underline',
+                      fontSize: 16,
+                    }}
+                    target="_blank"
+                  >
+                    Xem thêm về GenApp &gt;&gt;
+                  </a>
+                </Paragraph>
+              </Col>
+            </Row>
           </div>
         </div>
       </>
@@ -1639,7 +2078,13 @@ const ContentComponent = () => {
                     image: dichvu,
                   },
                 ].map((item, index) => (
-                  <div key={index} className="service-card">
+                  <div
+                    key={index}
+                    className="service-card"
+                    onClick={() => {
+                      navigate('/y-te/danh-sach-dich-vu');
+                    }}
+                  >
                     <img
                       src={item.image}
                       alt={item.title}
@@ -1681,43 +2126,43 @@ const ContentComponent = () => {
             >
               {[
                 {
-                  title: 'Xét nghiệm tổng quát',
+                  title: 'Phòng khám Đa khoa Quốc tế Thu Cúc',
                   image: imagehoptac1,
                 },
                 {
-                  title: 'Xét nghiệm máu',
+                  title: 'Phòng khám Đa khoa Medlatec',
                   image: imagehoptac2,
                 },
                 {
-                  title: 'Xét nghiệm ADN huyết thống',
+                  title: 'Phòng khám Đa khoa Hồng Ngọc',
                   image: imagehoptac3,
                 },
                 {
-                  title: 'Xét nghiệm dị tật thai nhi (NIPT)',
+                  title: 'Trung tâm Y tế Vinmec Times City',
                   image: imagehoptac1,
                 },
                 {
-                  title: 'Xét nghiệm bệnh lây qua đường tình dục',
+                  title: 'Phòng khám Đa khoa Bạch Mai (Hà Nội)',
                   image: imagehoptac2,
                 },
                 {
-                  title: 'Xét nghiệm miễn dịch',
+                  title: 'Trung tâm Y khoa Family Medical Practice Hà Nội',
                   image: imagehoptac3,
                 },
                 {
-                  title: 'Xét nghiệm COVID-19 PCR',
+                  title: 'Bệnh viện Đa khoa Quốc tế Hải Phòng',
                   image: imagehoptac1,
                 },
                 {
-                  title: 'Xét nghiệm COVID-19 PCR',
-                  image: imagehoptac1,
+                  title: 'Phòng khám Đa khoa Hoàn Mỹ Bắc Ninh',
+                  image: imagehoptac2,
                 },
                 {
-                  title: 'Xét nghiệm COVID-19 PCR',
-                  image: imagehoptac1,
+                  title: 'Trung tâm Xét nghiệm Quảng Ninh',
+                  image: imagehoptac3,
                 },
                 {
-                  title: 'Xét nghiệm COVID-19 PCR',
+                  title: 'Phòng khám Đa khoa Hưng Thịnh (Hà Nội)',
                   image: imagehoptac1,
                 },
               ].map((item, index) => (
@@ -1740,7 +2185,7 @@ const ContentComponent = () => {
                       textAlign: 'center',
                       marginTop: 10,
                       color: '#003553',
-                      fontSize: 13,
+                      fontSize: 12,
                     }}
                   >
                     {item.title}
@@ -1977,8 +2422,8 @@ const ContentComponent = () => {
                           alt={service.name}
                           style={{
                             width: '100%',
-                            // height: 60,
-                            objectFit: 'contain',
+                            height: 100,
+                            objectFit: 'cover',
                             borderTopLeftRadius: 16,
                             borderTopRightRadius: 16,
                           }}
@@ -2083,7 +2528,7 @@ const ContentComponent = () => {
               }}
             >
               <audio
-                src="http://res.cloudinary.com/dh3rdryux/video/upload/v1755654842/kao5bk7olka8a7p2ym67.mp3"
+                src="https://res.cloudinary.com/dh3rdryux/video/upload/v1756357363/udrxrrusumrrvg51xixt.mp3"
                 controls
                 style={{ width: '90%', display: 'block', margin: '0 auto' }}
               />
@@ -2126,7 +2571,7 @@ const ContentComponent = () => {
                 style={{ height: 45 }}
                 onClick={() => {
                   window.open(
-                    'https://expo.dev/accounts/bkc_duckien/projects/bio-app-frontent/builds/93d56238-ba85-44c0-ae18-3d10a6080c99',
+                    'https://expo.dev/accounts/bkc_duckien/projects/bio-app-frontent/builds/0d8138ea-3da8-4107-8acb-30db9a6463ee',
                     '_blank'
                   );
                 }}
@@ -2161,6 +2606,7 @@ const ContentComponent = () => {
               style={{
                 width: '90%',
                 margin: 'auto',
+                // marginBottom: 0,
                 padding: 16,
                 borderRadius: 16,
                 backgroundColor: '#f4f9fd',

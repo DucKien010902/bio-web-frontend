@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { Layout, Menu, Checkbox, Input, Button, Divider } from 'antd';
-import ProductDetailPage from './productdetail';
-import ShopeeProductCard from './productcard';
-import axiosClient from '../../api/apiConfig';
+import { Layout } from 'antd';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axiosClient from '../../api/apiConfig';
+import ShopeeProductCard from './productcard';
+import ProductDetailPage from './productdetail';
 const { Sider, Content } = Layout;
 
 const AllProductContent2 = () => {
@@ -22,8 +22,9 @@ const AllProductContent2 = () => {
     try {
       const res = await axiosClient.get('/product/getallproducts');
       setAllProducts(res.data);
+
       const top5Products = res.data
-        .sort((a, b) => b.pdCountSale - a.pdCountSale) // sắp xếp giảm dần
+        .sort((a, b) => b.pdVouncher - a.pdVouncher) // sắp xếp giảm dần theo pdVouncher
         .slice(0, 5); // lấy 5 sản phẩm đầu tiên
 
       setProducts(top5Products);

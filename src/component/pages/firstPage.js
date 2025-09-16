@@ -90,7 +90,7 @@ const FirstPage = () => {
                   marginRight: 8,
                 }}
               />
-              <span className="phone-number">0123 456 789</span>
+              <span className="phone-number">0936 654 456</span>
             </div>
             <div className="auth-links">
               <span

@@ -1,136 +1,254 @@
-import React from 'react';
-import { Layout, Row, Col, Typography, Space } from 'antd';
+import { Col, Divider, Layout, Row, Space, Typography } from 'antd';
+import { useMediaQuery } from 'react-responsive';
+import { useNavigate } from 'react-router-dom';
 
 const { Footer } = Layout;
-const { Title, Text } = Typography;
+const { Title, Text, Link } = Typography;
 
-const FooterSection = () => {
-  return (
-    <Footer
-      style={{
-        backgroundColor: '#2f4699',
-        color: '#fff',
-        padding: '24px',
-        paddingBottom: 150,
-      }}
-    >
-      <Row gutter={[16, 32]}>
-        {/* Cột thông tin liên hệ */}
-        <Col xs={24} md={9}>
-          <Title
-            level={2}
-            style={{ color: '#fff', fontFamily: 'cursive', marginBottom: 0 }}
-          >
-            GENAPP
-          </Title>
-          <Text style={{ color: '#fff', fontSize: 14 }}>
-            ĐÍCH ĐẾN CỦA NIỀM TIN
-          </Text>
-          <div style={{ marginTop: 16, fontSize: 13 }}>
-            <p>
-              <strong>Văn phòng:</strong> Số 26 Đoàn Thị Điểm, Quốc Tử Giám,
-              Đống Đa, HN
-            </p>
-            <p>
-              <strong>Điện thoại:</strong> 0968.694.777
-            </p>
-            <p>
-              <strong>Email:</strong> info@gennovax.vn
-            </p>
-            <p>
-              <strong>Fanpage:</strong> GennovaX
-            </p>
-          </div>
-        </Col>
+const FooterComponent = () => {
+  const isMobile = useMediaQuery({ maxWidth: 797 });
+  const isDesktop = useMediaQuery({ minWidth: 992 });
+  const navigate = useNavigate();
 
-        {/* Các danh mục chia theo nhóm 3 cột mỗi hàng trên tablet, 1 cột trên mobile */}
-        <Col xs={24} md={15}>
-          <Row gutter={[16, 24]}>
-            {[
-              {
-                title: 'Danh mục Y tế',
-                items: [
-                  'Dịch vụ y tế',
-                  'Khám chữa bệnh',
-                  'Xét nghiệm',
-                  'Tư vấn từ xa',
-                ],
-              },
-              {
-                title: 'Cơ sở Y tế',
-                items: [
-                  'Bệnh viện',
-                  'Phòng khám',
-                  'Nhà thuốc',
-                  'Trung tâm xét nghiệm',
-                ],
-              },
-              {
-                title: 'Hướng dẫn',
-                items: [
-                  'Đặt lịch khám',
-                  'Thanh toán',
-                  'Tải ứng dụng',
-                  'Liên hệ hỗ trợ',
-                ],
-              },
-              {
-                title: 'Liên hệ hợp tác',
-                items: [
-                  'Đăng ký cơ sở',
-                  'Chính sách đối tác',
-                  'Hợp tác truyền thông',
-                ],
-              },
-              {
-                title: 'Tin tức y tế',
-                items: [
-                  'Tin mới nhất',
-                  'Dinh dưỡng',
-                  'Sức khỏe tinh thần',
-                  'Covid-19',
-                ],
-              },
-              {
-                title: 'Về GennovaX',
-                items: [
-                  'Giới thiệu',
-                  'Điều khoản',
-                  'Chính sách bảo mật',
-                  'Quy định sử dụng',
-                ],
-              },
-            ].map((section, idx) => (
-              <Col xs={12} sm={8} md={8} key={idx}>
-                <Title level={5} style={{ color: '#fff', marginBottom: 12 }}>
-                  {section.title}
-                </Title>
-                <Space direction="vertical" size={10}>
-                  {section.items.map((item, i) => (
-                    <a
-                      key={i}
-                      href="http://gennovax.vn"
-                      style={{
-                        color: '#fff',
-                        fontSize: 13,
-                        textDecoration: 'none',
-                        cursor: 'pointer',
-                        display: 'block',
-                      }}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {item}
-                    </a>
-                  ))}
+  const DesktopLayOut = () => {
+    return (
+      <Footer style={{ backgroundColor: '#daf1f8ff', padding: '0px 0px 0' }}>
+        <Row gutter={[48, 32]} style={{ padding: 40 }}>
+          <Col xs={24} md={12} style={{ paddingLeft: 150 }}>
+            <Title
+              level={1}
+              style={{
+                color: '#178ee8',
+                marginBottom: 0,
+                fontSize: 80,
+                marginTop: 0,
+                fontFamily: 'cursive',
+              }}
+            >
+              GenApp
+            </Title>
+            <Text
+              style={{
+                fontSize: 25,
+                fontWeight: 300,
+                color: '#4da2e3',
+                margin: 0,
+                padding: 0,
+                fontFamily: 'cursive',
+              }}
+            >
+              Đặt khám nhanh
+            </Text>
+            <div style={{ marginTop: 16 }}>
+              <Text>
+                <strong>Địa chỉ:</strong> Tòa CT3, Ngõ 106 Hoàng Quốc Việt, Cổ
+                Nhuế, Cầu Giấy, Hà Nội
+              </Text>
+              <br />
+              <Text>
+                <strong>Website:</strong> https://genapp.vn
+              </Text>
+              <br />
+              <Text>
+                <strong>Email:</strong> cskh@genapp.vn
+              </Text>
+              <br />
+              <Text>
+                <strong>Điện thoại:</strong> 0936 654 456
+              </Text>
+            </div>
+          </Col>
+
+          <Col xs={24} md={12}>
+            <Row gutter={[32, 16]}>
+              <Col xs={24} sm={12} md={8}>
+                <Title level={5}>Dịch vụ xét nghiệm</Title>
+                <Space direction="vertical">
+                  <Link
+                    style={{ color: '#6ab0e6' }}
+                    onClick={() => navigate('/y-te/dat-lich-xet-nghiem')}
+                  >
+                    Đặt khám tại cơ sở
+                  </Link>
+                  <Link style={{ color: '#6ab0e6' }}>Lấy mẫu tại nhà</Link>
+                  <Link style={{ color: '#6ab0e6' }}>Tư vấn xét nghiệm</Link>
                 </Space>
               </Col>
-            ))}
-          </Row>
-        </Col>
-      </Row>
-    </Footer>
+
+              <Col xs={24} sm={12} md={16}>
+                <Title level={5}>Cơ sở xét nghiệm</Title>
+                <Space direction="vertical">
+                  <Link style={{ color: '#6ab0e6' }}>
+                    Phòng xét nghiệm GoLAB Ba Đình
+                  </Link>
+                  <Link style={{ color: '#6ab0e6' }}>
+                    Cơ sở xét nghiệm GoLAB Hải Phòng
+                  </Link>
+                  <Link style={{ color: '#6ab0e6' }}>
+                    Phòng xét nghiệm GoLAB Hòa Bình
+                  </Link>
+                  <Link style={{ color: '#6ab0e6' }}>
+                    Phòng xét nghiệm GoLAB Việt Trì
+                  </Link>
+                  <Link style={{ color: '#6ab0e6' }}>
+                    Phòng xét nghiệm GoLAB Hà Tĩnh
+                  </Link>
+                  <Link style={{ color: '#6ab0e6' }}>
+                    Lab xét nghiệm GenLAB Hồ Chí Minh
+                  </Link>
+                  <Link style={{ color: '#6ab0e6' }}>
+                    Lab xét nghiệm GenovaX Hà Nội 183 Trường Chinh
+                  </Link>
+                </Space>
+              </Col>
+            </Row>
+          </Col>
+        </Row>
+
+        <Divider style={{ marginTop: 40 }} />
+        <Row
+          justify="center"
+          align="middle"
+          style={{
+            padding: '0 8px',
+            backgroundColor: '#00b5f1',
+            height: 70,
+            textAlign: 'center',
+          }}
+        >
+          <Col>
+            <Text style={{ color: '#fff' }}>
+              <strong>
+                © 2025 - Bản quyền thuộc Công Ty Cổ Phần Truyền Thông Và Công
+                Nghệ GenTech
+              </strong>
+            </Text>
+          </Col>
+        </Row>
+      </Footer>
+    );
+  };
+
+  const MobileLayout = () => {
+    return (
+      <>
+        <Footer
+          style={{
+            backgroundColor: '#cfedf6ff',
+            padding: 20,
+          }}
+        >
+          <div style={{ textAlign: 'center' }}>
+            <Title
+              level={2}
+              style={{
+                color: '#178ee8',
+                marginBottom: 0,
+                fontFamily: 'cursive',
+              }}
+            >
+              GennovaX
+            </Title>
+            <Text
+              style={{
+                fontSize: 18,
+                fontWeight: 300,
+                color: '#4da2e3',
+                fontFamily: 'cursive',
+              }}
+            >
+              Đặt khám nhanh
+            </Text>
+          </div>
+
+          <div style={{ marginTop: 24 }}>
+            <Text>
+              <strong>Địa chỉ:</strong> 28 Thành Thái - Phường Dịch Vọng - Quận
+              Cầu Giấy - TP.Hà Nội
+            </Text>
+            <br />
+            <Text>
+              <strong>Website:</strong> https://genapp.vn
+            </Text>
+            <br />
+            <Text>
+              <strong>Email:</strong> cskh@genapp.vn
+            </Text>
+            <br />
+            <Text>
+              <strong>Điện thoại:</strong> (028) 710 78098
+            </Text>
+          </div>
+
+          <Divider />
+
+          <div>
+            <Title level={5}>Dịch vụ xét nghiệm</Title>
+            <Space direction="vertical">
+              <Link
+                style={{ color: '#6ab0e6' }}
+                onClick={() => navigate('/y-te/dat-lich-xet-nghiem')}
+              >
+                Đặt khám tại cơ sở
+              </Link>
+              <Link style={{ color: '#6ab0e6' }}>Lấy mẫu tại nhà</Link>
+              <Link style={{ color: '#6ab0e6' }}>Tư vấn xét nghiệm</Link>
+            </Space>
+          </div>
+
+          <Divider />
+
+          <div>
+            <Title level={5}>Cơ sở xét nghiệm</Title>
+            <Space direction="vertical">
+              <Link style={{ color: '#6ab0e6' }}>
+                Phòng xét nghiệm GoLAB Ba Đình
+              </Link>
+              <Link style={{ color: '#6ab0e6' }}>
+                Cơ sở xét nghiệm GoLAB Hải Phòng
+              </Link>
+              <Link style={{ color: '#6ab0e6' }}>
+                Phòng xét nghiệm GoLAB Hòa Bình
+              </Link>
+              <Link style={{ color: '#6ab0e6' }}>
+                Phòng xét nghiệm GoLAB Việt Trì
+              </Link>
+              <Link style={{ color: '#6ab0e6' }}>
+                Phòng xét nghiệm GoLAB Hà Tĩnh
+              </Link>
+              <Link style={{ color: '#6ab0e6' }}>
+                Lab xét nghiệm GenLAB Hồ Chí Minh
+              </Link>
+              <Link style={{ color: '#6ab0e6' }}>
+                Lab xét nghiệm GenovaX Hà Nội 183 Trường Chinh
+              </Link>
+            </Space>
+          </div>
+
+          <Divider style={{ marginTop: 12, marginBottom: 12 }} />
+        </Footer>
+        <div
+          style={{
+            backgroundColor: '#00b5f1',
+            padding: 8,
+            textAlign: 'center',
+            paddingBottom: 70,
+          }}
+        >
+          <Text style={{ color: '#fff' }}>
+            <strong>
+              © 2025 - Bản quyền thuộc Công Ty Cổ Phần Truyền Thông Và Công Nghệ
+              GenTech
+            </strong>
+          </Text>
+        </div>
+      </>
+    );
+  };
+
+  return (
+    <div>{isDesktop ? <DesktopLayOut /> : isMobile && <MobileLayout />}</div>
   );
 };
 
-export default FooterSection;
+export default FooterComponent;

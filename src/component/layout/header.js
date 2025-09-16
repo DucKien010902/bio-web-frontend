@@ -1,4 +1,5 @@
 import {
+  BellFilled,
   BellOutlined,
   CaretDownOutlined,
   CloseOutlined,
@@ -7,10 +8,12 @@ import {
   LogoutOutlined,
   MobileOutlined,
   ProfileOutlined,
+  ShoppingCartOutlined,
   UnorderedListOutlined,
   YoutubeFilled,
 } from '@ant-design/icons';
 import { Badge, Button, Dropdown, Layout, Menu, Space } from 'antd';
+import { useEffect, useState } from 'react';
 import { BiSupport } from 'react-icons/bi';
 import { FaUser } from 'react-icons/fa';
 import { RxDividerVertical } from 'react-icons/rx';
@@ -18,7 +21,9 @@ import { SiTiktok, SiZalo } from 'react-icons/si';
 import { useDispatch, useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
 import { useNavigate } from 'react-router-dom';
+import axiosClient from '../../api/apiConfig';
 import gennovaXLogo from '../../assets/images/GenApp logo.png';
+import { setUnreadCount } from '../../redux/slices/countNoticesSlice';
 import { closeMenuBio, openMenuBio } from '../../redux/slices/openMenuSlice';
 import './header.css';
 const { Header } = Layout;
@@ -28,8 +33,53 @@ const { Header } = Layout;
 const HeaderComponent = () => {
   const navigate = useNavigate();
   const isMobile = useMediaQuery({ maxWidth: 767 });
-
+  // const [countNotice, setCountNotice] = useState(null);
+  const countNotice = useSelector((state) => state.countNotices.unreadCount);
+  const [countOrder, setCountOrder] = useState(null);
   const isDesktop = useMediaQuery({ minWidth: 992 });
+  const phone = JSON.parse(localStorage.getItem('user'))?.phoneNumber;
+  const dispatch = useDispatch();
+  const fetchNotices = async () => {
+    try {
+      const res = await axiosClient.get('/notice/getall');
+      const allNotices = res.data || [];
+      localStorage.setItem('allNotice', JSON.stringify(allNotices));
+      // Lọc ra những thông báo chưa đọc
+      const unreadNotices = allNotices.filter(
+        (notice) => notice.isViewed === false
+      );
+
+      // Set số lượng chưa đọc
+      // setCountNotice(unreadNotices.length);
+
+      dispatch(setUnreadCount(unreadNotices.length));
+
+      // Lưu toàn bộ thông báo vào localStorage
+      localStorage.setItem('allNotices', JSON.stringify(allNotices));
+    } catch (error) {
+      console.log('Không thể lấy thông báo');
+    }
+  };
+  const fetchCountOrder = async () => {
+    try {
+      const res = await axiosClient.get(`/booking/fetchbyphone?phone=${phone}`);
+      const allBooking = res.data || [];
+      // Lọc ra những thông báo chưa đọc
+      const bookingNotPaid = allBooking.filter(
+        (booking) => booking.isPaid === false && booking.status !== 'Đã hủy'
+      );
+
+      // Set số lượng chưa đọc
+      // setCountNotice(unreadNotices.length);
+
+      setCountOrder(bookingNotPaid.length);
+
+      // Lưu toàn bộ thông báo vào localStorage
+    } catch (error) {
+      console.log('Không thể lấy thông báo');
+    }
+  };
+
   const accountMenu = (
     <Menu
       style={{
@@ -87,10 +137,10 @@ const HeaderComponent = () => {
   );
   const menuItems = [
     { label: 'Sản phẩm', key: '1' },
-    { label: 'Dịch vụ y tế', key: '2' },
-    { label: 'Vật tư y tế', key: '4' },
+    { label: 'Cơ sở y tế', key: '2' },
+    { label: 'Dịch vụ', key: '3' },
     { label: 'Tin tức', key: '5' },
-    { label: 'Đối tác', key: '6' },
+    // { label: 'Đối tác', key: '6' },
     { label: 'Liên hệ', key: '7' },
   ];
   const user = JSON.parse(localStorage.getItem('user'));
@@ -101,15 +151,11 @@ const HeaderComponent = () => {
       // { label: 'Trạm y tế', path: '/y-te' },
     ],
     2: [
-      { label: 'Các dịch vụ', path: '/y-te/danh-sach-dich-vu' },
       { label: 'Phòng khám', path: '/y-te/danh-sach-phong-kham' },
       // { label: 'Xét nghiệm', path: '/y-te' },
       // { label: 'Chẩn đoán hình ảnh', path: '/y-te' },
     ],
-    3: [
-      // { label: 'Gói khám cho doanh nghiệp', path: '/y-te' },
-      // { label: 'Khám định kỳ', path: '/y-te' },
-    ],
+    3: [{ label: 'Các dịch vụ', path: '/y-te/danh-sach-dich-vu' }],
     4: [{ label: 'Sản phẩm y tế', path: '/y-te' }],
     5: [
       { label: 'Tin tức y tế', path: '/y-te/tin-tuc' },
@@ -150,6 +196,10 @@ const HeaderComponent = () => {
       ))}
     </Menu>
   );
+  useEffect(() => {
+    fetchNotices();
+    fetchCountOrder();
+  }, []);
   const DesktopLayout = () => {
     return (
       <div>
@@ -210,56 +260,16 @@ const HeaderComponent = () => {
             >
               <Space size="small" style={{ flex: 12 }}>
                 <SiTiktok size={16} className="contact-icon" />
-                <strong
-                  className="contact-icon"
-                  onClick={() => {
-                    window.open(
-                      'https://www.youtube.com/watch?v=HxhUfenf0nQ',
-                      'blank'
-                    );
-                  }}
-                >
-                  Tiktok
-                </strong>
+                <strong className="contact-icon">Tiktok</strong>
                 <RxDividerVertical size={15} />
                 <SiZalo size={16} className="contact-icon" />
-                <strong
-                  className="contact-icon"
-                  onClick={() => {
-                    window.open(
-                      'https://www.youtube.com/watch?v=HxhUfenf0nQ',
-                      'blank'
-                    );
-                  }}
-                >
-                  Zalo
-                </strong>
+                <strong className="contact-icon">Zalo</strong>
                 <RxDividerVertical size={15} />
                 <FacebookFilled className="contact-icon" />
-                <strong
-                  className="contact-icon"
-                  onClick={() => {
-                    window.open(
-                      'https://www.youtube.com/watch?v=HxhUfenf0nQ',
-                      'blank'
-                    );
-                  }}
-                >
-                  Facebook
-                </strong>
+                <strong className="contact-icon">Facebook</strong>
                 <RxDividerVertical size={15} />
                 <YoutubeFilled className="contact-icon" />
-                <strong
-                  className="contact-icon"
-                  onClick={() => {
-                    window.open(
-                      'https://www.youtube.com/watch?v=HxhUfenf0nQ',
-                      'blank'
-                    );
-                  }}
-                >
-                  Youtube
-                </strong>
+                <strong className="contact-icon">Youtube</strong>
               </Space>
 
               <Space size="small" style={{ flex: 9, position: 'relative' }}>
@@ -276,7 +286,7 @@ const HeaderComponent = () => {
                   }}
                   onClick={() => {
                     window.open(
-                      'https://play.google.com/store/games?hl=vi',
+                      'https://expo.dev/accounts/bkc_duckien/projects/bio-app-frontent/builds/0d8138ea-3da8-4107-8acb-30db9a6463ee',
                       '_blank'
                     );
                   }}
@@ -334,8 +344,52 @@ const HeaderComponent = () => {
                     Tài khoản
                   </Button>
                 )}
-                <div className="popup-rgb-reminder">
-                  👈 Xem kết quả xét nghiệm
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    marginLeft: 40,
+                    cursor: 'pointer',
+                  }}
+                  className="bell-wrapper"
+                >
+                  <Badge
+                    count={countNotice}
+                    offset={[-2, 2]}
+                    onClick={() => {
+                      navigate('/y-te/tai-khoan', {
+                        state: { key: 'notifications' },
+                      });
+                    }}
+                  >
+                    <BellOutlined
+                      className="bell-icon outline"
+                      style={{ fontSize: 28 }}
+                    />
+                    <BellFilled
+                      className="bell-icon filled"
+                      style={{ fontSize: 28 }}
+                    />
+                  </Badge>
+                </div>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    marginLeft: 20,
+                    cursor: 'pointer',
+                  }}
+                  onClick={() => {
+                    navigate('/y-te/thanh-toan-dich-vu');
+                  }}
+                  className="cart-wrapper"
+                >
+                  <Badge count={countOrder} offset={[-2, 2]}>
+                    <ShoppingCartOutlined
+                      className="cart-icon"
+                      style={{ fontSize: 28 }}
+                    />
+                  </Badge>
                 </div>
               </Space>
             </div>
@@ -351,7 +405,7 @@ const HeaderComponent = () => {
             >
               <div
                 style={{
-                  flex: 9,
+                  flex: 11.5,
                   display: 'flex',
                   alignItems: 'center',
                   fontSize: 14,
@@ -361,11 +415,11 @@ const HeaderComponent = () => {
                 <BiSupport size={45} style={{ marginRight: 8, color: 'red' }} />
                 <div>
                   <strong style={{ fontSize: 25, color: '#ffb54a' }}>
-                    1900 1234
+                    0936 654 456
                   </strong>
                 </div>
               </div>
-              <div style={{ display: 'flex', gap: 24, flex: 11 }}>
+              <div style={{ display: 'flex', gap: 24, flex: 8.5 }}>
                 {menuItems.map((item) => {
                   if (item.key === '1') {
                     return (
@@ -465,6 +519,7 @@ const HeaderComponent = () => {
     );
   };
   const MobileLayout = () => {
+    const [activeBell, setActiveBell] = useState(false);
     const isOpenMenu = useSelector((state) => state.openMenu.IsOpenMenu);
     const dispatch = useDispatch();
     return (
@@ -525,10 +580,27 @@ const HeaderComponent = () => {
             }}
           >
             {/* Chuông có badge */}
-            <Badge count={6} offset={[-2, 2]}>
-              <BellOutlined style={{ fontSize: 22, color: '#1890ff' }} />
-            </Badge>
-
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+              }}
+            >
+              <Badge
+                count={6}
+                offset={[-2, 2]}
+                onClick={() => {
+                  setActiveBell(true); // đổi icon thành Fill
+                  navigate('/y-te/thong-bao');
+                }}
+              >
+                {activeBell ? (
+                  <BellFilled style={{ fontSize: 24, color: '#1890ff' }} />
+                ) : (
+                  <BellOutlined style={{ fontSize: 24, color: '#1890ff' }} />
+                )}
+              </Badge>
+            </div>
             {isOpenMenu ? (
               <CloseOutlined
                 style={{ fontSize: 22 }}

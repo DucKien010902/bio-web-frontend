@@ -1,14 +1,6 @@
-import React from 'react';
-import { Layout, Row, Col, Typography, Space, Divider } from 'antd';
-import {
-  FacebookFilled,
-  YoutubeFilled,
-  AppleFilled,
-  AndroidFilled,
-} from '@ant-design/icons';
-import { SiZalo, SiTiktok } from 'react-icons/si';
-import { useNavigate } from 'react-router-dom';
+import { Col, Divider, Layout, Row, Space, Typography } from 'antd';
 import { useMediaQuery } from 'react-responsive';
+import { useNavigate } from 'react-router-dom';
 
 const { Footer } = Layout;
 const { Title, Text, Link } = Typography;
@@ -33,7 +25,7 @@ const FooterComponent = () => {
                 fontFamily: 'cursive',
               }}
             >
-              GennovaX
+              GenApp
             </Title>
             <Text
               style={{
@@ -49,8 +41,8 @@ const FooterComponent = () => {
             </Text>
             <div style={{ marginTop: 16 }}>
               <Text>
-                <strong>Địa chỉ:</strong> 28 Thành Thái - Phường Dịch Vọng -
-                Quận Cầu Giấy - TP.Hà Nội
+                <strong>Địa chỉ:</strong> Tòa CT3, Ngõ 106 Hoàng Quốc Việt, Cổ
+                Nhuế, Cầu Giấy, Hà Nội
               </Text>
               <br />
               <Text>
@@ -62,7 +54,7 @@ const FooterComponent = () => {
               </Text>
               <br />
               <Text>
-                <strong>Điện thoại:</strong> (028) 710 78098
+                <strong>Điện thoại:</strong> 0936 654 456
               </Text>
             </div>
           </Col>

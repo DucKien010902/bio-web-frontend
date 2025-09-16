@@ -1,9 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import { Card, Steps, Tag, Divider, Empty } from 'antd';
-import axiosClient from '../../api/apiConfig';
+import {
+  Button,
+  Card,
+  Divider,
+  Empty,
+  message,
+  Modal,
+  Select,
+  Steps,
+  Tag,
+} from 'antd';
+import { useEffect, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
+import axiosClient from '../../api/apiConfig';
 
 const { Step } = Steps;
+const { Option } = Select;
 
 const statusSteps = [
   'Đã đặt đơn',
@@ -28,6 +39,7 @@ const MedicalTickets = () => {
   const isDesktop = useMediaQuery({ minWidth: 992 });
   const phone = JSON.parse(localStorage.getItem('user')).phoneNumber;
   const [mockBookings, setMockBookings] = useState([]);
+  const [filterStatus, setFilterStatus] = useState('Tất cả');
 
   const fetchMedicalTicket = async () => {
     try {
@@ -35,7 +47,6 @@ const MedicalTickets = () => {
       const sortedData = res.data.sort(
         (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
       );
-      console.log(sortedData);
       setMockBookings(sortedData);
     } catch (error) {
       console.log('Không thể lấy lịch sử phiếu');
@@ -45,6 +56,51 @@ const MedicalTickets = () => {
   useEffect(() => {
     fetchMedicalTicket();
   }, []);
+
+  // Hàm hủy đơn
+  const handleCancelBooking = (bookID) => {
+    Modal.confirm({
+      title: 'Xác nhận hủy đơn',
+      content: `Bạn có chắc muốn hủy phiếu ${bookID}?`,
+      okText: 'Hủy đơn',
+      cancelText: 'Đóng',
+      okButtonProps: { danger: true },
+      onOk: async () => {
+        try {
+          await axiosClient.post('/booking/cancel', { phone, bookID });
+          message.success('Đã hủy đơn thành công');
+          fetchMedicalTicket();
+        } catch (err) {
+          message.error('Hủy đơn thất bại');
+        }
+      },
+    });
+  };
+
+  // lọc danh sách theo trạng thái
+  const filteredBookings =
+    filterStatus === 'Tất cả'
+      ? mockBookings
+      : mockBookings.filter((ticket) => ticket.status === filterStatus);
+
+  const FilterBar = () => (
+    <div style={{ marginBottom: 16 }}>
+      <span style={{ marginRight: 8, fontWeight: 500 }}>Lọc trạng thái:</span>
+      <Select
+        value={filterStatus}
+        onChange={(val) => setFilterStatus(val)}
+        style={{ minWidth: 160 }}
+      >
+        <Option value="Tất cả">Tất cả</Option>
+        {[...statusSteps, 'Đã hủy'].map((status) => (
+          <Option key={status} value={status}>
+            {status}
+          </Option>
+        ))}
+      </Select>
+    </div>
+  );
+
   const DesktopLayout = () => {
     return (
       <Card
@@ -52,15 +108,28 @@ const MedicalTickets = () => {
         bordered={false}
         style={{ borderRadius: 12 }}
       >
-        {mockBookings.length > 0 ? (
-          mockBookings.map((ticket) => (
+        <FilterBar />
+        {filteredBookings.length > 0 ? (
+          filteredBookings.map((ticket) => (
             <Card
               key={ticket.bookID}
               type="inner"
               title={`Mã phiếu: ${ticket.bookID}`}
               style={{ marginBottom: 16 }}
               extra={
-                <Tag color={statusColors[ticket.status]}>{ticket.status}</Tag>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <Tag color={statusColors[ticket.status]}>{ticket.status}</Tag>
+                  {ticket.status === 'Đã đặt đơn' && (
+                    <Button
+                      danger
+                      size="small"
+                      onClick={() => handleCancelBooking(ticket.bookID)}
+                      style={{ fontSize: 12 }}
+                    >
+                      Hủy đơn
+                    </Button>
+                  )}
+                </div>
               }
             >
               <Steps current={getCurrentStep(ticket.status)} size="small">
@@ -105,41 +174,32 @@ const MedicalTickets = () => {
               {ticket.resultLink && (
                 <p>
                   <strong>Kết quả xét nghiệm:</strong>{' '}
-                  <span
-                    style={{
-                      fontWeight: 'bold',
-                      color: 'red',
-                      cursor: 'pointer',
-                    }}
-                    // onClick={() => {
-                    //   window.open(ticket.resultLink, 'blank');
-                    // }}
+                  <a
+                    href={ticket.resultLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: 'red', fontWeight: 'bold' }}
                   >
-                    <a
-                      href={ticket.resultLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{ color: 'red' }}
-                    >
-                      Xem kết quả
-                    </a>
-                  </span>
+                    Xem kết quả
+                  </a>
                 </p>
               )}
             </Card>
           ))
         ) : (
-          <Empty description="Chưa có lịch sử đặt xét nghiệm" />
+          <Empty description="Không có phiếu theo trạng thái này" />
         )}
       </Card>
     );
   };
+
   const MobileLayout = () => {
     return (
       <div style={{ padding: '12px' }}>
         <h3 style={{ marginBottom: 12 }}>Lịch sử xét nghiệm</h3>
-        {mockBookings.length > 0 ? (
-          mockBookings.map((ticket) => (
+        <FilterBar />
+        {filteredBookings.length > 0 ? (
+          filteredBookings.map((ticket) => (
             <Card
               key={ticket.bookID}
               type="inner"
@@ -149,7 +209,18 @@ const MedicalTickets = () => {
               size="small"
               style={{ marginBottom: 16, borderRadius: 12 }}
               extra={
-                <Tag color={statusColors[ticket.status]}>{ticket.status}</Tag>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                  <Tag color={statusColors[ticket.status]}>{ticket.status}</Tag>
+                  {ticket.status === 'Đã đặt đơn' && (
+                    <Button
+                      danger
+                      size="small"
+                      onClick={() => handleCancelBooking(ticket.bookID)}
+                    >
+                      Hủy
+                    </Button>
+                  )}
+                </div>
               }
             >
               <div style={{ marginBottom: 12 }}>
@@ -212,7 +283,7 @@ const MedicalTickets = () => {
             </Card>
           ))
         ) : (
-          <Empty description="Chưa có lịch sử đặt xét nghiệm" />
+          <Empty description="Không có phiếu theo trạng thái này" />
         )}
       </div>
     );

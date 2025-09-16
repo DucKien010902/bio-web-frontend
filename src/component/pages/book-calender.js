@@ -16,6 +16,7 @@ import {
   Input,
   message,
   Modal,
+  Radio,
   Row,
   Select,
   Space,
@@ -98,6 +99,10 @@ const BookingPage = () => {
   const [filteredServices, setFilteredServices] = useState([]);
   const [distanceToClinic, setDistanceToClinic] = useState(null);
 
+  const [paymentMethod, setPaymentMethod] = useState('Tại phòng khám');
+  const [resultMethod, setResultMethod] = useState('Online');
+  const [resultAddress, setResultAddress] = useState('');
+
   const timeSlots = [
     '08:00 - 09:00',
     '09:00 - 10:00',
@@ -160,13 +165,14 @@ const BookingPage = () => {
       (clinic) => clinic.name == selectedFacility
     )?.ID;
     let selectedServiceName = '';
-
+    let selectedServicePrice = 0;
     for (const testType of services) {
       const foundPkg = testType.packages.find(
         (pkg) => pkg.code === selectedService
       );
       if (foundPkg) {
         selectedServiceName = foundPkg.name;
+        selectedServicePrice = foundPkg.price;
         break; // kết thúc vòng lặp khi đã tìm thấy
       }
     }
@@ -177,10 +183,11 @@ const BookingPage = () => {
       facility: selectedFacility,
       facilityID: selectedFacilityID,
       serviceCode: selectedService,
+      servicePrice: selectedServicePrice,
       serviceName: selectedServiceName,
       name: fullName,
       phone: phoneNumber,
-      dob: dob.format('DD/MM/YYYY'),
+      dob: dob,
       location: address,
       email: email,
       confirmed: false,
@@ -220,6 +227,7 @@ const BookingPage = () => {
             packages: testType.packages.map((pkg) => ({
               code: pkg.code,
               name: pkg.name,
+              price: pkg.price,
             })),
           }));
           setServices(groupedServices);
@@ -534,6 +542,53 @@ const BookingPage = () => {
               {/* Bạn có thể để trống hoặc thêm 1 input khác */}
             </Col>
           </Row>
+        </Space>
+
+        <Divider />
+        <Space direction="vertical" style={{ width: '100%' }}>
+          <strong>Phương thức thanh toán:</strong>
+          <Row gutter={16}>
+            <Col span={24}>
+              <Radio.Group
+                value={paymentMethod}
+                onChange={(e) => setPaymentMethod(e.target.value)}
+              >
+                <Radio value="clinic">Thanh toán tại phòng khám</Radio>
+                <Radio value="online">Thanh toán online</Radio>
+              </Radio.Group>
+            </Col>
+          </Row>
+        </Space>
+
+        <Divider />
+
+        {/* PHẦN TRẢ KẾT QUẢ */}
+        <Space direction="vertical" style={{ width: '100%' }}>
+          <strong>Hình thức trả kết quả:</strong>
+          <Row gutter={16}>
+            <Col span={24}>
+              <Radio.Group
+                value={resultMethod}
+                onChange={(e) => setResultMethod(e.target.value)}
+              >
+                <Radio value="direct">Trực tiếp</Radio>
+                <Radio value="online">Online</Radio>
+              </Radio.Group>
+            </Col>
+          </Row>
+
+          {resultMethod === 'direct' && (
+            <Row gutter={16} style={{ marginTop: 12 }}>
+              <Col span={24}>
+                <Input
+                  placeholder="Nhập địa chỉ nhận kết quả"
+                  value={resultAddress}
+                  onChange={(e) => setResultAddress(e.target.value)}
+                  style={{ height: 40 }}
+                />
+              </Col>
+            </Row>
+          )}
         </Space>
 
         <Divider />

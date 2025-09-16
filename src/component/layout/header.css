@@ -47,3 +47,22 @@
   z-index: 1000;
   white-space: nowrap;
 }
+.bell-wrapper .bell-icon.outline {
+  color: #1890ff; /* luôn xanh mặc định */
+}
+
+.bell-wrapper .bell-icon.filled {
+  display: none;
+  color: #1890ff;
+}
+
+.bell-wrapper:hover .bell-icon.outline {
+  display: none;
+}
+
+.bell-wrapper:hover .bell-icon.filled {
+  display: inline-block;
+}
+.cart-wrapper .cart-icon {
+  color: #1890ff; /* luôn xanh mặc định */
+}
