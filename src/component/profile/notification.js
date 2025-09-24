@@ -14,6 +14,7 @@ import {
 } from 'antd';
 import dayjs from 'dayjs';
 import { useEffect, useMemo, useState } from 'react';
+import { GiMedicalPackAlt } from 'react-icons/gi';
 import { useDispatch } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
 import axiosClient from '../../api/apiConfig';
@@ -30,11 +31,13 @@ export default function HealthNewsMobile() {
   const [query] = useState('');
   const dispatch = useDispatch();
   const isDesktop = useMediaQuery({ minWidth: 992 });
-
-  // lấy dữ liệu từ API
+  const phoneNumber = JSON.parse(localStorage.getItem('user'))?.phoneNumber;
+  console.log(phoneNumber);
   const fetchNotices = async () => {
     try {
-      const res = await axiosClient.get('/notice/getall');
+      const res = await axiosClient.get(
+        `/notice/getall?phoneNumber=${phoneNumber}`
+      );
       setAllNew(res.data || []);
     } catch (error) {
       console.log('Không thể lấy thông báo');
@@ -45,7 +48,6 @@ export default function HealthNewsMobile() {
     if (!time) return '';
     const d = dayjs(time);
     const minutes = d.minute();
-    // làm tròn về bội số gần nhất của 5
     const rounded = Math.round(minutes / 5) * 5;
     return d.minute(rounded).second(0).format('DD/MM/YYYY HH:mm');
   };
@@ -53,18 +55,30 @@ export default function HealthNewsMobile() {
   // tính toán NEWS từ allNew
   const NEWS = useMemo(() => {
     const colors = ['blue', 'red', 'green', 'orange', 'purple', 'cyan'];
+
     return allNew
       .sort((a, b) => new Date(b.Time) - new Date(a.Time))
-      .map((item) => ({
-        id: item.postid,
-        title: item.Title,
-        category: 'Cộng đồng',
-        time: formatTime(item.Time),
-        icon: <TeamOutlined />,
-        color: colors[Math.floor(Math.random() * colors.length)],
-        details: item.Content,
-        isViewed: item?.isViewed || false,
-      }));
+      .map((item) => {
+        let icon;
+        if (item.Classify === 'Cộng đồng') {
+          icon = <TeamOutlined />;
+        } else if (item.Classify === 'Đặt lịch') {
+          icon = <GiMedicalPackAlt />;
+        } else {
+          icon = <TeamOutlined />; // mặc định
+        }
+
+        return {
+          id: item._id,
+          title: item.Title,
+          category: item.Classify,
+          time: formatTime(item.Time),
+          icon,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          details: item.Content,
+          isViewed: item?.isViewed || false,
+        };
+      });
   }, [allNew]);
 
   // set newsList ban đầu từ NEWS
@@ -192,6 +206,7 @@ export default function HealthNewsMobile() {
                             <Text
                               type="secondary"
                               style={{
+                                whiteSpace: 'pre-line', // 👈 cho phép \n hiển thị xuống dòng
                                 display: '-webkit-box',
                                 WebkitBoxOrient: 'vertical',
                                 WebkitLineClamp: 2,
@@ -207,6 +222,7 @@ export default function HealthNewsMobile() {
                             >
                               {item.details}
                             </Text>
+
                             <Space size={8} wrap style={{ marginTop: 8 }}>
                               <Tag icon={<FileTextOutlined />}>
                                 Tin chính thức

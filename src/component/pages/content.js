@@ -939,6 +939,9 @@ const ContentComponent = () => {
                         boxShadow: '0 4px 12px rgba(0, 191, 255, 0.3)',
                         textAlign: 'start',
                       }}
+                      onClick={() => {
+                        navigate('/y-te/chi-tiet-dich-vu');
+                      }}
                     >
                       <div
                         style={{
@@ -1023,7 +1026,8 @@ const ContentComponent = () => {
                             cursor: 'pointer',
                             fontWeight: 'bold',
                           }}
-                          onClick={() => {
+                          onClick={(e) => {
+                            e.stopPropagation();
                             navigate(
                               `/y-te/dat-lich-xet-nghiem?code=${service.id}`
                             );
@@ -1085,6 +1089,9 @@ const ContentComponent = () => {
                         borderRadius: 16,
                         boxShadow: '0 4px 12px rgba(0, 191, 255, 0.3)',
                         textAlign: 'start',
+                      }}
+                      onClick={() => {
+                        navigate('/y-te/thong-tin-bac-sy');
                       }}
                     >
                       <div

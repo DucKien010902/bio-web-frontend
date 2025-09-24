@@ -191,7 +191,7 @@ const ServicePage = () => {
                     <Col span={8} style={{ textAlign: 'right' }}>
                       <Space>
                         <Button
-                          onClick={() => setSelectedService(service)}
+                          onClick={() => navigate('/y-te/chi-tiet-dich-vu')}
                           style={{
                             borderRadius: 15,
                             backgroundColor: '#c4f2f5',

@@ -27,6 +27,8 @@ import ClinicListMobilePage from './component/pages/list-clinicMobile';
 import ServicePageMobile from './component/pages/list-serciceMobile';
 import ServicePage from './component/pages/list-service';
 // import HealthNewsMobile from './component/pages/notice';
+import DetailService from './component/pages/detail-service';
+import DoctorProfile from './component/pages/error';
 import BookingCart from './component/pages/orderServices';
 import CartPage from './component/productall/AllProductCart';
 import AllProductContent from './component/productall/AllProductContent';
@@ -128,6 +130,8 @@ function MainApp() {
         <Route path="menu" element={<MobileMenu />} />
         <Route path="tin-tuc" element={<PostList />} />
         <Route path="thanh-toan-dich-vu" element={<BookingCart />} />
+        <Route path="chi-tiet-dich-vu" element={<DetailService />} />
+        <Route path="thong-tin-bac-sy" element={<DoctorProfile />} />
         {/* <Route path="thong-bao" element={<HealthNewsMobile />} /> */}
       </Routes>
       <FooterComponent />
@@ -138,8 +142,6 @@ function App() {
   const chatOpen = useSelector((state) => state.chat.openChat);
   const location = useLocation();
   const { pathname } = location;
-
-  // Kiểm tra các path cần hiển thị chat
   const isDesktop = useMediaQuery({ minWidth: 992 });
   const isMobile = useMediaQuery({ maxWidth: 797 });
   const shouldShowChat =

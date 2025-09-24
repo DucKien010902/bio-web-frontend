@@ -51,7 +51,8 @@ const ChatDrawerAI = ({ open, onClose }) => {
   const askQuestion1 = async (question) => {
     try {
       const response = await fetch(
-        'https://advanced-bengal-many.ngrok-free.app/webhook/ai-train-GPT',
+        'https://uncasketed-karoline-resemblingly.ngrok-free.dev/webhook/ai-train-GPT',
+        // 'https://advanced-bengal-many.ngrok-free.app/webhook/a-kien-an-cut',
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -187,7 +188,7 @@ const ChatDrawerAI = ({ open, onClose }) => {
   const renderMessageContent = (m) => {
     if (!m.fromUser) {
       // Nếu có chứa link ảnh
-      if (m.content.includes(IMAGE_LINK)) {
+      if (m.content && m.content.includes(IMAGE_LINK)) {
         const textWithoutLink = m.content.replace(IMAGE_LINK, '').trim();
         return (
           <div>
@@ -209,7 +210,7 @@ const ChatDrawerAI = ({ open, onClose }) => {
       }
     }
     // Không có link thì render bình thường
-    return m.content
+    return (m.content || '')
       .split('\n')
       .map((line, index) => <div key={index}>{renderLine(line, index)}</div>);
   };

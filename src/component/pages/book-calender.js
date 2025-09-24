@@ -1,11 +1,6 @@
 ///
-import { CaretDownOutlined, EnvironmentOutlined } from '@ant-design/icons';
-import {
-  Autocomplete,
-  GoogleMap,
-  Marker,
-  useLoadScript,
-} from '@react-google-maps/api';
+import { CaretDownOutlined } from '@ant-design/icons';
+import { useLoadScript } from '@react-google-maps/api';
 import {
   Button,
   Calendar,
@@ -15,7 +10,6 @@ import {
   Divider,
   Input,
   message,
-  Modal,
   Radio,
   Row,
   Select,
@@ -33,39 +27,6 @@ dayjs.locale('vi');
 
 const { Title, Text } = Typography;
 const { Option, OptGroup } = Select;
-
-const mapContainerStyle = {
-  width: '100%',
-  height: '400px',
-};
-
-const defaultCenter = {
-  lat: 21.0285,
-  lng: 105.8542,
-};
-
-const extractLatLngFromUrl = (url) => {
-  const latLngMatch = url.match(/!2d(-?\d+\.\d+)!3d(-?\d+\.\d+)/);
-  if (latLngMatch) {
-    const lng = parseFloat(latLngMatch[1]);
-    const lat = parseFloat(latLngMatch[2]);
-    return { lat, lng };
-  }
-  return null;
-};
-
-const calculateDistanceKm = (lat1, lng1, lat2, lng2) => {
-  const R = 6371;
-  const dLat = ((lat2 - lat1) * Math.PI) / 180;
-  const dLng = ((lng2 - lng1) * Math.PI) / 180;
-  const a =
-    Math.sin(dLat / 2) ** 2 +
-    Math.cos((lat1 * Math.PI) / 180) *
-      Math.cos((lat2 * Math.PI) / 180) *
-      Math.sin(dLng / 2) ** 2;
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  return +(R * c).toFixed(2);
-};
 
 const BookingPage = () => {
   const { isLoaded } = useLoadScript({
@@ -127,25 +88,6 @@ const BookingPage = () => {
 
     setDob(value);
   };
-  const onPlaceChanged = () => {
-    console.log(autocomplete);
-    if (autocomplete !== null) {
-      const place = autocomplete.getPlace();
-      if (place.geometry) {
-        const location = place.geometry.location;
-        console.log(location);
-        const newLocation = {
-          lat: location.lat(),
-          lng: location.lng(),
-          name: place.formatted_address,
-        };
-        setSelectedLocation(newLocation);
-        setAddress(place.formatted_address || '');
-      } else {
-        message.error('Không tìm thấy vị trí phù hợp.');
-      }
-    }
-  };
 
   const handleBooking = () => {
     if (
@@ -195,6 +137,7 @@ const BookingPage = () => {
     const addFirst = async () => {
       try {
         const res = await axiosClient.post('/booking/addfirst', state);
+        const res1 = await axiosClient.post('/notice/addBookingNotice', state);
         message.success('Dat lich thanh cong');
         navigate('/y-te/booking-success', {
           state,
@@ -290,26 +233,6 @@ const BookingPage = () => {
     setFilteredServices(filtered);
   }, [selectedFacility, selectedService, allclinics, services]);
 
-  useEffect(() => {
-    if (selectedLocation && selectedFacility) {
-      const clinic = allclinics.find(
-        (clinic) => clinic.name === selectedFacility
-      );
-      if (clinic?.mapEmbedUrl) {
-        const clinicCoords = extractLatLngFromUrl(clinic.mapEmbedUrl);
-        if (clinicCoords) {
-          const distance = calculateDistanceKm(
-            selectedLocation.lat,
-            selectedLocation.lng,
-            clinicCoords.lat,
-            clinicCoords.lng
-          );
-          setDistanceToClinic(distance);
-        }
-      }
-    }
-  }, [selectedLocation, selectedFacility, allclinics]);
-
   return (
     <div style={{ padding: 20, background: '#e8f4fd', minHeight: '100vh' }}>
       <Card style={{ maxWidth: 1000, margin: '0 auto', borderRadius: 12 }}>
@@ -328,70 +251,6 @@ const BookingPage = () => {
           </Title>
         </div>
 
-        {/* ... Giữ nguyên phần còn lại như cũ ... */}
-
-        <Space direction="vertical" style={{ width: '100%' }}>
-          <strong>Chọn vị trí trên bản đồ:</strong>
-          <Button
-            type="primary"
-            icon={<EnvironmentOutlined />}
-            onClick={() => setMapModalOpen(true)}
-          >
-            Chọn vị trí trên bản đồ
-          </Button>
-          {selectedLocation && (
-            <Text>
-              Địa điểm đã chọn:{' '}
-              {/* <b>{selectedLocation.name || 'Không xác định'}</b> */}✅
-              {distanceToClinic !== null && (
-                <>
-                  {' '}
-                  – Cách cơ sở đã chọn khoảng <b>{distanceToClinic} km</b>
-                </>
-              )}
-            </Text>
-          )}
-        </Space>
-
-        <Modal
-          title="Chọn vị trí trên bản đồ"
-          open={mapModalOpen}
-          onCancel={() => setMapModalOpen(false)}
-          onOk={() => setMapModalOpen(false)}
-          okText="Chọn"
-          width={800}
-        >
-          {isLoaded ? (
-            <>
-              <Autocomplete
-                onLoad={onLoadAutocomplete}
-                onPlaceChanged={onPlaceChanged}
-              >
-                <Input
-                  placeholder="Nhập địa điểm..."
-                  style={{ marginBottom: 10, height: 40 }}
-                  allowClear
-                />
-              </Autocomplete>
-
-              <GoogleMap
-                mapContainerStyle={mapContainerStyle}
-                zoom={13}
-                center={selectedLocation || defaultCenter}
-                onClick={(e) =>
-                  setSelectedLocation({
-                    lat: e.latLng.lat(),
-                    lng: e.latLng.lng(),
-                  })
-                }
-              >
-                {selectedLocation && <Marker position={selectedLocation} />}
-              </GoogleMap>
-            </>
-          ) : (
-            <div>Đang tải bản đồ...</div>
-          )}
-        </Modal>
         <Divider />
         <Row gutter={16}>
           <Col span={12}>
